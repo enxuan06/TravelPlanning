@@ -1,14 +1,11 @@
-﻿/* site.css */
-.background-gif {
-    background-image: url('images/travel.jpg)
+﻿.background-gif {
+    background-image: url('images/Starting.gif');
     background-size: cover;
     background-position: center;
-   
     height: 100vh; /* Full viewport height */
     width: 100%; /* Full width */
     position: relative; /* Required for positioning child elements */
 }
-
 
 @media screen and (max-width: 2500px) { /* Adjust this breakpoint */
     body {
