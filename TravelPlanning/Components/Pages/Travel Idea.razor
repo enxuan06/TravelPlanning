@@ -1,0 +1,146 @@
+﻿@page "/Idea"
+<PageTitle>Travel Idea</PageTitle>
+
+<h3>Explore & Discover Your Own Voyage!</h3>
+<br />
+<h5>By Country:</h5>
+
+<style>
+    .card-img-top {
+        height: 300px;
+        object-fit: cover;
+    }
+</style>
+
+<!-- Carousel wrapper -->
+<div id="carouselMultiItemExample"
+     data-mdb-carousel-init
+     class="carousel slide carousel-dark text-center"
+     data-mdb-ride="carousel"
+     data-mdb-interval="5000">
+
+    <!-- Inner -->
+    <div class="carousel-inner py-4">
+        <!-- Single item -->
+        <div class="carousel-item active">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card text-white">
+                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                    <div class="text-center">
+                                        <h5 class="card-title">Japan</h5>
+                                        <p class="card-text">Discover the beauty of Japan!</p>
+                                    </div>
+                                </div>
+                                <img src="/images/japan.jpg" class="card-img-top" alt="Japan" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="card">
+                            <div class="card text-white">
+                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                    <div class="text-center">
+                                        <h5 class="card-title">Korea</h5>
+                                        <p class="card-text">Ride the Korean wave!</p>
+                                    </div>
+                                </div>
+                                <img src="/images/korea.png" class="card-img-top" alt="Korea" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="card">
+                            <div class="card text-white">
+                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                    <div class="text-center">
+                                        <h5 class="card-title">London</h5>
+                                        <p class="card-text">Let's do London.</p>
+                                    </div>
+                                </div>
+                                <img src="/images/london.jpg" class="card-img-top" alt="London" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single item -->
+        <div class="carousel-item">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="card">
+                            <div class="card text-white">
+                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                    <div class="text-center">
+                                        <h5 class="card-title">Bali</h5>
+                                        <p class="card-text">Bali: Your Gateway to Paradise.</p>
+                                    </div>
+                                </div>
+                                <img src="/images/bali.jpg" class="card-img-top" alt="Bali" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="card">
+                            <div class="card text-white">
+                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                    <div class="text-center">
+                                        <h5 class="card-title">Italy</h5>
+                                        <p class="card-text">Italy. Open to Wonder.</p>
+                                    </div>
+                                </div>
+                                <img src="/images/italy.webp" class="card-img-top" alt="Italy" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="card">
+                            <div class="card text-white">
+                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                                    <div class="text-center">
+                                        <h5 class="card-title">Thailand</h5>
+                                        <p class="card-text">Amazing Thailand: Your Stories Never End.</p>
+                                    </div>
+                                </div>
+                                <img src="/images/thailand.webp" class="card-img-top" alt="Thailand" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Inner -->
+    <!-- Controls -->
+    <div class="d-flex justify-content-center mb-4">
+        <button class="carousel-control-prev" type="button" data-mdb-target="#carouselMultiItemExample" data-mdb-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-mdb-target="#carouselMultiItemExample" data-mdb-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<!-- Carousel wrapper -->
+@code {
+    [Inject] IJSRuntime JSRuntime { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("mdb.Carousel.init");
+        }
+    }
+}
