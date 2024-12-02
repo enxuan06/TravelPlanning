@@ -1,53 +1,50 @@
-@page "/"
-
+﻿@page "/"
 <PageTitle>Home</PageTitle>
 
-<body class="background-gif">
-    <div class="container">
-        <!-- Hero Section -->
-        <div class="bg-image" style="background-image: url('/images/travel.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;max-width:100%; padding:140px; color: white; text-align: center;">
-            <div class="row justify-content-center">
-                <div class="col-xl-7 col-lg-7 col-md-12">
-                    <div class="py-8 py-lg-0 text-center">
-                        <h1 class="display-2 fw-bold mb-3 text-primary">
-                            <span class="header bg-secondary bg-gradient text-white display-5">Welcome to RoutePlanner!</span>
-                        </h1>
-                        <p class="mb-6 h1 text-dark">
-                            All in one place 
-                            </p>
-                        <p class="MB-6 h4 text-dark">
-                            Discover more adventures and destinations.<br/>
-                            Create your own personalised itinerary.📆
-                        </p>
-                        <br/>
-                        <a href="../logIn.html" class="btn btn-primary me-2" aria-label="Log in to RoutePlanner">Log In</a>
-                        <a href="../sign-up.html" class="btn btn-outline-primary" aria-label="Sign up for RoutePlanner">Sign Up</a>
+<!-- GIF Section (Full Viewport) -->
+<div class="background-gif">
+    <div class="h-100 d-flex flex-column justify-content-center align-items-center text-center">
+        <h1 class="display-1 fw-bold mb-3 text-primary">
+            <span class="header bg-secondary bg-gradient text-white display-5">Welcome to RoutePlanner!</span>
+        </h1>
 
-                        <div class="mt-7 mb-0">
-                            <ul class="list-inline">
-                                <li class="list-inline-item text-dark fw-semibold lh-1 fs-4 me-3 mb-2">
-                                    <span class="icon-shape icon-xs rounded-circle bg-light-success text-center me-2">
-                                        <i class="bi bi-check text-success"></i>
-                                    </span>
-                                    ✔️ Easy to use
-                                </li>
-                                <li class="list-inline-item text-dark fw-semibold lh-1 fs-4 me-3 mb-2">
-                                    <span class="icon-shape icon-xs rounded-circle bg-light-success text-center me-2">
-                                        <i class="bi bi-check text-success"></i>
-                                    </span>
-                                    ✔️ Forward Planning
-                                </li>
-                                <li class="list-inline-item text-dark fw-semibold lh-1 fs-4">
-                                    <span class="icon-shape icon-xs rounded-circle bg-light-success text-center me-2">
-                                        <i class="bi bi-check text-success"></i>
-                                    </span>
-                                    ✔️ No hidden charges
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+        <div class="d-flex justify-content-center">
+            <div class="card bg-transparent me-3" style="width: 18rem;">
+                <div class="card-body text-white">
+                    <p>Take a step into the world.
+                        <br />Start your exploration.🔍</p>
+                    <a href="/Idea" class="btn btn-primary">Start Exploring</a>
+                </div>
+            </div>
+            <div class="card bg-transparent" style="width: 18rem;">
+                <div class="card-body text-white">
+                    <p>Unleash your creativeness.📝</p>
+                    <a href="/Create" class="btn btn-primary">Begin Planning</a>
                 </div>
             </div>
         </div>
-       </div>
-</body>
+    </div>
+</div>
+
+<!-- Image Section (Full Viewport) -->
+<div class="vh-100 position-relative" style="background-image: url('/images/travel.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="h-100 d-flex flex-column justify-content-center align-items-center text-center">
+        <div class="col-xl-7 col-lg-7 col-md-12">
+            <p class="mb-6 h1 text-dark">All in one place</p>
+            <p class="MB-6 h4 text-dark">
+                Discover more adventures and destinations.<br />
+                Create your own personalised itinerary.📆
+            </p>
+            <br />
+            <a href="../logIn.html" class="btn btn-primary me-2">Log In</a>
+            <a href="../sign-up.html" class="btn btn-outline-primary">Sign Up</a>
+            <div class="mt-7 mb-0">
+                <ul class="list-inline">
+                    <li class="list-inline-item text-dark fw-semibold lh-1 fs-4 me-3 mb-2">✔️ Easy to use</li>
+                    <li class="list-inline-item text-dark fw-semibold lh-1 fs-4 me-3 mb-2">✔️ Forward Planning</li>
+                    <li class="list-inline-item text-dark fw-semibold lh-1 fs-4">✔️ No hidden charges</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
