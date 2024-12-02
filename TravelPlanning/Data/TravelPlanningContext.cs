@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 using TravelPlanning.Configurations.Entities;
 using TravelPlanning.Data;
 
@@ -22,6 +23,9 @@ namespace TravelPlanning.Data
             builder.ApplyConfiguration(new AccommodationSeed());
             builder.ApplyConfiguration(new ActivitySeed());
             builder.ApplyConfiguration(new TransportationSeed());
+            builder.ApplyConfiguration(new UserSeed());
+            builder.ApplyConfiguration(new RoleSeed());
+            builder.ApplyConfiguration(new UserRoleSeed());
         }
     }
 }
