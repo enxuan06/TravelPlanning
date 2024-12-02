@@ -1,0 +1,134 @@
+﻿@page "/accommmodations/edit"
+@using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Domain
+@inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>Accommmodation</h2>
+<hr />
+@if (Accommmodation is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Accommmodation" OnValidSubmit="UpdateAccommmodation" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="Accommmodation.Id" value="@Accommmodation.Id" />
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <InputText id="name" @bind-Value="Accommmodation.Name" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.Name" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address:</label>
+                    <InputText id="address" @bind-Value="Accommmodation.Address" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.Address" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="startdate" class="form-label">StartDate:</label>
+                    <InputDate id="startdate" @bind-Value="Accommmodation.StartDate" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.StartDate" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="enddate" class="form-label">EndDate:</label>
+                    <InputDate id="enddate" @bind-Value="Accommmodation.EndDate" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.EndDate" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="type" class="form-label">Type:</label>
+                    <InputText id="type" @bind-Value="Accommmodation.Type" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.Type" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="pricepernight" class="form-label">PricePerNight:</label>
+                    <InputNumber id="pricepernight" @bind-Value="Accommmodation.PricePerNight" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.PricePerNight" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="datecreated" class="form-label">DateCreated:</label>
+                    <InputDate id="datecreated" @bind-Value="Accommmodation.DateCreated" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.DateCreated" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dataupdated" class="form-label">DataUpdated:</label>
+                    <InputDate id="dataupdated" @bind-Value="Accommmodation.DataUpdated" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.DataUpdated" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="createdby" class="form-label">CreatedBy:</label>
+                    <InputText id="createdby" @bind-Value="Accommmodation.CreatedBy" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.CreatedBy" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Accommmodation.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Accommmodation.UpdatedBy" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/accommmodations">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Accommmodation? Accommmodation { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        Accommmodation ??= await context.Accommmodation.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Accommmodation is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateAccommmodation()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(Accommmodation!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!AccommmodationExists(Accommmodation!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/accommmodations");
+    }
+
+    private bool AccommmodationExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.Accommmodation.Any(e => e.Id == id);
+    }
+}

@@ -1,0 +1,83 @@
+﻿@page "/transportations/delete"
+@using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Domain
+@inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<p>Are you sure you want to delete this?</p>
+<div>
+    <h2>Transportation</h2>
+    <hr />
+    @if (transportation is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Type</dt>
+            <dd class="col-sm-10">@transportation.Type</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">StartLocation</dt>
+            <dd class="col-sm-10">@transportation.StartLocation</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">EndLocation</dt>
+            <dd class="col-sm-10">@transportation.EndLocation</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Cost</dt>
+            <dd class="col-sm-10">@transportation.Cost</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">DateCreated</dt>
+            <dd class="col-sm-10">@transportation.DateCreated</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">DataUpdated</dt>
+            <dd class="col-sm-10">@transportation.DataUpdated</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">CreatedBy</dt>
+            <dd class="col-sm-10">@transportation.CreatedBy</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">UpdatedBy</dt>
+            <dd class="col-sm-10">@transportation.UpdatedBy</dd>
+        </dl>
+        <EditForm method="post" Model="transportation" OnValidSubmit="DeleteTransportation" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(transportation is null)">Delete</button> |
+            <a href="/transportations">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private Transportation? transportation;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        transportation = await context.Transportation.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (transportation is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    private async Task DeleteTransportation()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Transportation.Remove(transportation!);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/transportations");
+    }
+}

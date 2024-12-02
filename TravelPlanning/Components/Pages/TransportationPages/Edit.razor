@@ -1,0 +1,124 @@
+﻿@page "/transportations/edit"
+@using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Domain
+@inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>Transportation</h2>
+<hr />
+@if (Transportation is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Transportation" OnValidSubmit="UpdateTransportation" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="Transportation.Id" value="@Transportation.Id" />
+                <div class="mb-3">
+                    <label for="type" class="form-label">Type:</label>
+                    <InputText id="type" @bind-Value="Transportation.Type" class="form-control" />
+                    <ValidationMessage For="() => Transportation.Type" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="startlocation" class="form-label">StartLocation:</label>
+                    <InputText id="startlocation" @bind-Value="Transportation.StartLocation" class="form-control" />
+                    <ValidationMessage For="() => Transportation.StartLocation" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="endlocation" class="form-label">EndLocation:</label>
+                    <InputText id="endlocation" @bind-Value="Transportation.EndLocation" class="form-control" />
+                    <ValidationMessage For="() => Transportation.EndLocation" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="cost" class="form-label">Cost:</label>
+                    <InputNumber id="cost" @bind-Value="Transportation.Cost" class="form-control" />
+                    <ValidationMessage For="() => Transportation.Cost" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="datecreated" class="form-label">DateCreated:</label>
+                    <InputDate id="datecreated" @bind-Value="Transportation.DateCreated" class="form-control" />
+                    <ValidationMessage For="() => Transportation.DateCreated" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="dataupdated" class="form-label">DataUpdated:</label>
+                    <InputDate id="dataupdated" @bind-Value="Transportation.DataUpdated" class="form-control" />
+                    <ValidationMessage For="() => Transportation.DataUpdated" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="createdby" class="form-label">CreatedBy:</label>
+                    <InputText id="createdby" @bind-Value="Transportation.CreatedBy" class="form-control" />
+                    <ValidationMessage For="() => Transportation.CreatedBy" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Transportation.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Transportation.UpdatedBy" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/transportations">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Transportation? Transportation { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        Transportation ??= await context.Transportation.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Transportation is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateTransportation()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(Transportation!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!TransportationExists(Transportation!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/transportations");
+    }
+
+    private bool TransportationExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.Transportation.Any(e => e.Id == id);
+    }
+}

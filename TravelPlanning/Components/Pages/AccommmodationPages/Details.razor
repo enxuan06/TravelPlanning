@@ -1,0 +1,64 @@
+﻿@page "/accommmodations/details"
+@using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Domain
+@inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>Accommmodation</h2>
+    <hr />
+    @if (accommmodation is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@accommmodation.Name</dd>
+            <dt class="col-sm-2">Address</dt>
+            <dd class="col-sm-10">@accommmodation.Address</dd>
+            <dt class="col-sm-2">StartDate</dt>
+            <dd class="col-sm-10">@accommmodation.StartDate</dd>
+            <dt class="col-sm-2">EndDate</dt>
+            <dd class="col-sm-10">@accommmodation.EndDate</dd>
+            <dt class="col-sm-2">Type</dt>
+            <dd class="col-sm-10">@accommmodation.Type</dd>
+            <dt class="col-sm-2">PricePerNight</dt>
+            <dd class="col-sm-10">@accommmodation.PricePerNight</dd>
+            <dt class="col-sm-2">DateCreated</dt>
+            <dd class="col-sm-10">@accommmodation.DateCreated</dd>
+            <dt class="col-sm-2">DataUpdated</dt>
+            <dd class="col-sm-10">@accommmodation.DataUpdated</dd>
+            <dt class="col-sm-2">CreatedBy</dt>
+            <dd class="col-sm-10">@accommmodation.CreatedBy</dd>
+            <dt class="col-sm-2">UpdatedBy</dt>
+            <dd class="col-sm-10">@accommmodation.UpdatedBy</dd>
+        </dl>
+        <div>
+            <a href="@($"/accommmodations/edit?id={accommmodation.Id}")">Edit</a> |
+            <a href="@($"/accommmodations")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private Accommmodation? accommmodation;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        accommmodation = await context.Accommmodation.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (accommmodation is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

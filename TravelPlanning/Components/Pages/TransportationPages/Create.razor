@@ -1,0 +1,79 @@
+﻿@page "/transportations/create"
+@using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Domain
+@inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Transportation</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Transportation" OnValidSubmit="AddTransportation" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="type" class="form-label">Type:</label> 
+                <InputText id="type" @bind-Value="Transportation.Type" class="form-control" /> 
+                <ValidationMessage For="() => Transportation.Type" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="startlocation" class="form-label">StartLocation:</label> 
+                <InputText id="startlocation" @bind-Value="Transportation.StartLocation" class="form-control" /> 
+                <ValidationMessage For="() => Transportation.StartLocation" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="endlocation" class="form-label">EndLocation:</label> 
+                <InputText id="endlocation" @bind-Value="Transportation.EndLocation" class="form-control" /> 
+                <ValidationMessage For="() => Transportation.EndLocation" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="cost" class="form-label">Cost:</label> 
+                <InputNumber id="cost" @bind-Value="Transportation.Cost" class="form-control" /> 
+                <ValidationMessage For="() => Transportation.Cost" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datecreated" class="form-label">DateCreated:</label> 
+                <InputDate id="datecreated" @bind-Value="Transportation.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => Transportation.DateCreated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dataupdated" class="form-label">DataUpdated:</label> 
+                <InputDate id="dataupdated" @bind-Value="Transportation.DataUpdated" class="form-control" /> 
+                <ValidationMessage For="() => Transportation.DataUpdated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="createdby" class="form-label">CreatedBy:</label> 
+                <InputText id="createdby" @bind-Value="Transportation.CreatedBy" class="form-control" /> 
+                <ValidationMessage For="() => Transportation.CreatedBy" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="updatedby" class="form-label">UpdatedBy:</label> 
+                <InputText id="updatedby" @bind-Value="Transportation.UpdatedBy" class="form-control" /> 
+                <ValidationMessage For="() => Transportation.UpdatedBy" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/transportations">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Transportation Transportation { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddTransportation()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Transportation.Add(Transportation);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/transportations");
+    }
+}
