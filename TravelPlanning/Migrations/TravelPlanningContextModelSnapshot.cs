@@ -196,9 +196,11 @@ namespace TravelPlanning.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -251,7 +253,7 @@ namespace TravelPlanning.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "743d876b-f5ed-40a6-ac6e-90cddf86301a",
+                            ConcurrencyStamp = "c6dc11a8-f0ca-4ef1-92c2-8a5328d30cf4",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -259,9 +261,9 @@ namespace TravelPlanning.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENrdvK3+QXbn7RnzDCj+yCv6gtYRzvw9P2hFJ4CjuZw0fcYQeKhYEMiekCcWNY2isQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBkLS62F5skmalnbUXbg4yRMhIjxluntic42rYoYX8/P9RZ7oyz6nrZEdpNGbUlnRQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2aab6241-400c-41e5-b6ab-e2c3717e9b5d",
+                            SecurityStamp = "a10f26c5-2e48-4e46-bf6f-c08cb255161c",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -314,8 +316,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7410),
-                            DateCreated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7398),
+                            DataUpdated = new DateTime(2024, 12, 16, 0, 28, 53, 133, DateTimeKind.Local).AddTicks(9752),
+                            DateCreated = new DateTime(2024, 12, 16, 0, 28, 53, 133, DateTimeKind.Local).AddTicks(9730),
                             EndDate = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Park View Hotel",
                             PricePerNight = 80.50m,
@@ -327,8 +329,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7416),
-                            DateCreated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7415),
+                            DataUpdated = new DateTime(2024, 12, 16, 0, 28, 53, 133, DateTimeKind.Local).AddTicks(9757),
+                            DateCreated = new DateTime(2024, 12, 16, 0, 28, 53, 133, DateTimeKind.Local).AddTicks(9756),
                             EndDate = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "KSL Hotel & Resort",
                             PricePerNight = 80.50m,
@@ -379,8 +381,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7659),
-                            DateCreated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7658),
+                            DataUpdated = new DateTime(2024, 12, 16, 0, 28, 53, 134, DateTimeKind.Local).AddTicks(55),
+                            DateCreated = new DateTime(2024, 12, 16, 0, 28, 53, 134, DateTimeKind.Local).AddTicks(54),
                             Duration = 1,
                             Location = "Bugis",
                             Name = "Visit Sultan Mosque",
@@ -391,8 +393,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7662),
-                            DateCreated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7662),
+                            DataUpdated = new DateTime(2024, 12, 16, 0, 28, 53, 134, DateTimeKind.Local).AddTicks(59),
+                            DateCreated = new DateTime(2024, 12, 16, 0, 28, 53, 134, DateTimeKind.Local).AddTicks(58),
                             Duration = 2,
                             Location = "Juhor",
                             Name = "LEGOLAND Malaysia",
@@ -528,8 +530,8 @@ namespace TravelPlanning.Migrations
                             Id = 1,
                             Cost = 150.50m,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7795),
-                            DateCreated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7795),
+                            DataUpdated = new DateTime(2024, 12, 16, 0, 28, 53, 134, DateTimeKind.Local).AddTicks(196),
+                            DateCreated = new DateTime(2024, 12, 16, 0, 28, 53, 134, DateTimeKind.Local).AddTicks(195),
                             EndLocation = "Bugis",
                             StartLocation = "Tampines",
                             Type = "Boat",
@@ -540,8 +542,8 @@ namespace TravelPlanning.Migrations
                             Id = 2,
                             Cost = 60.50m,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7799),
-                            DateCreated = new DateTime(2024, 12, 2, 20, 27, 34, 314, DateTimeKind.Local).AddTicks(7799),
+                            DataUpdated = new DateTime(2024, 12, 16, 0, 28, 53, 134, DateTimeKind.Local).AddTicks(200),
+                            DateCreated = new DateTime(2024, 12, 16, 0, 28, 53, 134, DateTimeKind.Local).AddTicks(200),
                             EndLocation = "Juhor",
                             StartLocation = "Kuala Lumpur",
                             Type = "AirPlane",

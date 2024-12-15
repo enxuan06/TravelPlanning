@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Components.Authorization;
 using TravelPlanning.Components.Account;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContextFactory<TravelPlanningContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TravelPlanningContext") ?? throw new InvalidOperationException("Connection string 'TravelPlanningContext' not found.")));
+
+// Add DbContext with migration support
+builder.Services.AddDbContext<TravelPlanningContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TravelPlanningContext") ??
+        throw new InvalidOperationException("Connection string 'TravelPlanningContext' not found.")));
 
 builder.Services.AddQuickGridEntityFrameworkAdapter();
 
@@ -34,6 +37,7 @@ builder.Services.AddAuthentication(options =>
     .AddIdentityCookies();
 
 builder.Services.AddIdentityCore<TravelPlanningUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<TravelPlanningContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
@@ -41,6 +45,12 @@ builder.Services.AddIdentityCore<TravelPlanningUser>(options => options.SignIn.R
 builder.Services.AddSingleton<IEmailSender<TravelPlanningUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<TravelPlanningContext>();
+    dbContext.Database.Migrate(); 
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
