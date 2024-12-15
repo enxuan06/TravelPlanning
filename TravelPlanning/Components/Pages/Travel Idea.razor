@@ -6,133 +6,119 @@
 <h5>By Country:</h5>
 
 <style>
-    .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1rem;
-    }
-
-    .card {
-        border: none;
-        overflow: hidden;
-        position: relative;
-    }
-
     .card-img-top {
-        width: 100%;
         height: 300px;
         object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .card:hover .card-img-top {
-        transform: scale(1.05);
-    }
-
-    .card-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .card:hover .card-overlay {
-        opacity: 1;
-    }
-
-    .card-title {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 60%;
     }
 </style>
 
-<div class="gallery">
-    <div class="card">
-        <img src="/images/japan.jpg" class="card-img-top" alt="Japan">
-        <div class="card-overlay">
-            <div>
-                <h5 class="card-title">Japan</h5>
-                <p class="card-text">Discover the beauty of Japan!</p>
+<div class="container mt-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100">
+                <a href="/Explore/Japan" style="text-decoration: none;">
+                    <img src="/images/japan.jpg" class="card-img-top" alt="Japan" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Japan</h5>
+                        <p class="card-text">Discover the beauty of Japan!</p>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <img src="/images/korea.png" class="card-img-top" alt="Korea">
-        <div class="card-overlay">
-            <div>
-                <h5 class="card-title">Korea</h5>
-                <p class="card-text">Ride the Korean wave!</p>
+        <div class="col">
+            <div class="card h-100">
+                <a href="/Planning/Korea" style="text-decoration: none;">
+                    <img src="/images/korea.png" class="card-img-top" alt="Korea" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Korea</h5>
+                        <p class="card-text">Ride the Korean wave!</p>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <img src="/images/london.jpg" class="card-img-top" alt="London">
-        <div class="card-overlay">
-            <div>
-                <h5 class="card-title">London</h5>
-                <p class="card-text">Let's do London.</p>
+        <div class="col">
+            <div class="card h-100">
+                <a href="/Planning/London" style="text-decoration: none;">
+                    <img src="/images/london.jpg" class="card-img-top" alt="London" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">London</h5>
+                        <p class="card-text">Let's do London.</p>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <img src="/images/bali.jpg" class="card-img-top" alt="Bali">
-        <div class="card-overlay">
-            <div>
-                <h5 class="card-title">Bali</h5>
-                <p class="card-text"> Your Gateway to Paradise.</p>
+        <div class="col">
+            <div class="card h-100">
+                <a href="/Planning/Bali" style="text-decoration: none;">
+                    <img src="/images/bali.jpg" class="card-img-top" alt="Bali" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Bali</h5>
+                        <p class="card-text">Bali: Your Gateway to Paradise.</p>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <img src="/images/italy.webp" class="card-img-top" alt="Italy">
-        <div class="card-overlay">
-            <div>
-                <h5 class="card-title">Italy</h5>
-                <p class="card-text">Italy. Open to Wonder.</p>
+        <div class="col">
+            <div class="card h-100">
+                <a href="/Planning/Italy" style="text-decoration: none;">
+                    <img src="/images/italy.webp" class="card-img-top" alt="Italy" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Italy</h5>
+                        <p class="card-text">Italy. Open to Wonder.</p>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <img src="/images/thailand.webp" class="card-img-top" alt="Thailand">
-        <div class="card-overlay">
-            <div>
-                <h5 class="card-title">Thailand</h5>
-                <p class="card-text">Amazing Thailand: Your Stories Never End.</p>
+        <div class="col">
+            <div class="card h-100">
+                <a href="/Create?location =Thailand" style="text-decoration: none;">
+                    <img src="/images/thailand.webp" class="card-img-top" alt="Thailand" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Thailand</h5>
+                        <p class="card-text">Amazing Thailand: Your Stories Never End.</p>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <img src="/images/norway.webp" class="card-img-top" alt="Norway">
-        <div class="card-overlay">
-            <div>
-                <h5 class="card-title">Norway</h5>
-                <p class="card-text">Powered By Nature</p>
+        <div class="col">
+            <div class="card h-100">
+                <a href="/Create?location =Australia" style="text-decoration: none;">
+                    <img src="/images/australia.jpg" class="card-img-top" alt="Australia" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Australia</h5>
+                        <p class="card-text">Come and Say G'day</p>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <img src="/images/australia.jpg" class="card-img-top" alt="australia">
-        <div class="card-overlay">
-            <div>
-                <h5 class="card-title">Australia</h5>
-                <p class="card-text">Come and Say G'day</p>
+        <div class="col">
+            <div class="card h-100">
+                <a href="/Create?location =Taiwan" style="text-decoration: none;">
+                    <img src="/images/taiwan.jpg" class="card-img-top" alt="Taiwan" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Taiwan</h5>
+                        <p class="card-text">Waves of Wonder</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100">
+                <a href="/Create?location =Norway" style="text-decoration: none;">
+                    <img src="/images/norway.webp" class="card-img-top" alt="Norway" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Norway</h5>
+                        <p class="card-text">Powered By Nature</p>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
