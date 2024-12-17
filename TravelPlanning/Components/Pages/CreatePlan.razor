@@ -1,23 +1,50 @@
-﻿ @page "/Create"
+﻿@page "/Create"
+@using TravelPlanning.Domain
 
 <PageTitle>Create Itinerary</PageTitle>
+
+@code {
+    private Destination tripDetails = new Destination();
+    private void SaveTrip()
+    {
+        NavigationManager.NavigateTo($"/Create/Trip?destination={tripDetails.Country}&startDate={tripDetails.StartDate}&endDate={tripDetails.EndDate}");
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+}
+
 <div class="text-center">
-    <h2> Plan your new trip </h2>
+    <h2>Plan your new trip</h2>
 </div>
-<form>
-    <div class="form-group">
-        <label for="Destination">Heading to?</label>
-        <input class="form-control" type="text" placeholder="Location">
+
+<div class="card" style="width: 40rem; height: auto;">
+    <div class="card-body">
+        <h5 class="card-title">Add new trip</h5>
+        <p class="card-text">Where are you heading to? Enter your trip details and start planning your trip!</p>
+
+        <form>
+            <div class="form-group">
+                <label for="Destination">Heading to?</label>
+                <input @bind="tripDetails.Country" class="form-control" type="text" placeholder="Location">
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6 col-lg-5 mb-3 mb-sm-0">
+                    <label for="startDate">Start Date</label>
+                    <input @bind="tripDetails.StartDate" id="startDate" class="form-control" type="date" />
+                </div>
+                <div class="col-sm-6 col-lg-5">
+                    <label for="endDate">End Date</label>
+                    <input @bind="tripDetails.EndDate" id="endDate" class="form-control" type="date" />
+                </div>
+            </div>
+            <br />
+            <div class="d-grid col-md-4 d-md-block">
+                <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                <a href="/Create/Trip"class ="btn btn-primary">Save</a>
+            </div>
+        </form>
     </div>
-    <br />
-    <div class="row">
-        <div class="col-sm-6 col-lg-5 mb-3 mb-sm-0">
-            <label for="startDate">Start Date</label>
-            <input id="startDate" class="form-control" type="date" />
-        </div>
-        <div class="col-sm-6 col-lg-5">
-            <label for="endDate">End Date</label>
-            <input id="endDate" class="form-control" type="date" />
-        </div>
-    </div>
-</form>
+</div>
+
