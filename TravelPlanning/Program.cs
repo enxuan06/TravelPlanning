@@ -9,9 +9,10 @@ using TravelPlanning.Components.Account;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add DbContext with migration support
-builder.Services.AddDbContext<TravelPlanningContext>(options =>
+builder.Services.AddDbContextFactory<TravelPlanningContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TravelPlanningContext") ??
         throw new InvalidOperationException("Connection string 'TravelPlanningContext' not found.")));
+
 
 builder.Services.AddQuickGridEntityFrameworkAdapter();
 

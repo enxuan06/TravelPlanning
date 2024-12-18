@@ -1,0 +1,110 @@
+﻿@page "/Create/Trip"
+
+<a href="/Create" class="text-decoration-none text-primary">
+    <span>&larr;</span> Back
+</a>
+
+<h3>Create Trip</h3>
+<br />
+<h5>Commonly Used</h5>
+<button type="button" class="button selection" data-bs-toggle="modal" data-bs-target="#activitiesModal"> 🕹️ Activities </button>
+<button type="button" class="button selection" data-bs-toggle="modal" data-bs-target="#exampleModal"> 🚃 Transportation </button>
+<button type="button" class="button selection" data-bs-toggle="modal" data-bs-target="#accomodationModal">  🏨 Accommodation </button>
+
+
+<!-- Modal (activities)-->
+<div class="modal fade" id="activitiesModal" tabindex="-1" aria-labelledby="activitiesModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Type of activities</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="Type"><b>Name: </b></label>
+                    <input type="text" placeholder="Activity name" name="activity" required>
+                    <br />
+                    <label for="date"><b>Location: </b></label>
+                    <input type="text" placeholder="Venu" name="location">
+                    <br />
+                    <label for="startLocation"><b>Type: </b></label>
+                    <input type="text" placeholder="Type" name="Type">
+                    <br />
+                    <label for="EndLocation"><b>Duration: </b></label>
+                    <input type="text" placeholder="Time" name="Duration"
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal (transport)-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Type of transportation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="Type"><b>Transportation: </b></label>
+                    <input type="text" placeholder="Mode" name="Type" required>
+                    <br />
+                    <label for="date"><b>Date: </b></label>
+                    <input type="datetime-local" placeholder="Date" name="Date">
+                    <br />
+                    <label for="startLocation"><b>Location: </b></label>
+                    <input type="text" placeholder="location" name="Depart">
+                    <br />
+                    <label for="EndLocation"><b>Destination: </b></label>
+                    <input type="text" placeholder="Destination" name="Arrival">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal (accomodation)-->
+<div class="modal fade" id="accomodationModal" tabindex="-1" aria-labelledby="accomodationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="accomodationModalLabel">Accommodation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label for="Type"><b>Name: </b></label>
+                    <input type="text" placeholder="Accomodation" name="accomodation" required>
+                    <br />
+                    <label for="date"><b>Address: </b></label>
+                    <input type="text" placeholder="location" name="address">
+                    <br />
+                    <label for="startLocation"><b>Type: </b></label>
+                    <input type="text" placeholder="Type" name="Type">
+                    <br />
+                    <label for="EndLocation"><b>Check-in Date: </b></label>
+                    <input type="datetime-local" placeholder="Check in" name="start"
+                    <br />
+                    <label for="EndLocation"><b>Check-out Date: </b></label>
+                    <input type="datetime-local" placeholder="Check out" name="end"
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
