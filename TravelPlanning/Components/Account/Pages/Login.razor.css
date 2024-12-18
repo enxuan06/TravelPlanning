@@ -13,6 +13,7 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+
     /* Overlay to improve readability */
     .row::before {
         content: "";
@@ -24,6 +25,7 @@
         background-color: rgba(255, 255, 255, 0.7); /* Translucent white overlay */
         z-index: 1;
     }
+
 /* Center the columns */
 .col-md-4, .col-md-6 {
     display: flex;
@@ -34,6 +36,7 @@
     position: relative;
     z-index: 2; /* Ensure content is above the overlay */
 }
+
 /* Sections with background */
 section {
     width: 100%;
@@ -44,6 +47,7 @@ section {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 /* Center form elements */
 .form-floating {
     width: 100%;
@@ -52,15 +56,18 @@ section {
 .form-control {
     width: 100%;
 }
+
 /* Center submit button */
 button[type="submit"] {
     width: 100%;
     margin-top: 15px;
 }
+
 /* Center links */
 p {
     text-align: center;
 }
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .row {
