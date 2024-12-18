@@ -8,11 +8,7 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Index</h1>
 
-<p>
-    <a href="itineraryplans/create">Create New</a>
-</p>
 
 <QuickGrid Class="table" Items="context.ItineraryPlan">
     <PropertyColumn Property="itineraryplan => itineraryplan.Activities" />
@@ -31,6 +27,9 @@
     </TemplateColumn>
 </QuickGrid>
 
+<p>
+    <a href="itineraryplans/create" button class="button create">+ New Trip</a>
+</p>
 @code {
     private TravelPlanningContext context = default!;
 
