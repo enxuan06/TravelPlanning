@@ -9,3 +9,4 @@ namespace TravelPlanning.Data
         public string LastName { get; set; }
     }
 }
+ 
