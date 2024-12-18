@@ -26,17 +26,13 @@ builder.Services.AddScoped<IdentityRedirectManager>();
 
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = IdentityConstants.ApplicationScheme;
-    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-})
-    .AddIdentityCookies();
 
-builder.Services.AddIdentityCore<TravelPlanningUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+builder.Services.AddIdentity<TravelPlanningUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<TravelPlanningContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
+
 
 builder.Services.AddSingleton<IEmailSender<TravelPlanningUser>, IdentityNoOpEmailSender>();
 
@@ -59,6 +55,6 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-app.MapAdditionalIdentityEndpoints(); ;
+app.MapAdditionalIdentityEndpoints(); 
 
 app.Run();
