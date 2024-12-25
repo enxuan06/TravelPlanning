@@ -4,79 +4,100 @@
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Create</PageTitle>
+<PageTitle>Create Destination</PageTitle>
 
-<h1>Create</h1>
-
-<h2>Destination</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <EditForm method="post" Model="Destination" OnValidSubmit="AddDestination" FormName="create" Enhance>
-            <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert"/>
-            <div class="mb-3">
-                <label for="name" class="form-label">Name:</label> 
-                <InputText id="name" @bind-Value="Destination.Name" class="form-control" /> 
-                <ValidationMessage For="() => Destination.Name" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="country" class="form-label">Country:</label> 
-                <InputText id="country" @bind-Value="Destination.Country" class="form-control" /> 
-                <ValidationMessage For="() => Destination.Country" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="startdate" class="form-label">StartDate:</label> 
-                <InputDate id="startdate" @bind-Value="Destination.StartDate" class="form-control" /> 
-                <ValidationMessage For="() => Destination.StartDate" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="enddate" class="form-label">EndDate:</label> 
-                <InputDate id="enddate" @bind-Value="Destination.EndDate" class="form-control" /> 
-                <ValidationMessage For="() => Destination.EndDate" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="activityid" class="form-label">ActivityId:</label> 
-                <InputNumber id="activityid" @bind-Value="Destination.ActivityId" class="form-control" /> 
-                <ValidationMessage For="() => Destination.ActivityId" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="transportid" class="form-label">TransportId:</label> 
-                <InputNumber id="transportid" @bind-Value="Destination.TransportId" class="form-control" /> 
-                <ValidationMessage For="() => Destination.TransportId" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="accomid" class="form-label">AccomId:</label> 
-                <InputNumber id="accomid" @bind-Value="Destination.AccomId" class="form-control" /> 
-                <ValidationMessage For="() => Destination.AccomId" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="datecreated" class="form-label">DateCreated:</label> 
-                <InputDate id="datecreated" @bind-Value="Destination.DateCreated" class="form-control" /> 
-                <ValidationMessage For="() => Destination.DateCreated" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="dataupdated" class="form-label">DataUpdated:</label> 
-                <InputDate id="dataupdated" @bind-Value="Destination.DataUpdated" class="form-control" /> 
-                <ValidationMessage For="() => Destination.DataUpdated" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="createdby" class="form-label">CreatedBy:</label> 
-                <InputText id="createdby" @bind-Value="Destination.CreatedBy" class="form-control" /> 
-                <ValidationMessage For="() => Destination.CreatedBy" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="updatedby" class="form-label">UpdatedBy:</label> 
-                <InputText id="updatedby" @bind-Value="Destination.UpdatedBy" class="form-control" /> 
-                <ValidationMessage For="() => Destination.UpdatedBy" class="text-danger" /> 
-            </div>        
-            <button type="submit" class="btn btn-primary">Create</button>
-        </EditForm>
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="display-4 text-primary">Add a New Destination</h1>
+        <p class="lead text-muted">Fill in the details below to create a new destination entry.</p>
     </div>
-</div>
 
-<div>
-    <a href="/destinations">Back to List</a>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center text-success mb-4">Destination Details</h2>
+                    <EditForm method="post" Model="Destination" OnValidSubmit="AddDestination" FormName="create" Enhance>
+                        <DataAnnotationsValidator />
+                        <ValidationSummary class="text-danger" role="alert" />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Name:</label>
+                                <InputText id="name" @bind-Value="Destination.Name" class="form-control" placeholder="E.g., Tokyo" />
+                                <ValidationMessage For="() => Destination.Name" class="text-danger" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="country" class="form-label">Country:</label>
+                                <InputText id="country" @bind-Value="Destination.Country" class="form-control" placeholder="E.g., Japan" />
+                                <ValidationMessage For="() => Destination.Country" class="text-danger" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="startdate" class="form-label">Start Date:</label>
+                                <InputDate id="startdate" @bind-Value="Destination.StartDate" class="form-control" />
+                                <ValidationMessage For="() => Destination.StartDate" class="text-danger" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="enddate" class="form-label">End Date:</label>
+                                <InputDate id="enddate" @bind-Value="Destination.EndDate" class="form-control" />
+                                <ValidationMessage For="() => Destination.EndDate" class="text-danger" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="activityid" class="form-label">Activity ID:</label>
+                                <InputNumber id="activityid" @bind-Value="Destination.ActivityId" class="form-control" />
+                                <ValidationMessage For="() => Destination.ActivityId" class="text-danger" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="transportid" class="form-label">Transport ID:</label>
+                                <InputNumber id="transportid" @bind-Value="Destination.TransportId" class="form-control" />
+                                <ValidationMessage For="() => Destination.TransportId" class="text-danger" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="accomid" class="form-label">Accommodation ID:</label>
+                                <InputNumber id="accomid" @bind-Value="Destination.AccomId" class="form-control" />
+                                <ValidationMessage For="() => Destination.AccomId" class="text-danger" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="createdby" class="form-label">Created By:</label>
+                                <InputText id="createdby" @bind-Value="Destination.CreatedBy" class="form-control" />
+                                <ValidationMessage For="() => Destination.CreatedBy" class="text-danger" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="datecreated" class="form-label">Date Created:</label>
+                                <InputDate id="datecreated" @bind-Value="Destination.DateCreated" class="form-control" />
+                                <ValidationMessage For="() => Destination.DateCreated" class="text-danger" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="updatedby" class="form-label">Updated By:</label>
+                                <InputText id="updatedby" @bind-Value="Destination.UpdatedBy" class="form-control" />
+                                <ValidationMessage For="() => Destination.UpdatedBy" class="text-danger" />
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-success btn-lg">Create Destination</button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/destinations" class="btn btn-outline-secondary">Back to List</a>
+    </div>
 </div>
 
 @code {
