@@ -27,11 +27,80 @@
     <PropertyColumn Property="accommmodation => accommmodation.UpdatedBy" />
 
     <TemplateColumn Context="accommmodation">
-        <a href="@($"accommmodations/edit?id={accommmodation.Id}")">Edit</a> |
-        <a href="@($"accommmodations/details?id={accommmodation.Id}")">Details</a> |
-        <a href="@($"accommmodations/delete?id={accommmodation.Id}")">Delete</a>
+       <div class="action-buttons">
+            <a href="@($"accommmodations/edit?id={accommmodation.Id}")" class="btn btn-secondary btn-sm">Edit</a> |
+            <a href="@($"accommmodations/details?id={accommmodation.Id}")" class="btn btn-info btn-sm">Details</a> |
+            <a href="@($"accommmodations/delete?id={accommmodation.Id}")" class="btn btn-danger btn-sm">Delete</a>
+        </div>
     </TemplateColumn>
 </QuickGrid>
+
+<style>
+    .page-title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-family: Arial, sans-serif;
+        color: #2c3e50;
+    }
+
+    .action-links {
+        text-align: right;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 14px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-left: 5px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        color: #fff;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-bordered th, .table-bordered td {
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .action-buttons a {
+        margin-right: 5px;
+    }
+</style>
 
 @code {
     private TravelPlanningContext context = default!;
