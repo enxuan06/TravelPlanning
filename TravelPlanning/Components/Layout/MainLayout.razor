@@ -1,4 +1,12 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.AspNetCore.Identity
+@using TravelPlanning.Data
+
+@inject NavigationManager NavigationManager
+@inject SignInManager<TravelPlanningUser> SignInManager
+@inject UserManager<TravelPlanningUser> UserManager
+@implements IAsyncDisposable
 
 <div class="page">
     
@@ -22,5 +30,50 @@
 </div>
 
     
+@code {
+    private HubConnection? hubConnection;
 
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/emailConfirmationHub"))
+            .WithAutomaticReconnect()
+            .Build();
+
+        hubConnection.On<string>("EmailConfirmed", async (email) =>
+        {
+            try
+            {
+                var user = await UserManager.FindByEmailAsync(email);
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false);
+                    NavigationManager.NavigateTo("/");
+                    StateHasChanged();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error handling email confirmation: {ex.Message}");
+            }
+        });
+
+        try
+        {
+            await hubConnection.StartAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error starting SignalR connection: {ex.Message}");
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}
 

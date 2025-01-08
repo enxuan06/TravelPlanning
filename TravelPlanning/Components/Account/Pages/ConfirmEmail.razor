@@ -4,17 +4,22 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 @using TravelPlanning.Data
+@using Microsoft.AspNetCore.SignalR.Client
 
 @inject UserManager<TravelPlanningUser> UserManager
 @inject IdentityRedirectManager RedirectManager
+@inject NavigationManager NavigationManager
+@inject IConfiguration Configuration
 
 <PageTitle>Confirm email</PageTitle>
 
 <h1>Confirm email</h1>
+
 <StatusMessage Message="@statusMessage" />
 
 @code {
     private string? statusMessage;
+    private HubConnection? hubConnection;
 
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
@@ -29,20 +34,61 @@
     {
         if (UserId is null || Code is null)
         {
-            RedirectManager.RedirectTo("");
+            statusMessage = "Error: Invalid email confirmation link.";
+            return;
         }
 
-        var user = await UserManager.FindByIdAsync(UserId);
-        if (user is null)
+
+        try
         {
-            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-            statusMessage = $"Error loading user with ID {UserId}";
+            var user = await UserManager.FindByIdAsync(UserId);
+            if (user == null)
+            {
+                statusMessage = "Error: Unable to find user.";
+                return;
+            }
+
+            Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
+            var result = await UserManager.ConfirmEmailAsync(user, Code);
+
+            if (result.Succeeded)
+            {
+                // Connect to SignalR hub
+                hubConnection = new HubConnectionBuilder()
+                    .WithUrl(NavigationManager.ToAbsoluteUri("/emailConfirmationHub"))
+                    .WithAutomaticReconnect()
+                    .Build();
+
+                try
+                {
+                    await hubConnection.StartAsync();
+                    await hubConnection.SendAsync("ConfirmationComplete", user.Email);
+                    statusMessage = "Thank you for confirming your email. You can now close this window.";
+                }
+                catch (Exception ex)
+                {
+                    // Log the SignalR error but still show success to user
+                    Console.WriteLine($"SignalR Error: {ex.Message}");
+                    statusMessage = "Email confirmed successfully. Please return to the application to continue.";
+                }
+            }
+            else
+            {
+                statusMessage = "Error confirming your email.";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
-            var result = await UserManager.ConfirmEmailAsync(user, code);
-            statusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            statusMessage = "An error occurred while confirming your email.";
+            Console.WriteLine($"Confirmation Error: {ex.Message}");
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
         }
     }
 }

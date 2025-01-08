@@ -5,6 +5,9 @@ using TravelPlanning.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using TravelPlanning.Components.Account;
+using TravelPlanning.Services;
+using TravelPlanning.Hubs;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<TravelPlanningContext>(options =>
@@ -40,9 +43,20 @@ builder.Services.AddIdentityCore<TravelPlanningUser>(options => options.SignIn.R
     .AddDefaultTokenProviders();
 
 
-builder.Services.AddSingleton<IEmailSender<TravelPlanningUser>, IdentityNoOpEmailSender>();
+builder.Services.AddSignalR();
 
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        ["/emailConfirmationHub"]);
+});
+
+
+builder.Services.AddScoped<IEmailSender<TravelPlanningUser>, GmailEmailSender>();
 var app = builder.Build();
+
+app.UseResponseCompression();
+app.MapHub<EmailConfirmationHub>("/emailConfirmationHub");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
