@@ -30,7 +30,7 @@
                     <DataAnnotationsValidator />
                     <ValidationSummary class="text-danger" role="alert" />
                     <div class=" col-md 6 mb-3">
-                        <label for="activities" class="form-label">Activities:</label>
+                        <label for="activities" class="form-label">Acitivites:</label>
                         <InputText id="activities" @bind-Value="ItineraryPlan.Activities" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.Activities" class="text-danger" />
                     </div>
@@ -40,31 +40,31 @@
                         <ValidationMessage For="() => ItineraryPlan.Budget" class="text-danger" />
                     </div>
                     <div class="col-md 6 mb-3">
-                        <label for="userid" class="form-label">UserId:</label>
+                        <label for="userid" class="form-label">User:</label>
                         <InputNumber id="userid" @bind-Value="ItineraryPlan.UserId" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.UserId" class="text-danger" />
                     </div>
                     <div class="col-md 6 mb-3">
-                        <label for="destinationid" class="form-label">DestinationId:</label>
+                        <label for="destinationid" class="form-label">Target Destination:</label>
                         <InputNumber id="destinationid" @bind-Value="ItineraryPlan.DestinationId" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.DestinationId" class="text-danger" />
                     </div>
-                    <div class="col-md 6 mb-3">
-                        <label for="datecreated" class="form-label">DateCreated:</label>
+                    <div class="col-md 6 mb-3" hidden>
+                        <label for="datecreated" class="form-label">Date Created:</label>
                         <InputDate id="datecreated" @bind-Value="ItineraryPlan.DateCreated" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.DateCreated" class="text-danger" />
                     </div>
-                    <div class="col-md 6 mb-3">
-                        <label for="dataupdated" class="form-label">DataUpdated:</label>
+                    <div class="col-md 6 mb-3" hidden>
+                        <label for="dataupdated" class="form-label">Data Updated:</label>
                         <InputDate id="dataupdated" @bind-Value="ItineraryPlan.DataUpdated" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.DataUpdated" class="text-danger" />
                     </div>
-                    <div class="col-md 6 mb-3">
-                        <label for="createdby" class="form-label">CreatedBy:</label>
+                    <div class="col-md 6 mb-3" >
+                        <label for="createdby" class="form-label">Assgined User:</label>
                         <InputText id="createdby" @bind-Value="ItineraryPlan.CreatedBy" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.CreatedBy" class="text-danger" />
                     </div>
-                    <div class="col-md 6 mb-3">
+                    <div class="col-md 6 mb-3" >
                         <label for="updatedby" class="form-label">UpdatedBy:</label>
                         <InputText id="updatedby" @bind-Value="ItineraryPlan.UpdatedBy" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.UpdatedBy" class="text-danger" />
@@ -74,11 +74,12 @@
             </div>
         </div>
     </div>
+    <div class="text-center mt-4">
+        <a href="/itineraryplans" class="btn btn-outline-secondary">Cancel</a>
+    </div>
 </div>
 
-<div>
-    <a href="/itineraryplans">Back to List</a>
-</div>
+
 
 @code {
     [SupplyParameterFromForm]
@@ -88,6 +89,11 @@
     private async Task AddItineraryPlan()
     {
         using var context = DbFactory.CreateDbContext();
+
+
+        ItineraryPlan.DateCreated = DateTime.Now;
+        ItineraryPlan.DataUpdated = DateTime.Now;
+
         context.ItineraryPlan.Add(ItineraryPlan);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/itineraryplans");

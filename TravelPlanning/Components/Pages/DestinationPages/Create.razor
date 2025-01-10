@@ -74,12 +74,12 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden>
                                 <label for="datecreated" class="form-label">Date Created:</label>
                                 <InputDate id="datecreated" @bind-Value="Destination.DateCreated" class="form-control" />
                                 <ValidationMessage For="() => Destination.DateCreated" class="text-danger" />
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden >
                                 <label for="updatedby" class="form-label">Updated By:</label>
                                 <InputText id="updatedby" @bind-Value="Destination.UpdatedBy" class="form-control" />
                                 <ValidationMessage For="() => Destination.UpdatedBy" class="text-danger" />
@@ -108,6 +108,10 @@
     private async Task AddDestination()
     {
         using var context = DbFactory.CreateDbContext();
+
+        Destination.DateCreated = DateTime.Now;
+        Destination.DataUpdated = DateTime.Now;
+
         context.Destination.Add(Destination);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/destinations");

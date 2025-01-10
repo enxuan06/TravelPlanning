@@ -42,12 +42,12 @@ else
                     <InputNumber id="duration" @bind-Value="Activity.Duration" class="form-control" />
                     <ValidationMessage For="() => Activity.Duration" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="datecreated" class="form-label">DateCreated:</label>
                     <InputDate id="datecreated" @bind-Value="Activity.DateCreated" class="form-control" />
                     <ValidationMessage For="() => Activity.DateCreated" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="dataupdated" class="form-label">DataUpdated:</label>
                     <InputDate id="dataupdated" @bind-Value="Activity.DataUpdated" class="form-control" />
                     <ValidationMessage For="() => Activity.DataUpdated" class="text-danger" />
@@ -95,6 +95,9 @@ else
     private async Task UpdateActivity()
     {
         using var context = DbFactory.CreateDbContext();
+
+        Activity.DataUpdated = DateTime.Now;
+
         context.Attach(Activity!).State = EntityState.Modified;
 
         try

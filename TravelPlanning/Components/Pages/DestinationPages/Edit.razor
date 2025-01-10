@@ -57,12 +57,12 @@ else
                     <InputNumber id="accomid" @bind-Value="Destination.AccomId" class="form-control" />
                     <ValidationMessage For="() => Destination.AccomId" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="datecreated" class="form-label">DateCreated:</label>
                     <InputDate id="datecreated" @bind-Value="Destination.DateCreated" class="form-control" />
                     <ValidationMessage For="() => Destination.DateCreated" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="dataupdated" class="form-label">DataUpdated:</label>
                     <InputDate id="dataupdated" @bind-Value="Destination.DataUpdated" class="form-control" />
                     <ValidationMessage For="() => Destination.DataUpdated" class="text-danger" />
@@ -110,6 +110,9 @@ else
     private async Task UpdateDestination()
     {
         using var context = DbFactory.CreateDbContext();
+
+        Destination.DataUpdated = DateTime.Now;
+
         context.Attach(Destination!).State = EntityState.Modified;
 
         try

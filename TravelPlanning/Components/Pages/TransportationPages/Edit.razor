@@ -42,12 +42,12 @@ else
                     <InputNumber id="cost" @bind-Value="Transportation.Cost" class="form-control" />
                     <ValidationMessage For="() => Transportation.Cost" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="datecreated" class="form-label">DateCreated:</label>
                     <InputDate id="datecreated" @bind-Value="Transportation.DateCreated" class="form-control" />
                     <ValidationMessage For="() => Transportation.DateCreated" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="dataupdated" class="form-label">DataUpdated:</label>
                     <InputDate id="dataupdated" @bind-Value="Transportation.DataUpdated" class="form-control" />
                     <ValidationMessage For="() => Transportation.DataUpdated" class="text-danger" />
@@ -95,6 +95,9 @@ else
     private async Task UpdateTransportation()
     {
         using var context = DbFactory.CreateDbContext();
+
+        Transportation.DataUpdated = DateTime.Now;
+
         context.Attach(Transportation!).State = EntityState.Modified;
 
         try

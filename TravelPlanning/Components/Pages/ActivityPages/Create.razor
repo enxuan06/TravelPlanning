@@ -10,7 +10,7 @@
 
 <div class="container mt-5">
     <div class="text-center mb-4">
-        <h1 class="display-4 text-primary">Add a New Accommodation</h1>
+        <h1 class="display-4 text-primary">Add a New Activity</h1>
         <p class="lead text-muted">Fill in the details below to create a new activities entry.</p>
     </div>
 
@@ -50,12 +50,12 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden>
                                 <label for="datecreated" class="form-label">DateCreated:</label>
                             <InputDate id="datecreated" @bind-Value="Activity.DateCreated" class="form-control" />
                             <ValidationMessage For="() => Activity.DateCreated" class="text-danger" />
                         </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden>
                                 <label for="dataupdated" class="form-label">DataUpdated:</label>
                             <InputDate id="dataupdated" @bind-Value="Activity.DataUpdated" class="form-control" />
                             <ValidationMessage For="() => Activity.DataUpdated" class="text-danger" />
@@ -83,11 +83,13 @@
             </div>
          </div>
    </div>
+    <div class="text-center mt-4">
+        <a href="/activities" class="btn btn-outline-secondary">Back to List</a>
+    </div>
 </div>
 
-<div>
-    <a href="/activities">Back to List</a>
-</div>
+
+
 
 @code {
     [SupplyParameterFromForm]
@@ -97,6 +99,10 @@
     private async Task AddActivity()
     {
         using var context = DbFactory.CreateDbContext();
+
+        Activity.DateCreated = DateTime.Now;
+        Activity.DataUpdated = DateTime.Now;
+
         context.Activity.Add(Activity);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/activities");

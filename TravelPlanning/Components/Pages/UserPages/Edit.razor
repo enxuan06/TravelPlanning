@@ -32,12 +32,12 @@ else
                     <InputText id="emailaddress" @bind-Value="User.EmailAddress" class="form-control" />
                     <ValidationMessage For="() => User.EmailAddress" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="datecreated" class="form-label">DateCreated:</label>
                     <InputDate id="datecreated" @bind-Value="User.DateCreated" class="form-control" />
                     <ValidationMessage For="() => User.DateCreated" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="dataupdated" class="form-label">DataUpdated:</label>
                     <InputDate id="dataupdated" @bind-Value="User.DataUpdated" class="form-control" />
                     <ValidationMessage For="() => User.DataUpdated" class="text-danger" />
@@ -85,6 +85,9 @@ else
     private async Task UpdateUser()
     {
         using var context = DbFactory.CreateDbContext();
+
+        User.DataUpdated = DateTime.Now;
+
         context.Attach(User!).State = EntityState.Modified;
 
         try

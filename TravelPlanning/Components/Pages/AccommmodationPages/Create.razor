@@ -64,12 +64,12 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden >
                                 <label for="datecreated" class="form-label">DateCreated:</label>
                             <InputDate id="datecreated" @bind-Value="Accommmodation.DateCreated" class="form-control" />
                             <ValidationMessage For="() => Accommmodation.DateCreated" class="text-danger" />
                         </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden>
                                 <label for="dataupdated" class="form-label">DataUpdated:</label>
                             <InputDate id="dataupdated" @bind-Value="Accommmodation.DataUpdated" class="form-control" />
                             <ValidationMessage For="() => Accommmodation.DataUpdated" class="text-danger" />
@@ -94,13 +94,14 @@
                     </EditForm>
                 </div>
             </div>
+            <div class="text-center mt-4">
+                <a href="/accommmodations" class="btn btn-outline-secondary">Back to List</a>
+            </div>
           </div>
     </div>
 </div>
 
-<div>
-    <a href="/accommmodations">Back to List</a>
-</div>
+
 
 @code {
     [SupplyParameterFromForm]
@@ -110,6 +111,10 @@
     private async Task AddAccommmodation()
     {
         using var context = DbFactory.CreateDbContext();
+
+        Accommmodation.DateCreated = DateTime.Now;
+        Accommmodation.DataUpdated = DateTime.Now;
+
         context.Accommmodation.Add(Accommmodation);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/accommmodations");

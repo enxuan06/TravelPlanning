@@ -47,12 +47,12 @@ else
                     <InputDate id="datecreated" @bind-Value="ItineraryPlan.DateCreated" class="form-control" />
                     <ValidationMessage For="() => ItineraryPlan.DateCreated" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="dataupdated" class="form-label">DataUpdated:</label>
                     <InputDate id="dataupdated" @bind-Value="ItineraryPlan.DataUpdated" class="form-control" />
                     <ValidationMessage For="() => ItineraryPlan.DataUpdated" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="createdby" class="form-label">CreatedBy:</label>
                     <InputText id="createdby" @bind-Value="ItineraryPlan.CreatedBy" class="form-control" />
                     <ValidationMessage For="() => ItineraryPlan.CreatedBy" class="text-danger" />
@@ -95,6 +95,8 @@ else
     private async Task UpdateItineraryPlan()
     {
         using var context = DbFactory.CreateDbContext();
+
+        ItineraryPlan.DataUpdated = DateTime.Now;
         context.Attach(ItineraryPlan!).State = EntityState.Modified;
 
         try

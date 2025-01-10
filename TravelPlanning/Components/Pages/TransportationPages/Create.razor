@@ -41,8 +41,8 @@
                             <InputNumber id="cost" @bind-Value="Transportation.Cost" class="form-control" />
                             <ValidationMessage For="() => Transportation.Cost" class="text-danger" />
                         </div>
-                        <div class="mb-3">
-                            <label for="datecreated" class="form-label">Date Created:</label>
+                        <div class="mb-3" hidden >
+                            <label for="datecreated" class="form-label" >Date Created:</label>
                             <InputDate id="datecreated" @bind-Value="Transportation.DateCreated" class="form-control" />
                             <ValidationMessage For="() => Transportation.DateCreated" class="text-danger" />
                         </div>
@@ -73,6 +73,10 @@
     private async Task AddTransportation()
     {
         using var context = DbFactory.CreateDbContext();
+
+        Transportation.DateCreated = DateTime.Now;
+        Transportation.DataUpdated = DateTime.Now;
+
         context.Transportation.Add(Transportation);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/transportations");

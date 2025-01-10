@@ -52,12 +52,12 @@ else
                     <InputNumber id="pricepernight" @bind-Value="Accommmodation.PricePerNight" class="form-control" />
                     <ValidationMessage For="() => Accommmodation.PricePerNight" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="datecreated" class="form-label">DateCreated:</label>
                     <InputDate id="datecreated" @bind-Value="Accommmodation.DateCreated" class="form-control" />
                     <ValidationMessage For="() => Accommmodation.DateCreated" class="text-danger" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" hidden>
                     <label for="dataupdated" class="form-label">DataUpdated:</label>
                     <InputDate id="dataupdated" @bind-Value="Accommmodation.DataUpdated" class="form-control" />
                     <ValidationMessage For="() => Accommmodation.DataUpdated" class="text-danger" />
@@ -105,6 +105,8 @@ else
     private async Task UpdateAccommmodation()
     {
         using var context = DbFactory.CreateDbContext();
+        Accommmodation.DataUpdated = DateTime.Now;
+
         context.Attach(Accommmodation!).State = EntityState.Modified;
 
         try
