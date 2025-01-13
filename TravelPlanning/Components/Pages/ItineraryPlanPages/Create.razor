@@ -59,12 +59,12 @@
                         <InputDate id="dataupdated" @bind-Value="ItineraryPlan.DataUpdated" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.DataUpdated" class="text-danger" />
                     </div>
-                    <div class="col-md 6 mb-3" >
+                    <div class="col-md 6 mb-3" hidden >
                         <label for="createdby" class="form-label">Assgined User:</label>
                         <InputText id="createdby" @bind-Value="ItineraryPlan.CreatedBy" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.CreatedBy" class="text-danger" />
                     </div>
-                    <div class="col-md 6 mb-3" >
+                    <div class="col-md 6 mb-3"  >
                         <label for="updatedby" class="form-label">UpdatedBy:</label>
                         <InputText id="updatedby" @bind-Value="ItineraryPlan.UpdatedBy" class="form-control" />
                         <ValidationMessage For="() => ItineraryPlan.UpdatedBy" class="text-danger" />

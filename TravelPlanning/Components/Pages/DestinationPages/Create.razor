@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="name" class="form-label">Name:</label>
-                                <InputText id="name" @bind-Value="Destination.Name" class="form-control" placeholder="E.g., Tokyo" />
+                                <InputText id="name" @bind-Value="Destination.Name" class="form-control"  />
                                 <ValidationMessage For="() => Destination.Name" class="text-danger" />
                             </div>
                             <div class="col-md-6 mb-3">
@@ -79,6 +79,7 @@
                                 <InputDate id="datecreated" @bind-Value="Destination.DateCreated" class="form-control" />
                                 <ValidationMessage For="() => Destination.DateCreated" class="text-danger" />
                             </div>
+
                             <div class="col-md-6 mb-3" hidden >
                                 <label for="updatedby" class="form-label">Updated By:</label>
                                 <InputText id="updatedby" @bind-Value="Destination.UpdatedBy" class="form-control" />
@@ -103,6 +104,19 @@
 @code {
     [SupplyParameterFromForm]
     private Destination Destination { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var query = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).Query;
+        var queryparams = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(query);
+
+        if (queryparams.TryGetValue("location",out var location))
+        {
+            Destination.Country = location.ToString();
+        }
+    }
+
 
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task AddDestination()

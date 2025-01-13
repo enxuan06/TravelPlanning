@@ -13,7 +13,6 @@
         <h1 class="display-4 text-primary">Add a New Accommodation</h1>
         <p class="lead text-muted">Fill in the details below to create a new accommodation entry.</p>
     </div>
-
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow">
@@ -57,7 +56,7 @@
                             <ValidationMessage For="() => Accommmodation.Type" class="text-danger" />
                         </div>
                             <div class="col-md-6 mb-3">
-                                <label for="pricepernight" class="form-label">PricePerNight:</label>
+                                <label for="pricepernight" class="form-label">Price Per Night:</label>
                             <InputNumber id="pricepernight" @bind-Value="Accommmodation.PricePerNight" class="form-control" />
                             <ValidationMessage For="() => Accommmodation.PricePerNight" class="text-danger" />
                         </div>
@@ -65,12 +64,12 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3" hidden >
-                                <label for="datecreated" class="form-label">DateCreated:</label>
+                                <label for="datecreated" class="form-label">Date Created:</label>
                             <InputDate id="datecreated" @bind-Value="Accommmodation.DateCreated" class="form-control" />
                             <ValidationMessage For="() => Accommmodation.DateCreated" class="text-danger" />
                         </div>
                             <div class="col-md-6 mb-3" hidden>
-                                <label for="dataupdated" class="form-label">DataUpdated:</label>
+                                <label for="dataupdated" class="form-label">Data Updated:</label>
                             <InputDate id="dataupdated" @bind-Value="Accommmodation.DataUpdated" class="form-control" />
                             <ValidationMessage For="() => Accommmodation.DataUpdated" class="text-danger" />
                         </div>
