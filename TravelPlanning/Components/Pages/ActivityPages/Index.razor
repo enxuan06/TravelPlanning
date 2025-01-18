@@ -8,13 +8,11 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Index</h1>
-
-<p>
-    <a href="activities/create">Create New</a>
+<p class="action-links">
+    <a href="activities/create" class="btn btn-primary">Create New</a>
 </p>
 
-<QuickGrid Class="table" Items="context.Activity">
+<QuickGrid Class=" table table-striped table-bordered" Items="context.Activity">
     <PropertyColumn Property="activity => activity.Name" />
     <PropertyColumn Property="activity => activity.Location" />
     <PropertyColumn Property="activity => activity.Type" />
@@ -26,8 +24,8 @@
 
     <TemplateColumn Context="activity">
       <div class="action-buttons">
-            <a href="@($"activities/edit?id={activity.Id}")" class="btn btn-secondary btn-sm">Edit</a> |
-            <a href="@($"activities/details?id={activity.Id}")" class="btn btn-info btn-sm">Details</a> |
+            <a href="@($"activities/edit?id={activity.Id}")" class="btn btn-secondary btn-sm">Edit</a> 
+            <a href="@($"activities/details?id={activity.Id}")" class="btn btn-info btn-sm">Details</a> 
             <a href="@($"activities/delete?id={activity.Id}")" class="btn btn-danger btn-sm">Delete</a>
        </div>
     </TemplateColumn>

@@ -8,13 +8,11 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Index</h1>
-
-<p>
+<p class="action-links">
     <a href="destinations/create" class="btn btn-primary">Create New</a>
 </p>
 
-<QuickGrid Class="table" Items="context.Destination">
+<QuickGrid Class="table table-striped table-bordered" Items="context.Destination">
     <PropertyColumn Property="destination => destination.Name" />
     <PropertyColumn Property="destination => destination.Country" />
     <PropertyColumn Property="destination => destination.StartDate" />
@@ -29,12 +27,14 @@
 
     <TemplateColumn Context="destination">
       <div class="action-buttons">
-            <a href="@($"destinations/edit?id={destination.Id}")" class="btn btn-secondary btn-sm">Edit</a> |
-            <a href="@($"destinations/details?id={destination.Id}")" class="btn btn-info btn-sm">Details</a> |
+            <a href="@($"destinations/edit?id={destination.Id}")" class="btn btn-secondary btn-sm">Edit</a> 
+            <a href="@($"destinations/details?id={destination.Id}")" class="btn btn-info btn-sm">Details</a> 
             <a href="@($"destinations/delete?id={destination.Id}")" class="btn btn-danger btn-sm">Delete</a>
       </div>
     </TemplateColumn>
 </QuickGrid>
+
+
 
 <style>
     .page-title {

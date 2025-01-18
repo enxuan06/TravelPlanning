@@ -8,13 +8,11 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Index</h1>
-
-<p>
-    <a href="accommmodations/create">Create New</a>
+<p class="action-links">
+    <a href="accommmodations/create" class="btn btn-primary">Create New</a>
 </p>
 
-<QuickGrid Class="table" Items="context.Accommmodation">
+<QuickGrid Class="table table-striped table-bordered" Items="context.Accommmodation">
     <PropertyColumn Property="accommmodation => accommmodation.Name" />
     <PropertyColumn Property="accommmodation => accommmodation.Address" />
     <PropertyColumn Property="accommmodation => accommmodation.StartDate" />
@@ -28,8 +26,8 @@
 
     <TemplateColumn Context="accommmodation">
        <div class="action-buttons">
-            <a href="@($"accommmodations/edit?id={accommmodation.Id}")" class="btn btn-secondary btn-sm">Edit</a> |
-            <a href="@($"accommmodations/details?id={accommmodation.Id}")" class="btn btn-info btn-sm">Details</a> |
+            <a href="@($"accommmodations/edit?id={accommmodation.Id}")" class="btn btn-secondary btn-sm">Edit</a> 
+            <a href="@($"accommmodations/details?id={accommmodation.Id}")" class="btn btn-info btn-sm">Details</a> 
             <a href="@($"accommmodations/delete?id={accommmodation.Id}")" class="btn btn-danger btn-sm">Delete</a>
         </div>
     </TemplateColumn>

@@ -48,12 +48,12 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden>
                                 <label for="activityid" class="form-label">Activity ID:</label>
                                 <InputNumber id="activityid" @bind-Value="Destination.ActivityId" class="form-control" />
                                 <ValidationMessage For="() => Destination.ActivityId" class="text-danger" />
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden>
                                 <label for="transportid" class="form-label">Transport ID:</label>
                                 <InputNumber id="transportid" @bind-Value="Destination.TransportId" class="form-control" />
                                 <ValidationMessage For="() => Destination.TransportId" class="text-danger" />
@@ -61,12 +61,12 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden>
                                 <label for="accomid" class="form-label">Accommodation ID:</label>
                                 <InputNumber id="accomid" @bind-Value="Destination.AccomId" class="form-control" />
                                 <ValidationMessage For="() => Destination.AccomId" class="text-danger" />
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3" hidden>
                                 <label for="createdby" class="form-label">Created By:</label>
                                 <InputText id="createdby" @bind-Value="Destination.CreatedBy" class="form-control" />
                                 <ValidationMessage For="() => Destination.CreatedBy" class="text-danger" />
