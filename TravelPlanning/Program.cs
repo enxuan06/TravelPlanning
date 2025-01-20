@@ -45,18 +45,19 @@ builder.Services.AddIdentityCore<TravelPlanningUser>(options => options.SignIn.R
 
 builder.Services.AddSignalR();
 
-builder.Services.AddResponseCompression(opts =>
+builder.Services.AddResponseCompression(options =>
 {
-    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-        ["/emailConfirmationHub"]);
+    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
 });
 
 
+
 builder.Services.AddScoped<IEmailSender<TravelPlanningUser>, GmailEmailSender>();
+
 var app = builder.Build();
 
 app.UseResponseCompression();
-app.MapHub<EmailConfirmationHub>("/emailConfirmationHub");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -70,11 +71,20 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-app.UseAntiforgery();
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-app.MapAdditionalIdentityEndpoints();; 
+app.UseRouting();
+app.UseAuthorization();
+app.UseAntiforgery();
+
+app.MapBlazorHub();
+
+app.MapHub<EmailConfirmationHub>("/emailConfirmationHub");
+
+app.MapAdditionalIdentityEndpoints();
+
 
 app.Run();

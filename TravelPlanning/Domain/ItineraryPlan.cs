@@ -7,9 +7,13 @@
 
         public decimal?  Budget { get; set; }
 
-        public int UserId { get; set; }
+        public int UserId { get; set; } //foreign key
 
-        public int DestinationId { get; set; }
+        public User? User { get; set; }//NAV PROP
+
+        public int DestinationId { get; set; } //foreign key
+
+        public Destination? Destination { get; set; }//NAV PROP
 
 
 

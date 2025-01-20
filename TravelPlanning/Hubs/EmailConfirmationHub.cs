@@ -4,9 +4,9 @@ namespace TravelPlanning.Hubs
 {
     public class EmailConfirmationHub : Hub
     {
-        public async Task ConfirmationComplete(string email)
+        public async Task EmailConfirmed(string email)
         {
-            await Clients.All.SendAsync("EmailConfirmed", email);
+            await Clients.Group(email).SendAsync("EmailConfirmed", email);
         }
     }
 }

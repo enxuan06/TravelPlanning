@@ -12,8 +12,8 @@ using TravelPlanning.Data;
 namespace TravelPlanning.Migrations
 {
     [DbContext(typeof(TravelPlanningContext))]
-    [Migration("20241202083523_AddIdentity")]
-    partial class AddIdentity
+    [Migration("20250115125711_SeedUserRole")]
+    partial class SeedUserRole
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,20 @@ namespace TravelPlanning.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -137,6 +151,13 @@ namespace TravelPlanning.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -176,6 +197,12 @@ namespace TravelPlanning.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -221,6 +248,26 @@ namespace TravelPlanning.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "004a2917-eda6-4f41-b5da-06ec899b6dac",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN2nGt1VZgIqZht9m3pGIWaO+faX3B9YE23gAcaq5Eb0znfmpLzLyKblvH3xydlAUw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "9ce3224e-30f6-441c-982e-320e020c82fc",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
+                        });
                 });
 
             modelBuilder.Entity("TravelPlanning.Domain.Accommmodation", b =>
@@ -270,8 +317,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 16, 35, 22, 502, DateTimeKind.Local).AddTicks(9847),
-                            DateCreated = new DateTime(2024, 12, 2, 16, 35, 22, 502, DateTimeKind.Local).AddTicks(9830),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7242),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7227),
                             EndDate = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Park View Hotel",
                             PricePerNight = 80.50m,
@@ -283,8 +330,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 16, 35, 22, 502, DateTimeKind.Local).AddTicks(9856),
-                            DateCreated = new DateTime(2024, 12, 2, 16, 35, 22, 502, DateTimeKind.Local).AddTicks(9855),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7247),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7247),
                             EndDate = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "KSL Hotel & Resort",
                             PricePerNight = 80.50m,
@@ -335,8 +382,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 16, 35, 22, 503, DateTimeKind.Local).AddTicks(290),
-                            DateCreated = new DateTime(2024, 12, 2, 16, 35, 22, 503, DateTimeKind.Local).AddTicks(289),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7549),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7548),
                             Duration = 1,
                             Location = "Bugis",
                             Name = "Visit Sultan Mosque",
@@ -347,8 +394,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 16, 35, 22, 503, DateTimeKind.Local).AddTicks(294),
-                            DateCreated = new DateTime(2024, 12, 2, 16, 35, 22, 503, DateTimeKind.Local).AddTicks(293),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7552),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7551),
                             Duration = 2,
                             Location = "Juhor",
                             Name = "LEGOLAND Malaysia",
@@ -366,6 +413,9 @@ namespace TravelPlanning.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccomId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AccommmodationId")
                         .HasColumnType("int");
 
                     b.Property<int>("ActivityId")
@@ -395,10 +445,19 @@ namespace TravelPlanning.Migrations
                     b.Property<int>("TransportId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TransportationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccommmodationId");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("TransportationId");
 
                     b.ToTable("Destination");
                 });
@@ -436,6 +495,8 @@ namespace TravelPlanning.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DestinationId");
 
                     b.HasIndex("UserId");
 
@@ -484,8 +545,8 @@ namespace TravelPlanning.Migrations
                             Id = 1,
                             Cost = 150.50m,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 16, 35, 22, 503, DateTimeKind.Local).AddTicks(468),
-                            DateCreated = new DateTime(2024, 12, 2, 16, 35, 22, 503, DateTimeKind.Local).AddTicks(468),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7665),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7664),
                             EndLocation = "Bugis",
                             StartLocation = "Tampines",
                             Type = "Boat",
@@ -496,8 +557,8 @@ namespace TravelPlanning.Migrations
                             Id = 2,
                             Cost = 60.50m,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2024, 12, 2, 16, 35, 22, 503, DateTimeKind.Local).AddTicks(473),
-                            DateCreated = new DateTime(2024, 12, 2, 16, 35, 22, 503, DateTimeKind.Local).AddTicks(472),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7669),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7668),
                             EndLocation = "Juhor",
                             StartLocation = "Kuala Lumpur",
                             Type = "AirPlane",
@@ -587,13 +648,46 @@ namespace TravelPlanning.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TravelPlanning.Domain.Destination", b =>
+                {
+                    b.HasOne("TravelPlanning.Domain.Accommmodation", "Accommmodation")
+                        .WithMany()
+                        .HasForeignKey("AccommmodationId");
+
+                    b.HasOne("TravelPlanning.Domain.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelPlanning.Domain.Transportation", "Transportation")
+                        .WithMany()
+                        .HasForeignKey("TransportationId");
+
+                    b.Navigation("Accommmodation");
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("Transportation");
+                });
+
             modelBuilder.Entity("TravelPlanning.Domain.ItineraryPlan", b =>
                 {
-                    b.HasOne("TravelPlanning.Domain.User", null)
+                    b.HasOne("TravelPlanning.Domain.Destination", "Destination")
+                        .WithMany()
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelPlanning.Domain.User", "User")
                         .WithMany("TravelPlan")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Destination");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TravelPlanning.Domain.User", b =>

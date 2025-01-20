@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelPlanning.Data;
 
@@ -11,9 +12,11 @@ using TravelPlanning.Data;
 namespace TravelPlanning.Migrations
 {
     [DbContext(typeof(TravelPlanningContext))]
-    partial class TravelPlanningContextModelSnapshot : ModelSnapshot
+    [Migration("20250115124050_inital")]
+    partial class Inital
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,7 +254,7 @@ namespace TravelPlanning.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "004a2917-eda6-4f41-b5da-06ec899b6dac",
+                            ConcurrencyStamp = "66b0b828-bd70-489f-ad6b-3141f5d35a33",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -259,9 +262,9 @@ namespace TravelPlanning.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEN2nGt1VZgIqZht9m3pGIWaO+faX3B9YE23gAcaq5Eb0znfmpLzLyKblvH3xydlAUw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJkNaZMxn+nWGimGOWcY477g1hfZNXdMik6OGnAl021v2reUc6qP/SwL0mMb5w6h6A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9ce3224e-30f6-441c-982e-320e020c82fc",
+                            SecurityStamp = "522d945d-1370-4689-866b-ddf18edfa86c",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -314,8 +317,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7242),
-                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7227),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(661),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(646),
                             EndDate = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Park View Hotel",
                             PricePerNight = 80.50m,
@@ -327,8 +330,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7247),
-                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7247),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(666),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(665),
                             EndDate = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "KSL Hotel & Resort",
                             PricePerNight = 80.50m,
@@ -379,8 +382,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7549),
-                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7548),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(1048),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(1047),
                             Duration = 1,
                             Location = "Bugis",
                             Name = "Visit Sultan Mosque",
@@ -391,8 +394,8 @@ namespace TravelPlanning.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7552),
-                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7551),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(1052),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(1051),
                             Duration = 2,
                             Location = "Juhor",
                             Name = "LEGOLAND Malaysia",
@@ -432,6 +435,9 @@ namespace TravelPlanning.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ItineraryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -493,7 +499,8 @@ namespace TravelPlanning.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DestinationId");
+                    b.HasIndex("DestinationId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -542,8 +549,8 @@ namespace TravelPlanning.Migrations
                             Id = 1,
                             Cost = 150.50m,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7665),
-                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7664),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(1163),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(1163),
                             EndLocation = "Bugis",
                             StartLocation = "Tampines",
                             Type = "Boat",
@@ -554,8 +561,8 @@ namespace TravelPlanning.Migrations
                             Id = 2,
                             Cost = 60.50m,
                             CreatedBy = "System",
-                            DataUpdated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7669),
-                            DateCreated = new DateTime(2025, 1, 15, 20, 57, 10, 429, DateTimeKind.Local).AddTicks(7668),
+                            DataUpdated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(1167),
+                            DateCreated = new DateTime(2025, 1, 15, 20, 40, 49, 763, DateTimeKind.Local).AddTicks(1167),
                             EndLocation = "Juhor",
                             StartLocation = "Kuala Lumpur",
                             Type = "AirPlane",
@@ -670,9 +677,9 @@ namespace TravelPlanning.Migrations
 
             modelBuilder.Entity("TravelPlanning.Domain.ItineraryPlan", b =>
                 {
-                    b.HasOne("TravelPlanning.Domain.Destination", "Destination")
-                        .WithMany()
-                        .HasForeignKey("DestinationId")
+                    b.HasOne("TravelPlanning.Domain.Destination", null)
+                        .WithOne("ItineraryPlan")
+                        .HasForeignKey("TravelPlanning.Domain.ItineraryPlan", "DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -682,9 +689,12 @@ namespace TravelPlanning.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Destination");
-
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TravelPlanning.Domain.Destination", b =>
+                {
+                    b.Navigation("ItineraryPlan");
                 });
 
             modelBuilder.Entity("TravelPlanning.Domain.User", b =>
