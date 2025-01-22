@@ -1,4 +1,7 @@
-﻿namespace TravelPlanning.Domain
+﻿using Microsoft.AspNetCore.Identity;
+using TravelPlanning.Data;
+
+namespace TravelPlanning.Domain
 {
     public class Trip: BaseDomainModel
     {
@@ -10,10 +13,9 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public int UserId { get; set; } //foreign key
+        public string UserId { get; set; } //foreign key of the identity (TranelPlanningUser) table
 
-        public User? User { get; set; }//NAV PROP
-
+        public virtual TravelPlanningUser User { get; set; }
 
         // Navigation properties
         public  ICollection<Activity> Activities { get; set; }= new List<Activity>();

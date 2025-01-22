@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using TravelPlanning.Domain;
 
 namespace TravelPlanning.Data
 {
@@ -7,6 +8,8 @@ namespace TravelPlanning.Data
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+
+        public ICollection<Trip> Trips { get; set; } = new List<Trip>();
     }
 }
  

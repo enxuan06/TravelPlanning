@@ -251,7 +251,7 @@ namespace TravelPlanning.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5275af93-caca-4297-87f4-7d2021f2faec",
+                            ConcurrencyStamp = "514486ea-a4e7-404a-9275-ef3586daed8e",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -259,9 +259,9 @@ namespace TravelPlanning.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENAjfuzwez1vznauAK1B97jdL0GZU0QONpXJHCO5Ce0hDP0fui4F1R4buYmEG1mv5g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJU3zS9zgqzub8YSyvnwn5aJfDUhRO6q7i3EdsYy4uuVR971uiZn13netUpDhE+28Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9514b3d3-94ec-41f7-a7e6-ec59e1f4d09d",
+                            SecurityStamp = "15fe386f-1cae-4b66-a6b0-67b5db2505b7",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -425,12 +425,19 @@ namespace TravelPlanning.Migrations
                     b.Property<string>("TripName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("UserId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Trip");
                 });
@@ -557,13 +564,20 @@ namespace TravelPlanning.Migrations
 
             modelBuilder.Entity("TravelPlanning.Domain.Trip", b =>
                 {
-                    b.HasOne("TravelPlanning.Domain.User", "User")
+                    b.HasOne("TravelPlanning.Data.TravelPlanningUser", null)
                         .WithMany("Trips")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("TravelPlanning.Domain.User", null)
+                        .WithMany("Trips")
+                        .HasForeignKey("UserId1");
+                });
+
+            modelBuilder.Entity("TravelPlanning.Data.TravelPlanningUser", b =>
+                {
+                    b.Navigation("Trips");
                 });
 
             modelBuilder.Entity("TravelPlanning.Domain.Trip", b =>

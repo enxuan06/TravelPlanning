@@ -1,8 +1,11 @@
 ﻿@page "/trips/create"
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Create</PageTitle>
 
@@ -35,11 +38,11 @@
                 <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" /> 
                 <ValidationMessage For="() => Trip.EndDate" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            @*<div class="mb-3">
                 <label for="userid" class="form-label">UserId:</label> 
                 <InputNumber id="userid" @bind-Value="Trip.UserId" class="form-control" /> 
                 <ValidationMessage For="() => Trip.UserId" class="text-danger" /> 
-            </div>        
+            </div> *@       
             <div class="mb-3">
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="Trip.DateCreated" class="form-control" /> 
@@ -62,13 +65,30 @@
 @code {
     [SupplyParameterFromForm]
     private Trip Trip { get; set; } = new();
-
-    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    protected override async Task OnInitializedAsync()
+    {
+        // Set default dates
+        Trip.DateCreated = DateTime.UtcNow;
+        Trip.DataUpdated = DateTime.UtcNow;
+        // Get the current user's ID
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity?.IsAuthenticated != true)
+        {
+            NavigationManager.NavigateTo("/Identity/Account/Login", true); return;
+        }
+        // Parse the UserId from the ClaimsPrincipal
+        var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (!string.IsNullOrEmpty(userId)) { Trip.UserId = userId; }
+    }
     private async Task AddTrip()
     {
         using var context = DbFactory.CreateDbContext();
+        // Update the DataUpdated timestamp
+        Trip.DataUpdated = DateTime.UtcNow; 
         context.Trip.Add(Trip);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/trips");
     }
 }
+

@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 using TravelPlanning.Configurations.Entities;
-using TravelPlanning.Data;
 using TravelPlanning.Domain;
 
 namespace TravelPlanning.Data
@@ -21,7 +20,6 @@ namespace TravelPlanning.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
 
             builder.ApplyConfiguration(new UserSeed());
             builder.ApplyConfiguration(new RoleSeed());
