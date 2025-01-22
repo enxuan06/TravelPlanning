@@ -6,89 +6,53 @@
 
 <PageTitle>Create</PageTitle>
 
+<h1>Create</h1>
 
-<div class="container mt-5">
-    <div class="text-center mb-4">
-        <h1 class="display-4 text-primary">Add a New Activity</h1>
-        <p class="lead text-muted">Fill in the details below to create a new activities entry.</p>
-    </div>
-
- <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h2 class="card-title text-center text-success mb-4">Acitivities Details</h2>
-                    <EditForm method="post" Model="Activity" OnValidSubmit="AddActivity" FormName="create" Enhance>
-                        <DataAnnotationsValidator />
-                        <ValidationSummary class="text-danger" role="alert" />
-
-                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="name" class="form-label">Name:</label>
-                            <InputText id="name" @bind-Value="Activity.Name" class="form-control" placeholder="E.g., Waterboarding" />
-                            <ValidationMessage For="() => Activity.Name" class="text-danger" />
-                        </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="location" class="form-label">Location:</label>
-                                <InputText id="location" @bind-Value="Activity.Location" class="form-control" placeholder="E.g., Okutama,Japan" />
-                            <ValidationMessage For="() => Activity.Location" class="text-danger" />
-                        </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="type" class="form-label">Type:</label>
-                            <InputText id="type" @bind-Value="Activity.Type" class="form-control" placeholder="E.g., Sports" />
-                            <ValidationMessage For="() => Activity.Type" class="text-danger" />
-                        </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="duration" class="form-label">Duration:</label>
-                            <InputNumber id="duration" @bind-Value="Activity.Duration" class="form-control" placeholder="E.g., 2 hours"/>
-                            <ValidationMessage For="() => Activity.Duration" class="text-danger" />
-                        </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3" hidden>
-                                <label for="datecreated" class="form-label">DateCreated:</label>
-                            <InputDate id="datecreated" @bind-Value="Activity.DateCreated" class="form-control" />
-                            <ValidationMessage For="() => Activity.DateCreated" class="text-danger" />
-                        </div>
-                            <div class="col-md-6 mb-3" hidden>
-                                <label for="dataupdated" class="form-label">DataUpdated:</label>
-                            <InputDate id="dataupdated" @bind-Value="Activity.DataUpdated" class="form-control" />
-                            <ValidationMessage For="() => Activity.DataUpdated" class="text-danger" />
-                        </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="createdby" class="form-label">CreatedBy:</label>
-                            <InputText id="createdby" @bind-Value="Activity.CreatedBy" class="form-control" />
-                            <ValidationMessage For="() => Activity.CreatedBy" class="text-danger" />
-                        </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="updatedby" class="form-label">UpdatedBy:</label>
-                            <InputText id="updatedby" @bind-Value="Activity.UpdatedBy" class="form-control" />
-                            <ValidationMessage For="() => Activity.UpdatedBy" class="text-danger" />
-                        </div>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-success btn-lg">Create Activity</button>
-                        </div>
-                    </EditForm>
-                 </div>
-            </div>
-         </div>
-   </div>
-    <div class="text-center mt-4">
-        <a href="/activities" class="btn btn-outline-secondary">Back to List</a>
+<h2>Activity</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Activity" OnValidSubmit="AddActivity" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="tripid" class="form-label">TripId:</label> 
+                <InputNumber id="tripid" @bind-Value="Activity.TripId" class="form-control" /> 
+                <ValidationMessage For="() => Activity.TripId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="activityname" class="form-label">ActivityName:</label> 
+                <InputText id="activityname" @bind-Value="Activity.ActivityName" class="form-control" /> 
+                <ValidationMessage For="() => Activity.ActivityName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label> 
+                <InputText id="description" @bind-Value="Activity.Description" class="form-control" /> 
+                <ValidationMessage For="() => Activity.Description" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:</label> 
+                <InputText id="address" @bind-Value="Activity.Address" class="form-control" /> 
+                <ValidationMessage For="() => Activity.Address" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datecreated" class="form-label">DateCreated:</label> 
+                <InputDate id="datecreated" @bind-Value="Activity.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => Activity.DateCreated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dataupdated" class="form-label">DataUpdated:</label> 
+                <InputDate id="dataupdated" @bind-Value="Activity.DataUpdated" class="form-control" /> 
+                <ValidationMessage For="() => Activity.DataUpdated" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
     </div>
 </div>
 
-
-
+<div>
+    <a href="/activities">Back to List</a>
+</div>
 
 @code {
     [SupplyParameterFromForm]
@@ -98,10 +62,6 @@
     private async Task AddActivity()
     {
         using var context = DbFactory.CreateDbContext();
-
-        Activity.DateCreated = DateTime.Now;
-        Activity.DataUpdated = DateTime.Now;
-
         context.Activity.Add(Activity);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/activities");

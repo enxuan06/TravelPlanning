@@ -1,16 +1,23 @@
 ﻿namespace TravelPlanning.Domain
 {
-    public class Activity : BaseDomainModel
+    public class Lodging: BaseDomainModel
     {
 
         public int TripId { get; set; } // Foreign Key referencing Trip.TripId
-        public String? ActivityName { get; set; }
-
-        public string? Description { get; set; }
+        
+        public string? HotelName { get; set; }
 
         public string? Address { get; set; }
 
+        public DateTime CheckInDate { get; set; }
+
+        public DateTime CheckOutDate { get; set; }
+
+
         //Navigation Property
         public Trip Trip { get; set; }
+
+
+
     }
 }

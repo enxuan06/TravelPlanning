@@ -1,0 +1,74 @@
+﻿@page "/trips/create"
+@using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Domain
+@inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Trip</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Trip" OnValidSubmit="AddTrip" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="tripname" class="form-label">TripName:</label> 
+                <InputText id="tripname" @bind-Value="Trip.TripName" class="form-control" /> 
+                <ValidationMessage For="() => Trip.TripName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="country" class="form-label">Country:</label> 
+                <InputText id="country" @bind-Value="Trip.Country" class="form-control" /> 
+                <ValidationMessage For="() => Trip.Country" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="startdate" class="form-label">StartDate:</label> 
+                <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" /> 
+                <ValidationMessage For="() => Trip.StartDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="enddate" class="form-label">EndDate:</label> 
+                <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" /> 
+                <ValidationMessage For="() => Trip.EndDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="userid" class="form-label">UserId:</label> 
+                <InputNumber id="userid" @bind-Value="Trip.UserId" class="form-control" /> 
+                <ValidationMessage For="() => Trip.UserId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datecreated" class="form-label">DateCreated:</label> 
+                <InputDate id="datecreated" @bind-Value="Trip.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => Trip.DateCreated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dataupdated" class="form-label">DataUpdated:</label> 
+                <InputDate id="dataupdated" @bind-Value="Trip.DataUpdated" class="form-control" /> 
+                <ValidationMessage For="() => Trip.DataUpdated" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/trips">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Trip Trip { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddTrip()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Trip.Add(Trip);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/trips");
+    }
+}

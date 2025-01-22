@@ -1,0 +1,69 @@
+﻿@page "/restaurants/create"
+@using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Domain
+@inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Restaurant</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Restaurant" OnValidSubmit="AddRestaurant" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="tripid" class="form-label">TripId:</label> 
+                <InputNumber id="tripid" @bind-Value="Restaurant.TripId" class="form-control" /> 
+                <ValidationMessage For="() => Restaurant.TripId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="resturantname" class="form-label">ResturantName:</label> 
+                <InputText id="resturantname" @bind-Value="Restaurant.ResturantName" class="form-control" /> 
+                <ValidationMessage For="() => Restaurant.ResturantName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:</label> 
+                <InputText id="address" @bind-Value="Restaurant.Address" class="form-control" /> 
+                <ValidationMessage For="() => Restaurant.Address" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datevisited" class="form-label">DateVisited:</label> 
+                <InputDate id="datevisited" @bind-Value="Restaurant.DateVisited" class="form-control" /> 
+                <ValidationMessage For="() => Restaurant.DateVisited" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datecreated" class="form-label">DateCreated:</label> 
+                <InputDate id="datecreated" @bind-Value="Restaurant.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => Restaurant.DateCreated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dataupdated" class="form-label">DataUpdated:</label> 
+                <InputDate id="dataupdated" @bind-Value="Restaurant.DataUpdated" class="form-control" /> 
+                <ValidationMessage For="() => Restaurant.DataUpdated" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/restaurants">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Restaurant Restaurant { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddRestaurant()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Restaurant.Add(Restaurant);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/restaurants");
+    }
+}

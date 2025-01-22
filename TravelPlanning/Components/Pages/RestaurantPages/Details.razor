@@ -1,4 +1,4 @@
-﻿@page "/activities/details"
+﻿@page "/restaurants/details"
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
@@ -9,36 +9,36 @@
 <h1>Details</h1>
 
 <div>
-    <h2>Activity</h2>
+    <h2>Restaurant</h2>
     <hr />
-    @if (activity is null)
+    @if (restaurant is null)
     {
         <p><em>Loading...</em></p>
     }
     else {
         <dl class="row">
             <dt class="col-sm-2">TripId</dt>
-            <dd class="col-sm-10">@activity.TripId</dd>
-            <dt class="col-sm-2">ActivityName</dt>
-            <dd class="col-sm-10">@activity.ActivityName</dd>
-            <dt class="col-sm-2">Description</dt>
-            <dd class="col-sm-10">@activity.Description</dd>
+            <dd class="col-sm-10">@restaurant.TripId</dd>
+            <dt class="col-sm-2">ResturantName</dt>
+            <dd class="col-sm-10">@restaurant.ResturantName</dd>
             <dt class="col-sm-2">Address</dt>
-            <dd class="col-sm-10">@activity.Address</dd>
+            <dd class="col-sm-10">@restaurant.Address</dd>
+            <dt class="col-sm-2">DateVisited</dt>
+            <dd class="col-sm-10">@restaurant.DateVisited</dd>
             <dt class="col-sm-2">DateCreated</dt>
-            <dd class="col-sm-10">@activity.DateCreated</dd>
+            <dd class="col-sm-10">@restaurant.DateCreated</dd>
             <dt class="col-sm-2">DataUpdated</dt>
-            <dd class="col-sm-10">@activity.DataUpdated</dd>
+            <dd class="col-sm-10">@restaurant.DataUpdated</dd>
         </dl>
         <div>
-            <a href="@($"/activities/edit?id={activity.Id}")">Edit</a> |
-            <a href="@($"/activities")">Back to List</a>
+            <a href="@($"/restaurants/edit?id={restaurant.Id}")">Edit</a> |
+            <a href="@($"/restaurants")">Back to List</a>
         </div>
     }
 </div>
 
 @code {
-    private Activity? activity;
+    private Restaurant? restaurant;
 
     [SupplyParameterFromQuery]
     private int Id { get; set; }
@@ -46,9 +46,9 @@
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        activity = await context.Activity.FirstOrDefaultAsync(m => m.Id == Id);
+        restaurant = await context.Restaurant.FirstOrDefaultAsync(m => m.Id == Id);
 
-        if (activity is null)
+        if (restaurant is null)
         {
             NavigationManager.NavigateTo("notfound");
         }

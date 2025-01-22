@@ -21,9 +21,9 @@
                 <ValidationMessage For="() => User.UserName" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="emailaddress" class="form-label">EmailAddress:</label> 
-                <InputText id="emailaddress" @bind-Value="User.EmailAddress" class="form-control" /> 
-                <ValidationMessage For="() => User.EmailAddress" class="text-danger" /> 
+                <label for="phonenumber" class="form-label">PhoneNumber:</label> 
+                <InputText id="phonenumber" @bind-Value="User.PhoneNumber" class="form-control" /> 
+                <ValidationMessage For="() => User.PhoneNumber" class="text-danger" /> 
             </div>        
             <div class="mb-3">
                 <label for="datecreated" class="form-label">DateCreated:</label> 
@@ -34,16 +34,6 @@
                 <label for="dataupdated" class="form-label">DataUpdated:</label> 
                 <InputDate id="dataupdated" @bind-Value="User.DataUpdated" class="form-control" /> 
                 <ValidationMessage For="() => User.DataUpdated" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="createdby" class="form-label">CreatedBy:</label> 
-                <InputText id="createdby" @bind-Value="User.CreatedBy" class="form-control" /> 
-                <ValidationMessage For="() => User.CreatedBy" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="updatedby" class="form-label">UpdatedBy:</label> 
-                <InputText id="updatedby" @bind-Value="User.UpdatedBy" class="form-control" /> 
-                <ValidationMessage For="() => User.UpdatedBy" class="text-danger" /> 
             </div>        
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>

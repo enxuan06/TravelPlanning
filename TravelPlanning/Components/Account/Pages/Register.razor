@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 @using TravelPlanning.Data
+@using TravelPlanning.Domain
 
 @inject UserManager<TravelPlanningUser> UserManager
 @inject IUserStore<TravelPlanningUser> UserStore
@@ -15,6 +16,7 @@
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 @inject RoleManager<IdentityRole> RoleManager
+@inject TravelPlanningContext Context
 
 
 <PageTitle>Register</PageTitle>
@@ -76,16 +78,15 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
-        var user = CreateUser();
+        var User = CreateUser();
 
-        await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+        await UserStore.SetUserNameAsync(User, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
-        await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+        await emailStore.SetEmailAsync(User, Input.Email, CancellationToken.None);
+        User.FirstName = Input.FirstName;
+        User.LastName = Input.LastName;
 
-        user.FirstName = Input.FirstName;
-        user.LastName = Input.LastName;
-
-        var result = await UserManager.CreateAsync(user, Input.Password);
+        var result = await UserManager.CreateAsync(User, Input.Password);
 
         if (!result.Succeeded)
         {
@@ -93,16 +94,18 @@
             return;
         }
 
+        
+
         //create the user role if it doesn't exist
         if (!await RoleManager.RoleExistsAsync("User"))
         {
             await RoleManager.CreateAsync(new IdentityRole("User"));
         }
         //add the user to the user role
-        await UserManager.AddToRoleAsync(user, "User");
+        await UserManager.AddToRoleAsync(User, "User");
         //add the user id as claim when user registers
-        await UserManager.AddClaimAsync(user, new System.Security.Claims.Claim("userId",
-        user.Id));
+        await UserManager.AddClaimAsync(User, new System.Security.Claims.Claim("userId",
+        User.Id));
 
         Logger.LogInformation("User created a new account with password.");
 
@@ -115,7 +118,7 @@
                 new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
         }
 
-        await SignInManager.SignInAsync(user, isPersistent: false);
+        await SignInManager.SignInAsync(User, isPersistent: false);
         RedirectManager.RedirectTo(ReturnUrl);
     }
 

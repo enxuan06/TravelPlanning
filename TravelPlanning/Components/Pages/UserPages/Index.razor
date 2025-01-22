@@ -8,24 +8,25 @@
 
 <PageTitle>Index</PageTitle>
 
-<QuickGrid Class=" table table-striped table-bordered" Items="context.User">
+<h1>Index</h1>
+
+<p>
+    <a href="users/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.User">
     <PropertyColumn Property="user => user.UserName" />
-    <PropertyColumn Property="user => user.EmailAddress" />
+    <PropertyColumn Property="user => user.PhoneNumber" />
     <PropertyColumn Property="user => user.DateCreated" />
     <PropertyColumn Property="user => user.DataUpdated" />
-    <PropertyColumn Property="user => user.CreatedBy" />
-    <PropertyColumn Property="user => user.UpdatedBy" />
 
     <TemplateColumn Context="user">
-        <a href="@($"users/edit?id={user.Id}")">Edit</a> 
-        <a href="@($"users/details?id={user.Id}")">Details</a> 
+        <a href="@($"users/edit?id={user.Id}")">Edit</a> |
+        <a href="@($"users/details?id={user.Id}")">Details</a> |
         <a href="@($"users/delete?id={user.Id}")">Delete</a>
     </TemplateColumn>
 </QuickGrid>
 
-<p>
-    <a href="users/create" class="btn btn-primary">+ New User</a>
-</p>
 @code {
     private TravelPlanningContext context = default!;
 

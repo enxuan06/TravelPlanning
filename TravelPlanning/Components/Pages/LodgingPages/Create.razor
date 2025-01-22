@@ -1,0 +1,74 @@
+﻿@page "/lodgings/create"
+@using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Domain
+@inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>Lodging</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Lodging" OnValidSubmit="AddLodging" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="mb-3">
+                <label for="tripid" class="form-label">TripId:</label> 
+                <InputNumber id="tripid" @bind-Value="Lodging.TripId" class="form-control" /> 
+                <ValidationMessage For="() => Lodging.TripId" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="hotelname" class="form-label">HotelName:</label> 
+                <InputText id="hotelname" @bind-Value="Lodging.HotelName" class="form-control" /> 
+                <ValidationMessage For="() => Lodging.HotelName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:</label> 
+                <InputText id="address" @bind-Value="Lodging.Address" class="form-control" /> 
+                <ValidationMessage For="() => Lodging.Address" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="checkindate" class="form-label">CheckInDate:</label> 
+                <InputDate id="checkindate" @bind-Value="Lodging.CheckInDate" class="form-control" /> 
+                <ValidationMessage For="() => Lodging.CheckInDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="checkoutdate" class="form-label">CheckOutDate:</label> 
+                <InputDate id="checkoutdate" @bind-Value="Lodging.CheckOutDate" class="form-control" /> 
+                <ValidationMessage For="() => Lodging.CheckOutDate" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="datecreated" class="form-label">DateCreated:</label> 
+                <InputDate id="datecreated" @bind-Value="Lodging.DateCreated" class="form-control" /> 
+                <ValidationMessage For="() => Lodging.DateCreated" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="dataupdated" class="form-label">DataUpdated:</label> 
+                <InputDate id="dataupdated" @bind-Value="Lodging.DataUpdated" class="form-control" /> 
+                <ValidationMessage For="() => Lodging.DataUpdated" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/lodgings">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private Lodging Lodging { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddLodging()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Lodging.Add(Lodging);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/lodgings");
+    }
+}

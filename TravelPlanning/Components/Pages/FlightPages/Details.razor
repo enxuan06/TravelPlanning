@@ -1,4 +1,4 @@
-﻿@page "/users/details"
+﻿@page "/flights/details"
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
@@ -9,32 +9,34 @@
 <h1>Details</h1>
 
 <div>
-    <h2>User</h2>
+    <h2>Flight</h2>
     <hr />
-    @if (user is null)
+    @if (flight is null)
     {
         <p><em>Loading...</em></p>
     }
     else {
         <dl class="row">
-            <dt class="col-sm-2">UserName</dt>
-            <dd class="col-sm-10">@user.UserName</dd>
-            <dt class="col-sm-2">PhoneNumber</dt>
-            <dd class="col-sm-10">@user.PhoneNumber</dd>
+            <dt class="col-sm-2">TripId</dt>
+            <dd class="col-sm-10">@flight.TripId</dd>
+            <dt class="col-sm-2">AirlineName</dt>
+            <dd class="col-sm-10">@flight.AirlineName</dd>
+            <dt class="col-sm-2">DepartureDate</dt>
+            <dd class="col-sm-10">@flight.DepartureDate</dd>
             <dt class="col-sm-2">DateCreated</dt>
-            <dd class="col-sm-10">@user.DateCreated</dd>
+            <dd class="col-sm-10">@flight.DateCreated</dd>
             <dt class="col-sm-2">DataUpdated</dt>
-            <dd class="col-sm-10">@user.DataUpdated</dd>
+            <dd class="col-sm-10">@flight.DataUpdated</dd>
         </dl>
         <div>
-            <a href="@($"/users/edit?id={user.Id}")">Edit</a> |
-            <a href="@($"/users")">Back to List</a>
+            <a href="@($"/flights/edit?id={flight.Id}")">Edit</a> |
+            <a href="@($"/flights")">Back to List</a>
         </div>
     }
 </div>
 
 @code {
-    private User? user;
+    private Flight? flight;
 
     [SupplyParameterFromQuery]
     private int Id { get; set; }
@@ -42,9 +44,9 @@
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        user = await context.User.FirstOrDefaultAsync(m => m.Id == Id);
+        flight = await context.Flight.FirstOrDefaultAsync(m => m.Id == Id);
 
-        if (user is null)
+        if (flight is null)
         {
             NavigationManager.NavigateTo("notfound");
         }

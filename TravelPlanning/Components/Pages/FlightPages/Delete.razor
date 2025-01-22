@@ -1,0 +1,71 @@
+﻿@page "/flights/delete"
+@using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Domain
+@inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<p>Are you sure you want to delete this?</p>
+<div>
+    <h2>Flight</h2>
+    <hr />
+    @if (flight is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">TripId</dt>
+            <dd class="col-sm-10">@flight.TripId</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">AirlineName</dt>
+            <dd class="col-sm-10">@flight.AirlineName</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">DepartureDate</dt>
+            <dd class="col-sm-10">@flight.DepartureDate</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">DateCreated</dt>
+            <dd class="col-sm-10">@flight.DateCreated</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">DataUpdated</dt>
+            <dd class="col-sm-10">@flight.DataUpdated</dd>
+        </dl>
+        <EditForm method="post" Model="flight" OnValidSubmit="DeleteFlight" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(flight is null)">Delete</button> |
+            <a href="/flights">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    private Flight? flight;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        flight = await context.Flight.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (flight is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    private async Task DeleteFlight()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Flight.Remove(flight!);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/flights");
+    }
+}
