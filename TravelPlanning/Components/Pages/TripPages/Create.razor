@@ -1,8 +1,11 @@
 ﻿@page "/trips/create"
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Create</PageTitle>
 
@@ -10,46 +13,35 @@
 
 <h2>Trip</h2>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <EditForm method="post" Model="Trip" OnValidSubmit="AddTrip" FormName="create" Enhance>
             <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert"/>
+            <ValidationSummary class="text-danger" role="alert" />
             <div class="mb-3">
-                <label for="tripname" class="form-label">TripName:</label> 
-                <InputText id="tripname" @bind-Value="Trip.TripName" class="form-control" /> 
-                <ValidationMessage For="() => Trip.TripName" class="text-danger" /> 
-            </div>        
+                <label for="tripname" class="form-label">TripName:</label>
+                <InputText id="tripname" @bind-Value="Trip.TripName" class="form-control" />
+                <ValidationMessage For="() => Trip.TripName" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="country" class="form-label">Country:</label> 
-                <InputText id="country" @bind-Value="Trip.Country" class="form-control" /> 
-                <ValidationMessage For="() => Trip.Country" class="text-danger" /> 
-            </div>        
+                <label for="country" class="form-label">Country:</label>
+                <InputText id="country" @bind-Value="Trip.Country" class="form-control" />
+                <ValidationMessage For="() => Trip.Country" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="startdate" class="form-label">StartDate:</label> 
-                <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" /> 
-                <ValidationMessage For="() => Trip.StartDate" class="text-danger" /> 
-            </div>        
+                <label for="startdate" class="form-label">StartDate:</label>
+                <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" />
+                <ValidationMessage For="() => Trip.StartDate" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="enddate" class="form-label">EndDate:</label> 
-                <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" /> 
-                <ValidationMessage For="() => Trip.EndDate" class="text-danger" /> 
-            </div>        
+                <label for="enddate" class="form-label">EndDate:</label>
+                <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" />
+                <ValidationMessage For="() => Trip.EndDate" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="userid" class="form-label">UserId:</label> 
-                <InputNumber id="userid" @bind-Value="Trip.UserId" class="form-control" /> 
-                <ValidationMessage For="() => Trip.UserId" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="datecreated" class="form-label">DateCreated:</label> 
-                <InputDate id="datecreated" @bind-Value="Trip.DateCreated" class="form-control" /> 
-                <ValidationMessage For="() => Trip.DateCreated" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="dataupdated" class="form-label">DataUpdated:</label> 
-                <InputDate id="dataupdated" @bind-Value="Trip.DataUpdated" class="form-control" /> 
-                <ValidationMessage For="() => Trip.DataUpdated" class="text-danger" /> 
-            </div>        
+                <InputNumber type="hidden" @bind-Value="Trip.UserId" />
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>
@@ -63,7 +55,44 @@
     [SupplyParameterFromForm]
     private Trip Trip { get; set; } = new();
 
-    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    protected override async Task OnInitializedAsync()
+    {
+        // Set default dates
+        Trip.DateCreated = DateTime.UtcNow;
+        Trip.DataUpdated = DateTime.UtcNow;
+
+        // Get the current user's ID
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated != true)
+        {
+            NavigationManager.NavigateTo("/Identity/Account/Login", true);
+            return;
+        }
+
+        using var context = DbFactory.CreateDbContext();
+        var identityUserId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (!string.IsNullOrEmpty(identityUserId))
+        {
+            // Find the corresponding User record using IdentityUserId
+            var dbUser = await context.User
+                .FirstOrDefaultAsync(u => u.IdentityUserId == identityUserId);
+
+            if (dbUser != null)
+            {
+                Trip.UserId = dbUser.Id; // Set the numeric UserId from your User table
+            }
+            else
+            {
+                // Handle case where User record doesn't exist
+                NavigationManager.NavigateTo("/error", true);
+                return;
+            }
+        }
+    }
+
     private async Task AddTrip()
     {
         using var context = DbFactory.CreateDbContext();

@@ -1,50 +1,40 @@
 ﻿@page "/activities/create"
+@page "/activities/create/{TripId:int}"
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-<PageTitle>Create</PageTitle>
+<PageTitle>Create Activity</PageTitle>
 
 <h1>Create</h1>
 
-<h2>Activity</h2>
+<h2>Activity for Trip @TripId</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <EditForm method="post" Model="Activity" OnValidSubmit="AddActivity" FormName="create" Enhance>
             <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert"/>
+            <ValidationSummary class="text-danger" role="alert" />
+            <InputNumber type="hidden" @bind-Value="Activity.TripId" />
             <div class="mb-3">
-                <label for="tripid" class="form-label">TripId:</label> 
-                <InputNumber id="tripid" @bind-Value="Activity.TripId" class="form-control" /> 
-                <ValidationMessage For="() => Activity.TripId" class="text-danger" /> 
-            </div>        
+                <label for="activityname" class="form-label">ActivityName:</label>
+                <InputText id="activityname" @bind-Value="Activity.ActivityName" class="form-control" />
+                <ValidationMessage For="() => Activity.ActivityName" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="activityname" class="form-label">ActivityName:</label> 
-                <InputText id="activityname" @bind-Value="Activity.ActivityName" class="form-control" /> 
-                <ValidationMessage For="() => Activity.ActivityName" class="text-danger" /> 
-            </div>        
+                <label for="description" class="form-label">Description:</label>
+                <InputText id="description" @bind-Value="Activity.Description" class="form-control" />
+                <ValidationMessage For="() => Activity.Description" class="text-danger" />
+            </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Description:</label> 
-                <InputText id="description" @bind-Value="Activity.Description" class="form-control" /> 
-                <ValidationMessage For="() => Activity.Description" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="address" class="form-label">Address:</label> 
-                <InputText id="address" @bind-Value="Activity.Address" class="form-control" /> 
-                <ValidationMessage For="() => Activity.Address" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="datecreated" class="form-label">DateCreated:</label> 
-                <InputDate id="datecreated" @bind-Value="Activity.DateCreated" class="form-control" /> 
-                <ValidationMessage For="() => Activity.DateCreated" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
-                <label for="dataupdated" class="form-label">DataUpdated:</label> 
-                <InputDate id="dataupdated" @bind-Value="Activity.DataUpdated" class="form-control" /> 
-                <ValidationMessage For="() => Activity.DataUpdated" class="text-danger" /> 
-            </div>        
+                <label for="address" class="form-label">Address:</label>
+                <InputText id="address" @bind-Value="Activity.Address" class="form-control" />
+                <ValidationMessage For="() => Activity.Address" class="text-danger" />
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>
@@ -55,15 +45,46 @@
 </div>
 
 @code {
+    [Parameter]
+    public int TripId { get; set; }
+
     [SupplyParameterFromForm]
     private Activity Activity { get; set; } = new();
 
-    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    protected override async Task OnInitializedAsync()
+    {
+        // Set default dates
+        Activity.DateCreated = DateTime.UtcNow;
+        Activity.DataUpdated = DateTime.UtcNow;
+
+
+        
+        using var context = DbFactory.CreateDbContext();
+
+        {
+                // Verify the trip 
+                var trip = await context.Trip
+                    .FirstOrDefaultAsync(t => t.Id == TripId );
+
+                if (trip != null)
+                {
+                    // Trip doesn't exist or doesn't belong to this user
+                Activity.TripId = trip.Id;
+                }
+            
+                else
+                 {
+                NavigationManager.NavigateTo("/error", true);
+                return;
+                  }
+        }
+    }
+
     private async Task AddActivity()
     {
         using var context = DbFactory.CreateDbContext();
         context.Activity.Add(Activity);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/activities");
+        NavigationManager.NavigateTo($"/trips/details/{TripId}");
     }
 }

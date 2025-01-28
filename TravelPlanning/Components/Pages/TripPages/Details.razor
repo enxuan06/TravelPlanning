@@ -6,6 +6,7 @@
 
 <PageTitle>Details</PageTitle>
 
+
 <h1>Details</h1>
 
 <div>
@@ -16,6 +17,11 @@
         <p><em>Loading...</em></p>
     }
     else {
+        <a href="/activities/create/@trip.Id" class="button selection">🕹️ Activities</a>
+        <a href="/flights/create/@trip.Id" class="button selection">🚃 Flight</a>
+        <a href="/lodgings/create/@trip.Id" class="button selection">🏨 lodging</a>
+        <a href="/restaurants/create/@trip.Id" class="button selection">🍽️ Restaurant</a>
+        <hr />
         <dl class="row">
             <dt class="col-sm-2">TripName</dt>
             <dd class="col-sm-10">@trip.TripName</dd>

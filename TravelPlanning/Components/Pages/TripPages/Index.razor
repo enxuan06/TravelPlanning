@@ -7,22 +7,19 @@
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 
 <PageTitle>Index</PageTitle>
-
 <h1>Index</h1>
-
 <p>
     <a href="trips/create">Create New</a>
 </p>
 
-<QuickGrid Class="table" Items="context.Trip">
+<QuickGrid Class="table" Items="@(context.Trip.Include(t => t.User))">
     <PropertyColumn Property="trip => trip.TripName" />
     <PropertyColumn Property="trip => trip.Country" />
     <PropertyColumn Property="trip => trip.StartDate" />
     <PropertyColumn Property="trip => trip.EndDate" />
-    <PropertyColumn Property="trip => trip.UserId" />
+    <PropertyColumn Property="trip => trip.User.Id" />
     <PropertyColumn Property="trip => trip.DateCreated" />
     <PropertyColumn Property="trip => trip.DataUpdated" />
-
     <TemplateColumn Context="trip">
         <a href="@($"trips/edit?id={trip.Id}")">Edit</a> |
         <a href="@($"trips/details?id={trip.Id}")">Details</a> |
@@ -31,7 +28,7 @@
 </QuickGrid>
 
 @code {
-    private TravelPlanningContext context = default!;
+    private TravelPlanningContext context = default;
 
     protected override void OnInitialized()
     {

@@ -1,4 +1,6 @@
 ﻿@page "/restaurants/create"
+@page "/restaurants/create/{TripId:int}"
+
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
@@ -6,7 +8,7 @@
 
 <PageTitle>Create</PageTitle>
 
-<h1>Create</h1>
+<h1>Create for @TripId</h1>
 
 <h2>Restaurant</h2>
 <hr />
@@ -55,9 +57,38 @@
 </div>
 
 @code {
+    [Parameter]
+    public int TripId { get; set; }
+
     [SupplyParameterFromForm]
     private Restaurant Restaurant { get; set; } = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        // Set default dates
+        Restaurant.DateCreated = DateTime.UtcNow;
+        Restaurant.DataUpdated = DateTime.UtcNow;
+
+        using var context = DbFactory.CreateDbContext();
+
+        {
+            // Verify the trip
+            var trip = await context.Trip
+                .FirstOrDefaultAsync(t => t.Id == TripId);
+
+            if (trip != null)
+            {
+                // Trip doesn't exist or doesn't belong to this user
+                Restaurant.TripId = trip.Id;
+            }
+
+            else
+            {
+                NavigationManager.NavigateTo("/error", true);
+                return;
+            }
+        }
+    }
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task AddRestaurant()
     {
