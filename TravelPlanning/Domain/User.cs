@@ -10,7 +10,7 @@ namespace TravelPlanning.Domain
         public int Id { get; set; }
 
        
-       public string? IdentityUserId { get; set; }
+        public string? IdentityUserId { get; set; }
 
         public TravelPlanningUser? IdentityUser { get; set; }
         public string? UserName { get; set; }

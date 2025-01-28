@@ -12,8 +12,8 @@ using TravelPlanning.Data;
 namespace TravelPlanning.Migrations
 {
     [DbContext(typeof(TravelPlanningContext))]
-    [Migration("20250128034859_DBcontext")]
-    partial class DBcontext
+    [Migration("20250128061917_Updatedbcontextdb")]
+    partial class Updatedbcontextdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,7 +254,7 @@ namespace TravelPlanning.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1d50fe53-304c-4fc3-877b-d38924d8e7e4",
+                            ConcurrencyStamp = "a436e3dd-2d5b-4731-b7cc-8c24b5502fba",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -262,9 +262,9 @@ namespace TravelPlanning.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEB/LbgLj0E6gBosUqLN/sn42jethS2Emx8UuWkmUmmcBVGLlZ7xbSBTiw9IvQRpmLw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAnCumfajiva1NEwT1FcFrW7dC6nrr1Y9A4LfQ5TyCQ7aMV1bED5DkFR6LJHU/gk0g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5aabc79e-77e3-4f46-9787-f4ea6c563a38",
+                            SecurityStamp = "fb89e354-9e5e-47b6-890a-a828069af0d3",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });

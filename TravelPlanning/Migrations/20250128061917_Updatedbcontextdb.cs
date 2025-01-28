@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelPlanning.Migrations
 {
     /// <inheritdoc />
-    public partial class DBcontext : Migration
+    public partial class Updatedbcontextdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -315,7 +315,7 @@ namespace TravelPlanning.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "1d50fe53-304c-4fc3-877b-d38924d8e7e4", "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEB/LbgLj0E6gBosUqLN/sn42jethS2Emx8UuWkmUmmcBVGLlZ7xbSBTiw9IvQRpmLw==", null, false, "5aabc79e-77e3-4f46-9787-f4ea6c563a38", false, "admin@localhost.com" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "a436e3dd-2d5b-4731-b7cc-8c24b5502fba", "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEAnCumfajiva1NEwT1FcFrW7dC6nrr1Y9A4LfQ5TyCQ7aMV1bED5DkFR6LJHU/gk0g==", null, false, "fb89e354-9e5e-47b6-890a-a828069af0d3", false, "admin@localhost.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
