@@ -12,8 +12,8 @@ using TravelPlanning.Data;
 namespace TravelPlanning.Migrations
 {
     [DbContext(typeof(TravelPlanningContext))]
-    [Migration("20250122015841_UpdatedERD")]
-    partial class UpdatedERD
+    [Migration("20250128034859_DBcontext")]
+    partial class DBcontext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,7 +254,7 @@ namespace TravelPlanning.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5275af93-caca-4297-87f4-7d2021f2faec",
+                            ConcurrencyStamp = "1d50fe53-304c-4fc3-877b-d38924d8e7e4",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -262,9 +262,9 @@ namespace TravelPlanning.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENAjfuzwez1vznauAK1B97jdL0GZU0QONpXJHCO5Ce0hDP0fui4F1R4buYmEG1mv5g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB/LbgLj0E6gBosUqLN/sn42jethS2Emx8UuWkmUmmcBVGLlZ7xbSBTiw9IvQRpmLw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9514b3d3-94ec-41f7-a7e6-ec59e1f4d09d",
+                            SecurityStamp = "5aabc79e-77e3-4f46-9787-f4ea6c563a38",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -446,19 +446,23 @@ namespace TravelPlanning.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DataUpdated")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("DomainUsername")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdentityUserId")
+                        .IsUnique()
+                        .HasFilter("[IdentityUserId] IS NOT NULL");
 
                     b.ToTable("User");
                 });
@@ -567,6 +571,16 @@ namespace TravelPlanning.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TravelPlanning.Domain.User", b =>
+                {
+                    b.HasOne("TravelPlanning.Data.TravelPlanningUser", "IdentityUser")
+                        .WithOne()
+                        .HasForeignKey("TravelPlanning.Domain.User", "IdentityUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("TravelPlanning.Domain.Trip", b =>

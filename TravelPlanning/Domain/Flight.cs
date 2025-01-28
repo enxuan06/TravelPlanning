@@ -11,7 +11,7 @@ namespace TravelPlanning.Domain
         public DateTime DepartureDate { get; set; }
 
         //Navigation Property
-        public Trip Trip { get; set; }
+        public Trip? Trip { get; set; }
 
     }
 }

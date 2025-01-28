@@ -15,10 +15,10 @@
 </p>
 
 <QuickGrid Class="table" Items="context.User">
+    <PropertyColumn Property="user => user.IdentityUserId" />
     <PropertyColumn Property="user => user.UserName" />
-    <PropertyColumn Property="user => user.PhoneNumber" />
+    <PropertyColumn Property="user => user.DomainUsername" />
     <PropertyColumn Property="user => user.DateCreated" />
-    <PropertyColumn Property="user => user.DataUpdated" />
 
     <TemplateColumn Context="user">
         <a href="@($"users/edit?id={user.Id}")">Edit</a> |

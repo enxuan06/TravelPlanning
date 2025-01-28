@@ -13,6 +13,6 @@ namespace TravelPlanning.Domain
         public DateTime DateVisited { get; set; }
 
         //Navigation Property
-        public Trip Trip { get; set; }
+        public Trip? Trip { get; set; }
     }
 }

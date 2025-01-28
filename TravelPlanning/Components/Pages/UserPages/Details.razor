@@ -17,14 +17,14 @@
     }
     else {
         <dl class="row">
+            <dt class="col-sm-2">IdentityUserId</dt>
+            <dd class="col-sm-10">@user.IdentityUserId</dd>
             <dt class="col-sm-2">UserName</dt>
             <dd class="col-sm-10">@user.UserName</dd>
-            <dt class="col-sm-2">PhoneNumber</dt>
-            <dd class="col-sm-10">@user.PhoneNumber</dd>
+            <dt class="col-sm-2">DomainUsername</dt>
+            <dd class="col-sm-10">@user.DomainUsername</dd>
             <dt class="col-sm-2">DateCreated</dt>
             <dd class="col-sm-10">@user.DateCreated</dd>
-            <dt class="col-sm-2">DataUpdated</dt>
-            <dd class="col-sm-10">@user.DataUpdated</dd>
         </dl>
         <div>
             <a href="@($"/users/edit?id={user.Id}")">Edit</a> |

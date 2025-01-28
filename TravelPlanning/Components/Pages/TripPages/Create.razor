@@ -79,7 +79,7 @@
         }
         // Parse the UserId from the ClaimsPrincipal
         var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (!string.IsNullOrEmpty(userId)) { Trip.UserId = userId; }
+        if (!string.IsNullOrEmpty(userId)) { Trip.UserId = int.Parse(userId); }
     }
     private async Task AddTrip()
     {

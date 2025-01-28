@@ -9,7 +9,7 @@ namespace TravelPlanning.Data
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
-        public ICollection<Trip> Trips { get; set; } = new List<Trip>();
+      
     }
 }
  

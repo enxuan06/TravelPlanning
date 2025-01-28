@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TravelPlanning.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdatedERD : Migration
+    public partial class DBcontext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,22 +52,6 @@ namespace TravelPlanning.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataUpdated = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,6 +155,28 @@ namespace TravelPlanning.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdentityUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DomainUsername = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_User_AspNetUsers_IdentityUserId",
+                        column: x => x.IdentityUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -309,7 +315,7 @@ namespace TravelPlanning.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "5275af93-caca-4297-87f4-7d2021f2faec", "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAENAjfuzwez1vznauAK1B97jdL0GZU0QONpXJHCO5Ce0hDP0fui4F1R4buYmEG1mv5g==", null, false, "9514b3d3-94ec-41f7-a7e6-ec59e1f4d09d", false, "admin@localhost.com" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "1d50fe53-304c-4fc3-877b-d38924d8e7e4", "admin@localhost.com", true, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEB/LbgLj0E6gBosUqLN/sn42jethS2Emx8UuWkmUmmcBVGLlZ7xbSBTiw9IvQRpmLw==", null, false, "5aabc79e-77e3-4f46-9787-f4ea6c563a38", false, "admin@localhost.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -379,6 +385,13 @@ namespace TravelPlanning.Migrations
                 name: "IX_Trip_UserId",
                 table: "Trip",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_IdentityUserId",
+                table: "User",
+                column: "IdentityUserId",
+                unique: true,
+                filter: "[IdentityUserId] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -415,13 +428,13 @@ namespace TravelPlanning.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Trip");
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

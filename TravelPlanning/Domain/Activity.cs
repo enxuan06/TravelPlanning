@@ -11,6 +11,6 @@
         public string? Address { get; set; }
 
         //Navigation Property
-        public Trip Trip { get; set; }
+        public Trip? Trip { get; set; }
     }
 }

@@ -23,24 +23,24 @@ else
                 <ValidationSummary role="alert"/>
                 <input type="hidden" name="User.Id" value="@User.Id" />
                 <div class="mb-3">
+                    <label for="identityuserid" class="form-label">IdentityUserId:</label>
+                    <InputText id="identityuserid" @bind-Value="User.IdentityUserId" class="form-control" />
+                    <ValidationMessage For="() => User.IdentityUserId" class="text-danger" />
+                </div>
+                <div class="mb-3">
                     <label for="username" class="form-label">UserName:</label>
                     <InputText id="username" @bind-Value="User.UserName" class="form-control" />
                     <ValidationMessage For="() => User.UserName" class="text-danger" />
                 </div>
                 <div class="mb-3">
-                    <label for="phonenumber" class="form-label">PhoneNumber:</label>
-                    <InputText id="phonenumber" @bind-Value="User.PhoneNumber" class="form-control" />
-                    <ValidationMessage For="() => User.PhoneNumber" class="text-danger" />
+                    <label for="domainusername" class="form-label">DomainUsername:</label>
+                    <InputText id="domainusername" @bind-Value="User.DomainUsername" class="form-control" />
+                    <ValidationMessage For="() => User.DomainUsername" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="datecreated" class="form-label">DateCreated:</label>
                     <InputDate id="datecreated" @bind-Value="User.DateCreated" class="form-control" />
                     <ValidationMessage For="() => User.DateCreated" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="dataupdated" class="form-label">DataUpdated:</label>
-                    <InputDate id="dataupdated" @bind-Value="User.DataUpdated" class="form-control" />
-                    <ValidationMessage For="() => User.DataUpdated" class="text-danger" />
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </EditForm>
