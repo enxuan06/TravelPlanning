@@ -1,4 +1,4 @@
-﻿@page "/activities/edit"
+﻿@page "/activities/edit/{activityId:int}/{tripId:int}"
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
@@ -59,12 +59,16 @@ else
 }
 
 <div>
-    <a href="/activities">Back to List</a>
+    <a href="/activities/@tripId">Back to List</a>
 </div>
 
 @code {
     [SupplyParameterFromQuery]
     private int Id { get; set; }
+    [Parameter]
+    public int ActivityId { get; set; }
+    [Parameter]
+    public int tripId { get; set; }
 
     [SupplyParameterFromForm]
     private Activity? Activity { get; set; }
@@ -72,7 +76,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        Activity ??= await context.Activity.FirstOrDefaultAsync(m => m.Id == Id);
+        Activity ??= await context.Activity.FirstOrDefaultAsync(m => m.Id == ActivityId && m.TripId == tripId);
 
         if (Activity is null)
         {
@@ -86,14 +90,14 @@ else
     {
         using var context = DbFactory.CreateDbContext();
         context.Attach(Activity!).State = EntityState.Modified;
-
+        await context.SaveChangesAsync();
         try
         {
             await context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!ActivityExists(Activity!.Id))
+            if (!ActivityExist(Activity!.Id))
             {
                 NavigationManager.NavigateTo("notfound");
             }
@@ -103,12 +107,12 @@ else
             }
         }
 
-        NavigationManager.NavigateTo("/activities");
+        NavigationManager.NavigateTo($"/activities/{tripId}");
     }
 
-    private bool ActivityExists(int id)
+    private bool ActivityExist(int id)
     {
         using var context = DbFactory.CreateDbContext();
-        return context.Activity.Any(e => e.Id == id);
+        return context.Trip.Any(e => e.Id == id);
     }
 }

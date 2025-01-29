@@ -1,13 +1,11 @@
-﻿@page "/activities/details"
+﻿@page "/activities/details/{id:int}/{TripId:int}"
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Details</PageTitle>
-
 <h1>Details</h1>
-
 <div>
     <h2>Activity</h2>
     <hr />
@@ -15,7 +13,8 @@
     {
         <p><em>Loading...</em></p>
     }
-    else {
+    else
+    {
         <dl class="row">
             <dt class="col-sm-2">TripId</dt>
             <dd class="col-sm-10">@activity.TripId</dd>
@@ -26,13 +25,13 @@
             <dt class="col-sm-2">Address</dt>
             <dd class="col-sm-10">@activity.Address</dd>
             <dt class="col-sm-2">DateCreated</dt>
-            <dd class="col-sm-10">@activity.DateCreated</dd>
+            <dd class="col-sm-10">@activity.DateCreated.ToString("dd-MM-yyyy")</dd>
             <dt class="col-sm-2">DataUpdated</dt>
-            <dd class="col-sm-10">@activity.DataUpdated</dd>
+            <dd class="col-sm-10">@activity.DataUpdated.ToString("dd-MM-yyyy")</dd>
         </dl>
         <div>
-            <a href="@($"/activities/edit?id={activity.Id}")">Edit</a> |
-            <a href="@($"/activities")">Back to List</a>
+            <a href="/activities/edit/@activity.Id/@TripId" class="btn btn-primary">Edit</a> |
+            <a href="/activities/@TripId" class="btn btn-secondary">Back to List</a>
         </div>
     }
 </div>
@@ -40,17 +39,20 @@
 @code {
     private Activity? activity;
 
-    [SupplyParameterFromQuery]
-    private int Id { get; set; }
+    [Parameter]
+    public int id { get; set; }
+
+    [Parameter]
+    public int TripId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        activity = await context.Activity.FirstOrDefaultAsync(m => m.Id == Id);
+        activity = await context.Activity.FirstOrDefaultAsync(m => m.Id == id && m.TripId == TripId);
 
         if (activity is null)
         {
-            NavigationManager.NavigateTo("notfound");
+            NavigationManager.NavigateTo("/notfound");
         }
     }
 }

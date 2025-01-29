@@ -54,7 +54,13 @@ namespace TravelPlanning.Data
                 .WithMany(t => t.Flights) // trip can have many flights
                 .HasForeignKey(f => f.TripId) // Foreign key is TripId
                 .OnDelete(DeleteBehavior.Cascade);
-           
+
+            builder.Entity<Lodging>()
+                .HasOne(r => r.Trip) //Restaurant is linked to Trip
+                .WithMany(t => t.Lodgings) // Trip can have many restaurants
+                .HasForeignKey(r => r.TripId) // Foreign key is TripId
+                .OnDelete(DeleteBehavior.Cascade);
+
 
 
 

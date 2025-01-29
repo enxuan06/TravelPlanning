@@ -48,7 +48,9 @@
 </div>
 
 <div>
-    <a href="/flights">Back to List</a>
+    <a href="/flights/@TripId">Back to List</a>
+    <br />
+    <a href="/plan/@TripId">Back to Plan</a>
 </div>
 
 @code {
@@ -93,6 +95,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Flight.Add(Flight);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo($"/trips/details/{TripId}");
+        NavigationManager.NavigateTo($"/flights/{TripId}");
     }
 }

@@ -1,4 +1,6 @@
 ﻿@page "/lodgings/edit"
+@page "/lodgings/edit/{LodgingId:int}/{TripId:int}"
+
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
@@ -8,7 +10,7 @@
 
 <h1>Edit</h1>
 
-<h2>Lodging</h2>
+<h2>Lodging @TripId</h2>
 <hr />
 @if (Lodging is null)
 {
@@ -20,13 +22,9 @@ else
         <div class="col-md-4">
             <EditForm method="post" Model="Lodging" OnValidSubmit="UpdateLodging" FormName="edit" Enhance>
                 <DataAnnotationsValidator />
-                <ValidationSummary role="alert"/>
+                <ValidationSummary role="alert" />
                 <input type="hidden" name="Lodging.Id" value="@Lodging.Id" />
-                <div class="mb-3">
-                    <label for="tripid" class="form-label">TripId:</label>
-                    <InputNumber id="tripid" @bind-Value="Lodging.TripId" class="form-control" />
-                    <ValidationMessage For="() => Lodging.TripId" class="text-danger" />
-                </div>
+                <input type="hidden" name="Lodging.TripId" value="@TripId" />
                 <div class="mb-3">
                     <label for="hotelname" class="form-label">HotelName:</label>
                     <InputText id="hotelname" @bind-Value="Lodging.HotelName" class="form-control" />
@@ -49,12 +47,12 @@ else
                 </div>
                 <div class="mb-3">
                     <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Lodging.DateCreated" class="form-control" />
+                    <InputDate id="datecreated" @bind-Value="Lodging.DateCreated" class="form-control" Disabled="true" />
                     <ValidationMessage For="() => Lodging.DateCreated" class="text-danger" />
                 </div>
                 <div class="mb-3">
                     <label for="dataupdated" class="form-label">DataUpdated:</label>
-                    <InputDate id="dataupdated" @bind-Value="Lodging.DataUpdated" class="form-control" />
+                    <InputDate id="dataupdated" @bind-Value="Lodging.DataUpdated" class="form-control" Disabled="true" />
                     <ValidationMessage For="() => Lodging.DataUpdated" class="text-danger" />
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -64,10 +62,14 @@ else
 }
 
 <div>
-    <a href="/lodgings">Back to List</a>
+    <a href="/lodgings/@TripId">Back to List</a>
 </div>
 
 @code {
+    [Parameter]
+    public int TripId { get; set; }
+    [Parameter]
+    public int LodgingId { get; set; }
     [SupplyParameterFromQuery]
     private int Id { get; set; }
 
@@ -77,7 +79,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        Lodging ??= await context.Lodging.FirstOrDefaultAsync(m => m.Id == Id);
+        Lodging ??= await context.Lodging.FirstOrDefaultAsync(m => m.Id == LodgingId && m.TripId == TripId);
 
         if (Lodging is null)
         {
@@ -85,12 +87,11 @@ else
         }
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task UpdateLodging()
     {
         using var context = DbFactory.CreateDbContext();
-        context.Attach(Lodging!).State = EntityState.Modified;
+        Lodging!.DataUpdated = DateTime.UtcNow; // Update the last modified date
+        context.Attach(Lodging).State = EntityState.Modified;
 
         try
         {
@@ -98,7 +99,7 @@ else
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!LodgingExists(Lodging!.Id))
+            if (!LodgingExists(Lodging.Id))
             {
                 NavigationManager.NavigateTo("notfound");
             }
@@ -108,7 +109,7 @@ else
             }
         }
 
-        NavigationManager.NavigateTo("/lodgings");
+        NavigationManager.NavigateTo($"/lodgings/{TripId}");
     }
 
     private bool LodgingExists(int id)

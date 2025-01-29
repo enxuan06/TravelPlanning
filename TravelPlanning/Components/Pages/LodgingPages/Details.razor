@@ -1,4 +1,6 @@
 ﻿@page "/lodgings/details"
+@page "/lodgings/details/{Id:int}/{TripId:int}"
+
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
@@ -6,7 +8,7 @@
 
 <PageTitle>Details</PageTitle>
 
-<h1>Details</h1>
+<h1>Details @TripId</h1>
 
 <div>
     <h2>Lodging</h2>
@@ -33,26 +35,29 @@
             <dd class="col-sm-10">@lodging.DataUpdated</dd>
         </dl>
         <div>
-            <a href="@($"/lodgings/edit?id={lodging.Id}")">Edit</a> |
-            <a href="@($"/lodgings")">Back to List</a>
+            <a href="/lodgings/edit/@lodging.Id/@TripId" class="btn btn-primary">Edit</a> |
+            <a href="/lodgings/@TripId" class="btn btn-secondary">Back to List</a>
         </div>
     }
 </div>
 
 @code {
     private Lodging? lodging;
+    [Parameter]
+    public int TripId { get; set; }
 
-    [SupplyParameterFromQuery]
-    private int Id { get; set; }
+    [Parameter]
+    public int Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        lodging = await context.Lodging.FirstOrDefaultAsync(m => m.Id == Id);
+        lodging = await context.Lodging.FirstOrDefaultAsync(m => m.Id == Id && m.TripId == TripId);
 
         if (lodging is null)
         {
             NavigationManager.NavigateTo("notfound");
         }
     }
+    
 }

@@ -41,7 +41,9 @@
 </div>
 
 <div>
-    <a href="/activities">Back to List</a>
+    <a href="/activities/@TripId">View activity</a>
+    <br />
+    <a href="/plan/@TripId">Back to Plan</a>
 </div>
 
 @code {
@@ -58,25 +60,25 @@
         Activity.DataUpdated = DateTime.UtcNow;
 
 
-        
+
         using var context = DbFactory.CreateDbContext();
 
         {
-                // Verify the trip 
-                var trip = await context.Trip
-                    .FirstOrDefaultAsync(t => t.Id == TripId );
+            // Verify the trip
+            var trip = await context.Trip
+                .FirstOrDefaultAsync(t => t.Id == TripId);
 
-                if (trip != null)
-                {
-                    // Trip doesn't exist or doesn't belong to this user
+            if (trip != null)
+            {
+                // Trip doesn't exist or doesn't belong to this user
                 Activity.TripId = trip.Id;
-                }
-            
-                else
-                 {
+            }
+
+            else
+            {
                 NavigationManager.NavigateTo("/error", true);
                 return;
-                  }
+            }
         }
     }
 
@@ -85,6 +87,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Activity.Add(Activity);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo($"/trips/details/{TripId}");
+        NavigationManager.NavigateTo($"/activities/{Activity.TripId}");
     }
 }

@@ -1,42 +1,88 @@
-﻿@page "/activities"
-
+﻿@page "/activities/{TripId:int}"
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using TravelPlanning.Domain
 @using TravelPlanning.Data
 @implements IAsyncDisposable
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
 
 <PageTitle>Index</PageTitle>
+<h1>Index @TripId</h1>
 
-<h1>Index</h1>
+<div class="mb-3">
+    <a href="/activities/create/@TripId" class="btn btn-primary">Create New activity</a>
+</div>
 
-<p>
-    <a href="activities/create">Create New</a>
-</p>
 
-<QuickGrid Class="table" Items="context.Activity">
+<QuickGrid Class="table" Items="@filteredActivities">
     <PropertyColumn Property="activity => activity.TripId" />
     <PropertyColumn Property="activity => activity.ActivityName" />
     <PropertyColumn Property="activity => activity.Description" />
     <PropertyColumn Property="activity => activity.Address" />
-    <PropertyColumn Property="activity => activity.DateCreated" />
-    <PropertyColumn Property="activity => activity.DataUpdated" />
-
+    <PropertyColumn Property="activity => activity.DateCreated" Format="dd-MM-yyyy" />
+    <PropertyColumn Property="activity => activity.DataUpdated" Format="dd-MM-yyyy" />
     <TemplateColumn Context="activity">
-        <a href="@($"activities/edit?id={activity.Id}")">Edit</a> |
-        <a href="@($"activities/details?id={activity.Id}")">Details</a> |
-        <a href="@($"activities/delete?id={activity.Id}")">Delete</a>
+        <a href="/activities/edit/@activity.Id/@TripId">Edit</a> |
+        <a href="/activities/details/@activity.Id/@TripId">Details</a> |
+        <a href="/activities/delete/@activity.Id/@TripId">Delete</a>
     </TemplateColumn>
 </QuickGrid>
+<div class="mt-3">
+    <a href="/plan/@TripId" class="btn btn-secondary">Back to Plan</a>
+</div>
+
 
 @code {
-    private TravelPlanningContext context = default!;
+    [Parameter]
+    public int TripId { get; set; }
 
-    protected override void OnInitialized()
+    [SupplyParameterFromForm]
+    private Activity Activity { get; set; } = new();
+
+    private TravelPlanningContext context = default!;
+    private IQueryable<Activity> filteredActivities;
+
+    // Add this to handle parameter changes
+    protected override async Task OnParametersSetAsync()
     {
-        context = DbFactory.CreateDbContext();
+        await LoadData();
     }
 
-    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+    private async Task LoadData()
+    {
+        // Dispose old context if it exists
+        if (context != null)
+        {
+            await context.DisposeAsync();
+        }
+
+        context = DbFactory.CreateDbContext();
+
+        // Verify the trip
+        var trip = await context.Trip
+            .FirstOrDefaultAsync(t => t.Id == TripId);
+
+        if (trip != null)
+        {
+            Activity.TripId = trip.Id;
+            // Use ToListAsync() to materialize the query
+            filteredActivities = context.Activity
+                .Where(a => a.TripId == TripId)
+                .AsNoTracking(); // Add this for better performance
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/error", true);
+            return;
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (context != null)
+        {
+            await context.DisposeAsync();
+        }
+    }
 }

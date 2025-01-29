@@ -1,4 +1,4 @@
-﻿@page "/restaurants/delete"
+﻿@page "/restaurants/delete/{id:int}/{TripId:int}"
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
@@ -43,7 +43,7 @@
         </dl>
         <EditForm method="post" Model="restaurant" OnValidSubmit="DeleteRestaurant" FormName="delete" Enhance>
             <button type="submit" class="btn btn-danger" disabled="@(restaurant is null)">Delete</button> |
-            <a href="/restaurants">Back to List</a>
+            <a href="/restaurants/@TripId">Back to List</a>
         </EditForm>
     }
 </div>
@@ -51,13 +51,16 @@
 @code {
     private Restaurant? restaurant;
 
-    [SupplyParameterFromQuery]
-    private int Id { get; set; }
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public int TripId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        restaurant = await context.Restaurant.FirstOrDefaultAsync(m => m.Id == Id);
+        restaurant = await context.Restaurant.FirstOrDefaultAsync(m => m.Id == Id && m.TripId == TripId);
 
         if (restaurant is null)
         {
@@ -70,6 +73,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Restaurant.Remove(restaurant!);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/restaurants");
+        NavigationManager.NavigateTo($"/restaurants/{TripId}");
     }
 }

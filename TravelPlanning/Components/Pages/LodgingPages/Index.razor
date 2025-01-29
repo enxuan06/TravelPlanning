@@ -1,42 +1,75 @@
-﻿@page "/lodgings"
+﻿@page "/lodgings/{TripId:int}"
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Components.QuickGrid
 @using TravelPlanning.Domain
 @using TravelPlanning.Data
 @implements IAsyncDisposable
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@inject NavigationManager NavigationManager
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Index </PageTitle>
+<h1>Index @TripId </h1>
 
-<h1>Index</h1>
+<div class="mb-3">
+    <a href="/lodgings/create/@TripId" class="btn btn-primary">Create New Lodging</a>
+</div>
 
-<p>
-    <a href="lodgings/create">Create New</a>
-</p>
-
-<QuickGrid Class="table" Items="context.Lodging">
+<QuickGrid Class="table" Items="@filteredLodgings">
     <PropertyColumn Property="lodging => lodging.TripId" />
     <PropertyColumn Property="lodging => lodging.HotelName" />
     <PropertyColumn Property="lodging => lodging.Address" />
-    <PropertyColumn Property="lodging => lodging.CheckInDate" />
-    <PropertyColumn Property="lodging => lodging.CheckOutDate" />
-    <PropertyColumn Property="lodging => lodging.DateCreated" />
-    <PropertyColumn Property="lodging => lodging.DataUpdated" />
-
+    <PropertyColumn Property="lodging => lodging.CheckInDate" Format="dd-MM-yyyy"/>
+    <PropertyColumn Property="lodging => lodging.CheckOutDate" Format="dd-MM-yyyy"/>
+    <PropertyColumn Property="lodging => lodging.DateCreated" Format="dd-MM-yyyy"/>
+    <PropertyColumn Property="lodging => lodging.DataUpdated" Format="dd-MM-yyyy"/>
     <TemplateColumn Context="lodging">
-        <a href="@($"lodgings/edit?id={lodging.Id}")">Edit</a> |
-        <a href="@($"lodgings/details?id={lodging.Id}")">Details</a> |
-        <a href="@($"lodgings/delete?id={lodging.Id}")">Delete</a>
+        <a href="/lodgings/edit/@lodging.Id/@TripId">Edit</a> |
+        <a href="/lodgings/details/@lodging.Id/@TripId">Details</a> |
+        <a href="/lodgings/delete/@lodging.Id/@TripId">Delete</a>
     </TemplateColumn>
 </QuickGrid>
 
-@code {
-    private TravelPlanningContext context = default!;
+<div class="mt-3">
+    <a href="/plan/@TripId" class="btn btn-secondary">Back to Plan</a>
+</div>
 
-    protected override void OnInitialized()
+@code {
+    [Parameter]
+    public int TripId { get; set; }
+    
+    [SupplyParameterFromForm]
+    private Lodging Lodging { get; set; } = new();
+    
+    private TravelPlanningContext context = default!;
+    private IQueryable<Lodging> filteredLodgings;
+    
+    protected override async Task OnInitializedAsync()
     {
         context = DbFactory.CreateDbContext();
+        
+        // Verify the trip
+        var trip = await context.Trip
+            .FirstOrDefaultAsync(t => t.Id == TripId);
+            
+        if (trip != null)
+        {
+            // Trip exists, set the TripId
+            Lodging.TripId = trip.Id;
+            // Filter lodgings by TripId
+            filteredLodgings = context.Lodging.Where(l => l.TripId == TripId);
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/error", true);
+            return;
+        }
     }
 
-    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+    public async ValueTask DisposeAsync()
+    {
+        if (context != null)
+        {
+            await context.DisposeAsync();
+        }
+    }
 }

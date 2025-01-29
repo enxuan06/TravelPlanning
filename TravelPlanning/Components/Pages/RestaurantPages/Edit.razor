@@ -1,4 +1,4 @@
-﻿@page "/restaurants/edit"
+﻿@page "/restaurants/edit/{RestaurantId:int}/{TripId:int}"
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
@@ -59,20 +59,23 @@ else
 }
 
 <div>
-    <a href="/restaurants">Back to List</a>
+    <a href="/restaurants/@TripId">Back to List</a>
 </div>
 
 @code {
     [SupplyParameterFromQuery]
     private int Id { get; set; }
-
+    [Parameter]
+    public int TripId { get; set; }
+    [Parameter]
+    public int RestaurantId { get; set; }
     [SupplyParameterFromForm]
     private Restaurant? Restaurant { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        Restaurant ??= await context.Restaurant.FirstOrDefaultAsync(m => m.Id == Id);
+        Restaurant ??= await context.Restaurant.FirstOrDefaultAsync(m => m.Id == RestaurantId && m.TripId == TripId);
 
         if (Restaurant is null)
         {
@@ -103,7 +106,7 @@ else
             }
         }
 
-        NavigationManager.NavigateTo("/restaurants");
+        NavigationManager.NavigateTo($"/restaurants/{TripId}");
     }
 
     private bool RestaurantExists(int id)

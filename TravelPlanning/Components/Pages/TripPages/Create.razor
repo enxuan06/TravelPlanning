@@ -1,4 +1,5 @@
 ﻿@page "/trips/create"
+
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @using Microsoft.AspNetCore.Identity
@@ -98,6 +99,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Trip.Add(Trip);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/trips");
+        NavigationManager.NavigateTo($"/plan/{Trip.Id}");
     }
 }
