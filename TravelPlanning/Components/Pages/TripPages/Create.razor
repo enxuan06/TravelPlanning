@@ -32,15 +32,15 @@
             </div>
             <div class="mb-3">
                 <label for="startdate" class="form-label">StartDate:</label>
-                <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" />
+                <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <ValidationMessage For="() => Trip.StartDate" class="text-danger" />
             </div>
             <div class="mb-3">
                 <label for="enddate" class="form-label">EndDate:</label>
-                <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" />
+                <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <ValidationMessage For="() => Trip.EndDate" class="text-danger" />
             </div>
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <InputNumber type="hidden" @bind-Value="Trip.UserId" />
             </div>
             <button type="submit" class="btn btn-primary">Create</button>

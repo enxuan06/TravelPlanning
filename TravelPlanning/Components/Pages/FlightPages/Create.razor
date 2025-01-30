@@ -17,7 +17,7 @@
         <EditForm method="post" Model="Flight" OnValidSubmit="AddFlight" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="tripid" class="form-label">TripId:</label> 
                 <InputNumber id="tripid" @bind-Value="Flight.TripId" class="form-control" /> 
                 <ValidationMessage For="() => Flight.TripId" class="text-danger" /> 
@@ -29,15 +29,15 @@
             </div>        
             <div class="mb-3">
                 <label for="departuredate" class="form-label">DepartureDate:</label> 
-                <InputDate id="departuredate" @bind-Value="Flight.DepartureDate" class="form-control" /> 
+                <InputDate id="departuredate" @bind-Value="Flight.DepartureDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <ValidationMessage For="() => Flight.DepartureDate" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="Flight.DateCreated" class="form-control" /> 
                 <ValidationMessage For="() => Flight.DateCreated" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="dataupdated" class="form-label">DataUpdated:</label> 
                 <InputDate id="dataupdated" @bind-Value="Flight.DataUpdated" class="form-control" /> 
                 <ValidationMessage For="() => Flight.DataUpdated" class="text-danger" /> 

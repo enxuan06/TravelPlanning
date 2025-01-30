@@ -28,14 +28,14 @@ namespace TravelPlanning.Data
             .WithOne()                   // No reverse navigation from IdentityUser
             .HasForeignKey<User>(u => u.IdentityUserId) // Foreign key property
 
-            .OnDelete(DeleteBehavior.Cascade); // Optional: Define delete behavior
+            .OnDelete(DeleteBehavior.Cascade); //  Define delete behavior
 
             // Configure the relationship between Trip and User
             builder.Entity<Trip>()
                 .HasOne(t => t.User) // Trip is linked to User
                 .WithMany(u=> u.Trips) // User can have many Trips
                 .HasForeignKey(t => t.UserId) // Foreign key is UserId
-                .OnDelete(DeleteBehavior.Cascade); // Optional: Cascade delete
+                .OnDelete(DeleteBehavior.Cascade); //  Cascade delete
 
             builder.Entity<Restaurant>()
                 .HasOne(r => r.Trip) //Restaurant is linked to Trip

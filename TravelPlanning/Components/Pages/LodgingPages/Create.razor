@@ -16,7 +16,7 @@
         <EditForm method="post" Model="Lodging" OnValidSubmit="AddLodging" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="tripid" class="form-label">TripId:</label> 
                 <InputNumber id="tripid" @bind-Value="Lodging.TripId" class="form-control" /> 
                 <ValidationMessage For="() => Lodging.TripId" class="text-danger" /> 
@@ -33,20 +33,20 @@
             </div>        
             <div class="mb-3">
                 <label for="checkindate" class="form-label">CheckInDate:</label> 
-                <InputDate id="checkindate" @bind-Value="Lodging.CheckInDate" class="form-control" /> 
+                <InputDate id="checkindate" @bind-Value="Lodging.CheckInDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <ValidationMessage For="() => Lodging.CheckInDate" class="text-danger" /> 
             </div>        
             <div class="mb-3">
                 <label for="checkoutdate" class="form-label">CheckOutDate:</label> 
-                <InputDate id="checkoutdate" @bind-Value="Lodging.CheckOutDate" class="form-control" /> 
+                <InputDate id="checkoutdate" @bind-Value="Lodging.CheckOutDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <ValidationMessage For="() => Lodging.CheckOutDate" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="Lodging.DateCreated" class="form-control" /> 
                 <ValidationMessage For="() => Lodging.DateCreated" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="dataupdated" class="form-label">DataUpdated:</label> 
                 <InputDate id="dataupdated" @bind-Value="Lodging.DataUpdated" class="form-control" /> 
                 <ValidationMessage For="() => Lodging.DataUpdated" class="text-danger" /> 

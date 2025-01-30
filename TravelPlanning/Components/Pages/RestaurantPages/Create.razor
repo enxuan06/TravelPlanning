@@ -17,7 +17,7 @@
         <EditForm method="post" Model="Restaurant" OnValidSubmit="AddRestaurant" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="tripid" class="form-label">TripId:</label> 
                 <InputNumber id="tripid" @bind-Value="Restaurant.TripId" class="form-control" /> 
                 <ValidationMessage For="() => Restaurant.TripId" class="text-danger" /> 
@@ -34,15 +34,15 @@
             </div>        
             <div class="mb-3">
                 <label for="datevisited" class="form-label">DateVisited:</label> 
-                <InputDate id="datevisited" @bind-Value="Restaurant.DateVisited" class="form-control" /> 
+                <InputDate id="datevisited" @bind-Value="Restaurant.DateVisited" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <ValidationMessage For="() => Restaurant.DateVisited" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="datecreated" class="form-label">DateCreated:</label> 
                 <InputDate id="datecreated" @bind-Value="Restaurant.DateCreated" class="form-control" /> 
                 <ValidationMessage For="() => Restaurant.DateCreated" class="text-danger" /> 
             </div>        
-            <div class="mb-3">
+            <div class="mb-3" hidden>
                 <label for="dataupdated" class="form-label">DataUpdated:</label> 
                 <InputDate id="dataupdated" @bind-Value="Restaurant.DataUpdated" class="form-control" /> 
                 <ValidationMessage For="() => Restaurant.DataUpdated" class="text-danger" /> 
