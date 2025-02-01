@@ -10,51 +10,71 @@
 
 <PageTitle>Create</PageTitle>
 
-<h1>Create</h1>
+<h1>Create Trip</h1>
+ 
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="card-title text-center text-success mb-4">Trip Details</h2>
+                <EditForm method="post" Model="Trip" OnValidSubmit="AddTrip" FormName="create" Enhance>
+                    <DataAnnotationsValidator />
+                    <ValidationSummary class="text-danger" role="alert" />
 
-<h2>Trip</h2>
-<hr />
+                   <div class="row"> 
+                        <div class="col-md-6 mb-3">
+                        <label for="tripname" class="form-label">TripName:</label>
+                        <InputText id="tripname" @bind-Value="Trip.TripName" class="form-control" />
+                        <ValidationMessage For="() => Trip.TripName" class="text-danger" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="country" class="form-label">Country:</label>
+                        <InputText id="country" @bind-Value="Trip.Country" class="form-control" />
+                        <ValidationMessage For="() => Trip.Country" class="text-danger" />
+                    </div
+                   </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <EditForm method="post" Model="Trip" OnValidSubmit="AddTrip" FormName="create" Enhance>
-            <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert" />
-            <div class="mb-3">
-                <label for="tripname" class="form-label">TripName:</label>
-                <InputText id="tripname" @bind-Value="Trip.TripName" class="form-control" />
-                <ValidationMessage For="() => Trip.TripName" class="text-danger" />
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                        <label for="startdate" class="form-label">StartDate:</label>
+                        <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        <ValidationMessage For="() => Trip.StartDate" class="text-danger" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="enddate" class="form-label">EndDate:</label>
+                        <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        <ValidationMessage For="() => Trip.EndDate" class="text-danger" />
+                    </div>
+                    </div>
+                    <div class="col-md-6 mb-3" hidden>
+                        <InputNumber type="hidden" @bind-Value="Trip.UserId" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </EditForm>
             </div>
-            <div class="mb-3">
-                <label for="country" class="form-label">Country:</label>
-                <InputText id="country" @bind-Value="Trip.Country" class="form-control" />
-                <ValidationMessage For="() => Trip.Country" class="text-danger" />
-            </div>
-            <div class="mb-3">
-                <label for="startdate" class="form-label">StartDate:</label>
-                <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                <ValidationMessage For="() => Trip.StartDate" class="text-danger" />
-            </div>
-            <div class="mb-3">
-                <label for="enddate" class="form-label">EndDate:</label>
-                <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                <ValidationMessage For="() => Trip.EndDate" class="text-danger" />
-            </div>
-            <div class="mb-3" hidden>
-                <InputNumber type="hidden" @bind-Value="Trip.UserId" />
-            </div>
-            <button type="submit" class="btn btn-primary">Create</button>
-        </EditForm>
+        </div>
     </div>
 </div>
 
-<div>
+<div class="text-center mt-4">
     <a href="/trips">Back to List</a>
 </div>
 
 @code {
     [SupplyParameterFromForm]
     private Trip Trip { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var query = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).Query;
+        var queryparams = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(query);
+
+        if (queryparams.TryGetValue("location", out var location))
+        {
+            Trip.Country = location.ToString();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {

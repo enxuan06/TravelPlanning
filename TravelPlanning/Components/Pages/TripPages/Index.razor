@@ -8,11 +8,11 @@
 
 <PageTitle>Index</PageTitle>
 <h1>Index</h1>
-<p>
-    <a href="trips/create">Create New</a>
+<p class="action-links">
+    <a href="trips/create" class="btn btn-primary">Create New</a>
 </p>
 
-<QuickGrid Class="table" Items="@(context.Trip.Include(t => t.User))">
+<QuickGrid Class="table table-striped table-bordered" Items="@(context.Trip.Include(t => t.User))">
     <PropertyColumn Property="trip => trip.TripName" />
     <PropertyColumn Property="trip => trip.Country" />
     <PropertyColumn Property="trip => trip.StartDate" />
@@ -21,9 +21,9 @@
     <PropertyColumn Property="trip => trip.DateCreated" />
     <PropertyColumn Property="trip => trip.DataUpdated" />
     <TemplateColumn Context="trip">
-        <a href="@($"trips/edit?id={trip.Id}")">Edit</a> |
-        <a href="@($"trips/details?id={trip.Id}")">Details</a> |
-        <a href="@($"trips/delete?id={trip.Id}")">Delete</a>
+        <a href="@($"trips/edit?id={trip.Id}")" class="btn btn-secondary btn-sm">Edit</a> |
+        <a href="@($"trips/details?id={trip.Id}")" class="btn btn-info btn-sm">Details</a> |
+        <a href="@($"trips/delete?id={trip.Id}")" class="btn btn-danger btn-sm">Delete</a>
     </TemplateColumn>
 </QuickGrid>
 
@@ -37,3 +37,10 @@
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
 }
+<style>
+    .btn-primary {
+        background-color: darkslateblue;
+        color: #fff;
+        border: none;
+    }
+</style>

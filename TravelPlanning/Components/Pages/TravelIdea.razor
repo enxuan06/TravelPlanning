@@ -10,138 +10,165 @@
         height: 300px;
         object-fit: cover;
     }
+
+    .carousel-item img {
+        width: 60%;
+        height: 600px;
+        object-fit: cover;
+    }
 </style>
 
-<!-- Carousel wrapper -->
-<div id="carouselMultiItemExample"
-     data-mdb-carousel-init
-     class="carousel slide carousel-dark text-center"
-     data-mdb-ride="carousel"
-     data-mdb-interval="5000">
-    data-mdb-interval="2000">
-
-    <!-- Inner -->
-    <div class="carousel-inner py-4">
-        <!-- Single item -->
-        <div class="carousel-item active">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card text-white">
-                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                                    <div class="text-center">
-                                        <h5 class="card-title">Japan</h5>
-                                        <p class="card-text">Discover the beauty of Japan!</p>
-                                    </div>
-                                </div>
-                                <img src="/images/japan.jpg" class="card-img-top" alt="Japan" />
-                            </div>
-                        </div>
+<div class="container mt-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100">
+                <a href="/trips/create?location=Japan" style="text-decoration: none;">
+                    <img src="/images/japan.jpg" class="card-img-top" alt="Japan" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Japan</h5>
+                        <p class="card-text">Discover the beauty of Japan!</p>
                     </div>
-
-                    <div class="col-lg-4 d-none d-lg-block">
-                        <div class="card">
-                            <div class="card text-white">
-                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                                    <div class="text-center">
-                                        <h5 class="card-title">Korea</h5>
-                                        <p class="card-text">Ride the Korean wave!</p>
-                                    </div>
-                                </div>
-                                <img src="/images/korea.png" class="card-img-top" alt="Korea" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 d-none d-lg-block">
-                        <div class="card">
-                            <div class="card text-white">
-                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                                    <div class="text-center">
-                                        <h5 class="card-title">London</h5>
-                                        <p class="card-text">Let's do London.</p>
-                                    </div>
-                                </div>
-                                <img src="/images/london.jpg" class="card-img-top" alt="London" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
 
-        <!-- Single item -->
-        <div class="carousel-item">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="card">
-                            <div class="card text-white">
-                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                                    <div class="text-center">
-                                        <h5 class="card-title">Bali</h5>
-                                        <p class="card-text">Bali: Your Gateway to Paradise.</p>
-                                    </div>
-                                </div>
-                                <img src="/images/bali.jpg" class="card-img-top" alt="Bali" />
-                            </div>
-                        </div>
+        <div class="col">
+            <div class="card h-100">
+                <a href="/trips/create?location=Korea" style="text-decoration: none;">
+                    <img src="/images/korea.png" class="card-img-top" alt="Korea" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Korea</h5>
+                        <p class="card-text">Ride the Korean wave!</p>
                     </div>
-
-                    <div class="col-lg-4 d-none d-lg-block">
-                        <div class="card">
-                            <div class="card text-white">
-                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                                    <div class="text-center">
-                                        <h5 class="card-title">Italy</h5>
-                                        <p class="card-text">Italy. Open to Wonder.</p>
-                                    </div>
-                                </div>
-                                <img src="/images/italy.webp" class="card-img-top" alt="Italy" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 d-none d-lg-block">
-                        <div class="card">
-                            <div class="card text-white">
-                                <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                                    <div class="text-center">
-                                        <h5 class="card-title">Thailand</h5>
-                                        <p class="card-text">Amazing Thailand: Your Stories Never End.</p>
-                                    </div>
-                                </div>
-                                <img src="/images/thailand.webp" class="card-img-top" alt="Thailand" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </a>
             </div>
         </div>
-    </div>
-    <!-- Inner -->
-    <!-- Controls -->
-    <div class="d-flex justify-content-center mb-4">
-        <button class="carousel-control-prev" type="button" data-mdb-target="#carouselMultiItemExample" data-mdb-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-mdb-target="#carouselMultiItemExample" data-mdb-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+
+        <div class="col">
+            <div class="card h-100">
+                <a href="/trips/create?location=London" style="text-decoration: none;">
+                    <img src="/images/london.jpg" class="card-img-top" alt="London" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">London</h5>
+                        <p class="card-text">Let's do London.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100">
+                <a href="/trips/create?location=Bali" style="text-decoration: none;">
+                    <img src="/images/bali.webp" class="card-img-top" alt="Bali" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Bali</h5>
+                        <p class="card-text">Bali: Your Gateway to Paradise.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100">
+                <a href="/trips/create?location=Italy" style="text-decoration: none;">
+                    <img src="/images/italy.webp" class="card-img-top" alt="Italy" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Italy</h5>
+                        <p class="card-text">Italy. Open to Wonder.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100">
+                <a href="/trips/create?location=Thailand" style="text-decoration: none;">
+                    <img src="/images/thailand.webp" class="card-img-top" alt="Thailand" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Thailand</h5>
+                        <p class="card-text">Amazing Thailand: Your Stories Never End.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100">
+                <a href="/trips/create?location=Australia" style="text-decoration: none;">
+                    <img src="/images/australia.jpg" class="card-img-top" alt="Australia" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Australia</h5>
+                        <p class="card-text">Come and Say G'day</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100">
+                <a href="/trips/create?location=Taiwan" style="text-decoration: none;">
+                    <img src="/images/taiwan.jpg" class="card-img-top" alt="Taiwan" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Taiwan</h5>
+                        <p class="card-text">Waves of Wonder</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100">
+                <a href="/trips/create?location=Norway" style="text-decoration: none;">
+                    <img src="/images/norway.webp" class="card-img-top" alt="Norway" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Norway</h5>
+                        <p class="card-text">Powered By Nature</p>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
-<!-- Carousel wrapper -->
-@code {
-    [Inject] IJSRuntime JSRuntime { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await JSRuntime.InvokeVoidAsync("mdb.Carousel.init");
-        }
-    }
-}
+<hr />
+<h4>Get inspired through blogs</h4>
+
+<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="2000">
+            <a href="https://www.theblondeabroad.com/ultimate-italy-travel-guide/">
+            <img src="/Images/italy.webp" class="d-block w-100" alt="italy"
+            </a>
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+            <a href="https://www.heartmybackpack.com/life-travel-norway/"
+            <img src="/Images/norway.webp" class="d-block w-100" alt="norway">
+            </a>
+        </div>
+        <div class="carousel-item">
+            <a href="https://www.saltinourhair.com/thailand/">
+            <img src="/Images/thailand.webp" class="d-block w-100" alt="thailand" />
+            </a>
+        </div>
+        <div class="carousel-item">
+            <a href="https://kristywicks.com/london-travel-guide-where-to-eat-stay-and-play/">
+                <img src="/Images/london.jpg" class="d-block w-100" alt="london" />
+            </a>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<script>
+        $('.carousel').carousel({
+      interval: 2000
+    })
+</script>
+ 
