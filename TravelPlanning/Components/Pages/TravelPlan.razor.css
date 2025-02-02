@@ -1,0 +1,105 @@
+﻿
+
+.background-gif {
+    position: relative; /* This makes it possible to position the pseudo-element */
+    height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width */
+}
+
+    /* Add a pseudo-element for the background image */
+    .background-gif::before {
+        content: ""; /* Needed to create the pseudo-element */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('images/Cozy.jpg');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.8; /* Only apply opacity to the background */
+        z-index: -1; /* Push the background behind the content */
+    }
+
+
+
+/* Center the container */
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    gap: 30px;
+    padding: 0px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0px auto;
+}
+
+/* Button styling */
+.custom-button {
+    border: 5px solid #000;
+    width: 250px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    background-color: gray;
+    transition: transform 0.2s ease-in-out;
+}
+
+    /* Button hover effect */
+    .custom-button:hover {
+        transform: scale(1.05);
+    }
+
+    /* Different colors for each button */
+    .custom-button:nth-child(1) {
+        background-image: url('/images/Activity.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .custom-button:nth-child(2) {
+        background-image: url('/images/Flight.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .custom-button:nth-child(3) {
+        background-image: url('/images/Lodging.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .custom-button:nth-child(4) {
+        background-image: url('/images/Resturant.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Make sure text is readable */
+    .custom-button span {
+        background: rgba(0, 0, 0, 0.5); /* Adds a dark overlay for better readability */
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+
+/* Responsive Design: Stack buttons on smaller screens */
+@media screen and (max-width: 2500px) { /* Adjust this breakpoint */
+    body {
+        background-size: contain; /* Ensure the entire image is visible */
+    }
+}
+    /* Center the heading */
+    .text-center {
+        text-align: center;
+        margin-top: 20px;
+    }

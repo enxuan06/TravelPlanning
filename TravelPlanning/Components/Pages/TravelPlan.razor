@@ -3,14 +3,16 @@
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 
-<h3>TravelPlan</h3>
+<div class="background-gif">
+<h3 class="text-center">TravelPlan</h3>
 
-<a href="/activities/create/@TripId" class="button selection">🕹️ Activities</a>
-<a href="/flights/create/@TripId" class="button selection">🚃 Flight</a>
-<a href="/lodgings/create/@TripId" class="button selection">🏨 lodging</a>
-<a href="/restaurants/create/@TripId" class="button selection">🍽️ Restaurant</a>
-
-<hr />
+<div class="button-container">
+    <a href="/activities/create/@TripId" class="custom-button">🕹️ Activities</a>
+    <a href="/flights/create/@TripId" class="custom-button">🚃 Flight</a>
+    <a href="/lodgings/create/@TripId" class="custom-button">🏨 Lodging</a>
+    <a href="/restaurants/create/@TripId" class="custom-button">🍽️ Restaurant</a>
+</div>
+</div>
 
 @code {
     [Parameter]
@@ -24,3 +26,4 @@
         trip = await context.Trip.FindAsync(TripId);
     }
 }
+
