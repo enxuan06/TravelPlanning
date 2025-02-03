@@ -8,6 +8,7 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
+
 <PageTitle>Create</PageTitle>
 
 <h1>Create Trip</h1>
@@ -27,11 +28,18 @@
                         <InputText id="tripname" @bind-Value="Trip.TripName" class="form-control" />
                         <ValidationMessage For="() => Trip.TripName" class="text-danger" />
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="country" class="form-label">Country:</label>
-                        <InputText id="country" @bind-Value="Trip.Country" class="form-control" />
-                        <ValidationMessage For="() => Trip.Country" class="text-danger" />
-                    </div
+                        <div class="col-md-6 mb-3">
+                            <label for="country" class="form-label">Country:</label>
+                            <InputSelect id="country" @bind-Value="Trip.Country" class="form-control">
+                                <option value="">Select a country</option>
+                                @foreach (var country in Countries)
+                                {
+                                    <option value="@country">@country</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="() => Trip.Country" class="text-danger" />
+                        </div>
+
                    </div>
 
                     <div class="row">
@@ -64,12 +72,37 @@
     [SupplyParameterFromForm]
     private Trip Trip { get; set; } = new();
 
+    private List<string> Countries = new()
+{
+    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
+    "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bali",
+    "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
+    "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia",
+    "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo",
+    "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea",
+    "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana",
+    "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India",
+    "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati",
+    "Kuwait", "Kyrgyzstan", "Korea", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania",
+    "Luxembourg", "London", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania",
+    "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
+    "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia",
+    "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland",
+    "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines",
+    "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone",
+    "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",  "South Sudan",
+    "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania",
+    "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
+    "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu",
+    "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+};
+
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
         var query = NavigationManager.ToAbsoluteUri(NavigationManager.Uri).Query;
         var queryparams = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(query);
-
         if (queryparams.TryGetValue("location", out var location))
         {
             Trip.Country = location.ToString();

@@ -12,14 +12,14 @@
 
 <h1>Create</h1>
 
-<h2>Activity for Trip @TripId</h2>
+<h2>Activity for Trip </h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <EditForm method="post" Model="Activity" OnValidSubmit="AddActivity" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
-            <InputNumber type="hidden" @bind-Value="Activity.TripId" />
+            <InputNumber hidden @bind-Value="Activity.TripId" />
             <div class="mb-3">
                 <label for="activityname" class="form-label">ActivityName:</label>
                 <InputText id="activityname" @bind-Value="Activity.ActivityName" class="form-control" />
