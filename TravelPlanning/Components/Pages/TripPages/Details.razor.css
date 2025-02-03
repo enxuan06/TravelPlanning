@@ -1,0 +1,43 @@
+﻿.timeline-container {
+    position: relative;
+    padding: 10px 0;
+}
+
+.timeline-item {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+
+.timeline-date {
+    width: 100px;
+    height: 50px;
+    padding: 10px;
+    background-color: lightblue;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+
+.timeline-content {
+    flex-grow: 1;
+    margin-left: 20px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    height: flex;
+}
+
+.timeline-icon {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    width: 40px;
+    text-align: center;
+}
+
+.timeline-add-plan {
+    text-align: center;
+    margin-top: 20px;
+}
