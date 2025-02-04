@@ -7,27 +7,31 @@
 @inject NavigationManager NavigationManager
 
 <PageTitle>Create</PageTitle>
+<div class="background-container">
 
-<h1>Create for @TripId</h1>
 
-<h2>Flight</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <EditForm method="post" Model="Flight" OnValidSubmit="AddFlight" FormName="create" Enhance>
+<h1 style ="color: black;">Flight</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+            <div class="card shadow">
+            <div class="card-body">
+               <h2 class="card-title text-center text-success mb-4">Flight Details</h2>
+               <EditForm method="post" Model="Flight" OnValidSubmit="AddFlight" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
+            <div class="row">
             <div class="mb-3" hidden>
                 <label for="tripid" class="form-label">TripId:</label> 
                 <InputNumber id="tripid" @bind-Value="Flight.TripId" class="form-control" /> 
                 <ValidationMessage For="() => Flight.TripId" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
+            </div>
+            <div class="col-md-6 mb-3">
                 <label for="airlinename" class="form-label">AirlineName:</label> 
                 <InputText id="airlinename" @bind-Value="Flight.AirlineName" class="form-control" /> 
                 <ValidationMessage For="() => Flight.AirlineName" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
+            </div>
+            <div class="col-md-6 mb-3">
                 <label for="departuredate" class="form-label">DepartureDate:</label> 
                 <InputDate id="departuredate" @bind-Value="Flight.DepartureDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <ValidationMessage For="() => Flight.DepartureDate" class="text-danger" /> 
@@ -41,17 +45,22 @@
                 <label for="dataupdated" class="form-label">DataUpdated:</label> 
                 <InputDate id="dataupdated" @bind-Value="Flight.DataUpdated" class="form-control" /> 
                 <ValidationMessage For="() => Flight.DataUpdated" class="text-danger" /> 
-            </div>        
+            </div>  
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
-    </div>
+            <div class="text-center mt-4">
+                <a href="/flights/@TripId">Back to List</a>
+                <br />
+                <a href="/plan/@TripId">Back to Plan</a>
+            </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
+   
 
-<div>
-    <a href="/flights/@TripId">Back to List</a>
-    <br />
-    <a href="/plan/@TripId">Back to Plan</a>
-</div>
 
 @code {
     [Parameter]
@@ -95,6 +104,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Flight.Add(Flight);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo($"/flights/{TripId}");
+        NavigationManager.NavigateTo($"/trips/details?id={Flight.TripId}");
     }
 }

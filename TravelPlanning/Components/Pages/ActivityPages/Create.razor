@@ -10,16 +10,24 @@
 
 <PageTitle>Create Activity</PageTitle>
 
-<h1>Create</h1>
+<div class="background-container">
+<h1>Activity for Trip </h1>
 
-<h2>Activity for Trip </h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+        <h2 class="card-title text-center text-success mb-4">Activity Details</h2>
         <EditForm method="post" Model="Activity" OnValidSubmit="AddActivity" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
-            <InputNumber hidden @bind-Value="Activity.TripId" />
+            <div class="row">
+            <div class="mb-3" hidden>
+                <label for="activityname" class="form-label">TripId:</label>
+                <InputNumber id="tripid" @bind-Value="Activity.TripId" class="form-control" />
+                <ValidationMessage For="() => Activity.TripId" class="text-danger" />
+            </div>
+
             <div class="mb-3">
                 <label for="activityname" class="form-label">ActivityName:</label>
                 <InputText id="activityname" @bind-Value="Activity.ActivityName" class="form-control" />
@@ -35,16 +43,21 @@
                 <InputText id="address" @bind-Value="Activity.Address" class="form-control" />
                 <ValidationMessage For="() => Activity.Address" class="text-danger" />
             </div>
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
+             <div class="text-center mt-4">
+                <a href="/activities/@TripId">View activity</a>
+                <br />
+                <a href="/plan/@TripId">Back to Plan</a>
+            </div>
+        </div>
+       </div>
     </div>
+  </div>
 </div>
 
-<div>
-    <a href="/activities/@TripId">View activity</a>
-    <br />
-    <a href="/plan/@TripId">Back to Plan</a>
-</div>
+
 
 @code {
     [Parameter]
@@ -87,6 +100,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Activity.Add(Activity);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo($"/activities/{Activity.TripId}");
+        NavigationManager.NavigateTo($"/trips/details?id={Activity.TripId}");
     }
 }

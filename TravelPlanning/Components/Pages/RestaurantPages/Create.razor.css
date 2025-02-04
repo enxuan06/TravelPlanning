@@ -1,0 +1,60 @@
+﻿
+
+.background-container {
+    background-image: url('/images/Restaurant_background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+    .background-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1%; /* Ensure it covers the full width */
+        height: 1%;
+        background: rgba(0, 0, 0, 0.3); /* Darken the background */
+        z-index: -1;
+    }
+
+.card {
+    background-color: rgba(255, 255, 255, 0.8); /* 80% opacity */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Softer shadow */
+    max-width: 700px;
+    margin: auto;
+}
+
+input[type="date"] {
+    padding: 8px;
+    font-size: 16px;
+}
+
+h1, .card-title {
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Add shadow for better contrast */
+}
+
+
+
+.row.justify-content-center {
+    margin-top: 50px;
+}
+
+.btn-primary {
+    background-color: #28a745; /* A fresh green tone */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+}

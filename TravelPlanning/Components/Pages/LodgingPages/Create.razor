@@ -112,6 +112,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Lodging.Add(Lodging);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo($"/lodgings/{Lodging.TripId}");
+        NavigationManager.NavigateTo($"/trips/details?id={Lodging.TripId}");
     }
 }

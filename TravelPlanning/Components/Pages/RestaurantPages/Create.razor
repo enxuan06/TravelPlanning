@@ -8,22 +8,25 @@
 
 <PageTitle>Create</PageTitle>
 
-<h1>Create for @TripId</h1>
+<div class="background-container">
+<h1>Create Restaurant</h1>
 
-<h2>Restaurant</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+             <h2 class="card-title text-center text-success mb-4">Restaurant Details</h2>
         <EditForm method="post" Model="Restaurant" OnValidSubmit="AddRestaurant" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
+            <div class="row">
             <div class="mb-3" hidden>
                 <label for="tripid" class="form-label">TripId:</label> 
                 <InputNumber id="tripid" @bind-Value="Restaurant.TripId" class="form-control" /> 
                 <ValidationMessage For="() => Restaurant.TripId" class="text-danger" /> 
             </div>        
             <div class="mb-3">
-                <label for="resturantname" class="form-label">ResturantName:</label> 
+                <label for="resturantname" class="form-label">RestaurantName:</label> 
                 <InputText id="resturantname" @bind-Value="Restaurant.ResturantName" class="form-control" /> 
                 <ValidationMessage For="() => Restaurant.ResturantName" class="text-danger" /> 
             </div>        
@@ -46,18 +49,21 @@
                 <label for="dataupdated" class="form-label">DataUpdated:</label> 
                 <InputDate id="dataupdated" @bind-Value="Restaurant.DataUpdated" class="form-control" /> 
                 <ValidationMessage For="() => Restaurant.DataUpdated" class="text-danger" /> 
-            </div>        
+            </div>  
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
-    </div>
+            <div class="text-center mt-4">
+                <a href="/restaurants/@TripId">Back to List</a>
+                <br />
+                <a href="/plan/@TripId">Back to Plan</a>
+            </div>
+        </div>
+     </div>
+   </div>
+  </div>
 </div>
 
-<div>
-    <a href="/restaurants/@TripId">Back to List</a>
-    <br />
-    <a href="/plan/@TripId">Back to Plan</a>
-
-</div>
 
 @code {
     [Parameter]
@@ -98,6 +104,6 @@
         using var context = DbFactory.CreateDbContext();
         context.Restaurant.Add(Restaurant);
         await context.SaveChangesAsync();
-        NavigationManager.NavigateTo($"/restaurants/{TripId}");
+        NavigationManager.NavigateTo($"/trips/details?id={Restaurant.TripId}");
     }
 }
