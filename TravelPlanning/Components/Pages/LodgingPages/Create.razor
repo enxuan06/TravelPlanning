@@ -6,37 +6,42 @@
 @inject NavigationManager NavigationManager
 
 <PageTitle>Create</PageTitle>
+<div class="background-container">
 
-<h1>Create for @TripId</h1>
 
-<h2>Lodging</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <EditForm method="post" Model="Lodging" OnValidSubmit="AddLodging" FormName="create" Enhance>
+    <h1 style="color: black;">Create Lodging</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="card-title text-center text-success mb-4">Lodding Details</h2>   
+          <EditForm method="post" Model="Lodging" OnValidSubmit="AddLodging" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert"/>
+            <div class="row">
             <div class="mb-3" hidden>
                 <label for="tripid" class="form-label">TripId:</label> 
                 <InputNumber id="tripid" @bind-Value="Lodging.TripId" class="form-control" /> 
                 <ValidationMessage For="() => Lodging.TripId" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
+            </div> 
+              <div class="col-md-6 mb-3">
                 <label for="hotelname" class="form-label">HotelName:</label> 
                 <InputText id="hotelname" @bind-Value="Lodging.HotelName" class="form-control" /> 
                 <ValidationMessage For="() => Lodging.HotelName" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
+            </div>
+            
+             <div class="col-md-6 mb-3">
                 <label for="address" class="form-label">Address:</label> 
                 <InputText id="address" @bind-Value="Lodging.Address" class="form-control" /> 
                 <ValidationMessage For="() => Lodging.Address" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
+            </div>
+             <div class="col-md-6 mb-3">
                 <label for="checkindate" class="form-label">CheckInDate:</label> 
                 <InputDate id="checkindate" @bind-Value="Lodging.CheckInDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <ValidationMessage For="() => Lodging.CheckInDate" class="text-danger" /> 
-            </div>        
-            <div class="mb-3">
+            </div>
+             <div class="col-md-6 mb-3">
                 <label for="checkoutdate" class="form-label">CheckOutDate:</label> 
                 <InputDate id="checkoutdate" @bind-Value="Lodging.CheckOutDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <ValidationMessage For="() => Lodging.CheckOutDate" class="text-danger" /> 
@@ -50,19 +55,21 @@
                 <label for="dataupdated" class="form-label">DataUpdated:</label> 
                 <InputDate id="dataupdated" @bind-Value="Lodging.DataUpdated" class="form-control" /> 
                 <ValidationMessage For="() => Lodging.DataUpdated" class="text-danger" /> 
-            </div>        
+            </div>  
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
+             <div class="text-center mt-4">
+                <a href="/lodgings/@TripId">Back to List</a>
+                <br />
+                <a href="/plan/@TripId">Back to Plan</a>
+            </div>
+       </div>
+      </div>
     </div>
 </div>
-
-<div>
-    <a href="/lodgings/@TripId">Back to List</a>
-    <br />
-    <a href="/plan/@TripId">Back to Plan</a>
-
-
 </div>
+
 
 @code {
     [Parameter]
