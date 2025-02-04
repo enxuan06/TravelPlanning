@@ -40,4 +40,15 @@
 .timeline-add-plan {
     text-align: center;
     margin-top: 20px;
+    color: burlywood;
+    
+}
+.card-header{
+    background-color:dodgerblue;
+}
+.card{
+    border:none;
+}
+.badge{
+    background-color: dimgrey;
 }

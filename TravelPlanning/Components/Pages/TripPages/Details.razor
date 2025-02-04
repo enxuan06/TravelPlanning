@@ -14,22 +14,17 @@
 else
 {
     <div class="container-fluid py-4">
-
         <div class="row g-4">
-
             <!-- Main Trip Details -->
-
             <div class="col-md-7">
                 <div class="card h-70 shadow-sm">
-                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <div class="card-header text-white d-flex justify-content-between align-items-center">
                         <h2 class="mb-0">@trip.TripName</h2>
                         <div class="btn-group">
                             <a href="@($"/trips/edit?id={trip.Id}")" class="btn btn-sm btn-light">
                                 <i class="bi bi-pencil me-1"></i>Edit
                             </a>
-
                             <a href="/trips" class="btn btn-sm btn-outline-light">
-
                                 <i class="bi bi-arrow-left me-1"></i>Back to List
                             </a>
                         </div>
@@ -39,7 +34,6 @@ else
                         <div class="row">
                             <div class="col-md-6">
                                 <dl class="row">
-
                                     <dt class="col-5 text-muted">Country</dt>
                                     <dd class="col-7">@trip.Country</dd>
 
@@ -52,112 +46,126 @@ else
                             </div>
 
                             <div class="col-md-6">
-
                                 <dl class="row" hidden>
-
                                     <dt class="col-5 text-muted">Created On</dt>
                                     <dd class="col-7">@trip.DateCreated.ToString("MM/dd/yyyy HH:mm")</dd>
 
                                     <dt class="col-5 text-muted">Last Updated</dt>
                                     <dd class="col-7">@trip.DataUpdated.ToString("MM/dd/yyyy HH:mm")</dd>
-
                                 </dl>
                             </div>
-                        </div>
+                    
+                <!-- Details Section Below Trip Details -->
+                         <details class="mb-4">
+                            <summary class="h6"> Flight</summary>
+                            @if (flight != null)
+                            {
+                                @foreach (var flight in flight)
+                                {
+                                    <div class="border-bottom py-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-2">@flight.DepartureDate.ToString("dddd, MMMM dd, yyyy")</h6>
+                                            <a href="/flights/edit/@flight.Id/@flight.TripId" class="btn btn-sm btn-outline-primary">🛫 Edit</a>
+                                        </div>
+                                        <p class="mb-0">
+                                            Airline: @flight.AirlineName <br />
+                                            Time: @flight.DepartureDate
+                                        </p>
+                                    </div>
+                                }
+                            }
+                        </details>
+
+                        <details class="mb-4">
+                            <summary class="h6"> Lodging</summary>
+                            @if (Lodging != null)
+                            {
+                                @foreach (var lodging in Lodging)
+                                {
+                                    <div class="border-bottom py-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-2">@lodging.HotelName</h6>
+                                            <a href="/lodgings/edit/@lodging.Id/@lodging.TripId" class="btn btn-sm btn-outline-primary">🛏️ Edit</a>
+                                        </div>
+                                        <p class="mb-0">
+                                            Check-in: @lodging.CheckInDate.ToShortDateString()<br>
+                                            Address: @lodging.Address<br>
+                                            Check-out: @lodging.CheckOutDate.ToShortDateString()
+                                        </p>
+                                    </div>
+                                }
+                            }
+                        </details>
+
+                         <details class="mb-4">
+                            <summary class="h6"> Restaurant</summary>
+                            @if (restaurant != null)
+                            {
+                                @foreach (var restaurant in restaurant)
+                                {
+                                    <div class="border-bottom py-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-2">@restaurant.ResturantName</h6>
+                                            <a href="/restaurants/edit/@restaurant.Id/@restaurant.TripId" class="btn btn-sm btn-outline-primary">🍽️ Edit</a>
+                                        </div>
+                                        <p class="mb-0">
+                                            Date: @restaurant.DateVisited.ToShortDateString()<br>
+                                            Address: @restaurant.Address
+                                        </p>
+                                    </div>
+                                }
+                            }
+                        </details>
+
+                         <details class="mb-4">
+                            <summary class="h6"> Activity</summary>
+                            @if (activity != null)
+                            {
+                                @foreach (var activity in activity)
+                                {
+                                    <div class="border-bottom py-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-2">@activity.ActivityName</h6>
+                                            <p class="mb-0">
+                                              Address: @activity.Address<br />
+                                              Description: @activity.Description
+                                            </p>
+                                            <a href="/activities/edit/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Edit</a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                         </details>
+
+                         <div class="d-flex gap-2 flex-wrap mt-4">
+                            <a href="/activities/create/@trip.Id" class="btn btn-info custom-btn">🕹️ Add Activity</a>
+                            <a href="/flights/create/@trip.Id" class="btn btn-info custom-btn">✈️ Add Flight</a>
+                            <a href="/lodgings/create/@trip.Id" class="btn btn-info custom-btn">🏨 Add Lodging</a>
+                            <a href="/restaurants/create/@trip.Id" class="btn btn-info custom-btn">🍽️ Add Restaurant</a>
+                         </div>
+                       </div>
                     </div>
                 </div>
             </div>
-
             <!-- Timeline - Right Side -->
-            <div class="col-md-4">
-                <div class="timeline-container">
-                    @if (flight != null)
-                    {
-                        @foreach (var flight in flight)
-                        {
-                            <div class="timeline-item">
-                                <div class="timeline-icon">
-                                    <a href="/flights/edit/@flight.Id/@flight.TripId">🛫</a>
+            <div class="col-md-5">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-secondary text-white">
+                        <h3 class="mb-0">Timeline</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline-container">
+                            @foreach (var item in GetSortedTimelineItems())
+                            {
+                                <div class="timeline-item border-bottom py-2">
+                                    <div class="timeline-content">
+                                        <h6 class="mb-1">@item.Date.ToString("dddd, MMMM dd, yyyy")</h6>
+                                        <p class="mb-2">@item.Title</p>
+                                        <small class="text-muted">@item.Details</small>
+                                    </div>
                                 </div>
-                                <div class="timeline-content">
-                                    <h6>@flight.DepartureDate.ToShortDateString()</h6>
-                                    <details>
-                                        <summary>Airline: @flight.AirlineName</summary>
-                                        <p> Time:@flight.DepartureDate </p>
-                                    </details>
-                                </div>
-                            </div>
-                        }
-                    }
-                    @if (Lodging != null)
-                    {
-                        @foreach (var lodging in Lodging)
-                        {
-                            <div class="timeline-item">
-                                <div class="timeline-icon">
-                                    <a href="/lodgings/edit/@lodging.Id/@lodging.TripId">🛏️</a>
-                                </div>
-                                <div class="timeline-content">
-                                    <h6>@lodging.HotelName</h6>
-                                    <details>
-                                        <summary>Check-in: @lodging.CheckInDate.ToShortDateString()</summary>
-                                        <p>
-                                            Name:@lodging.HotelName<br>
-                                            Address: @lodging.Address<br>
-                                            Check-out: @lodging.CheckOutDate.ToShortDateString()<br>
-                                        </p>
-                                    </details>
-                                </div>
-                            </div>
-                        }
-                    }
-                    @if (activity != null)
-                    {
-                        @foreach (var activity in activity)
-                        {
-                            <div class="timeline-item">
-                                <div class="timeline-icon">
-                                    <a href="/activities/edit/@activity.Id/@activity.TripId">🎮</a>
-                                </div>
-                                <div class="timeline-content">
-                                    <h6>@activity.ActivityName</h6>
-                                    <details>
-                                        <summary>Address: @activity.Address</summary>
-                                        <p>
-                                            Description: @activity.Description
-                                        </p>
-                                    </details>
-                                </div>
-                            </div>
-                        }
-                    }
-                    @if (restaurant != null)
-                    {
-                        @foreach (var restaurant in restaurant)
-                        {
-                            <div class="timeline-item">
-                                <div class="timeline-icon">
-                                    <a href="/restaurants/edit/@restaurant.Id/@restaurant.TripId">🍽️</a>
-                                </div>
-                                <div class="timeline-content">
-                                    <h6>@restaurant.ResturantName</h6>
-                                    <details>
-                                        <summary>Date: @restaurant.DateVisited.ToShortDateString()</summary>
-                                        <p>
-                                            Address: @restaurant.Address
-                                        </p>
-                                    </details>
-                                </div>
-                            </div>
-                        }
-                    }
-
-
-                    <div class="timeline-add-plan">
-                        <a href="/activities/create/@trip.Id" class="btn btn-primary">🕹️ Activities</a>
-                        <a href="/flights/create/@trip.Id" class="btn btn-primary">✈️ Flight</a>
-                        <a href="/lodgings/create/@trip.Id" class="btn btn-primary">🏨 Lodging</a>
-                        <a href="/restaurants/create/@trip.Id" class="btn btn-primary">🍽️ Restaurant</a>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -173,6 +181,14 @@ else
     private List<Activity>? activity;
     private List<Flight>? flight;
     private List<Restaurant>? restaurant;
+
+    private class TimelineItem
+    {
+        public DateTime Date { get; set; }
+        public string Title { get; set; } = "";
+        public string Details { get; set; } = "";
+        public string Type { get; set; } = "";
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -207,5 +223,58 @@ else
         {
             NavigationManager.NavigateTo("notfound");
         }
+    }
+    private List<TimelineItem> GetSortedTimelineItems()
+    {
+        var timelineItems = new List<TimelineItem>();
+
+        // Add flights
+        if (flight != null)
+        {
+            timelineItems.AddRange(flight.Select(f => new TimelineItem
+                {
+                    Date = f.DepartureDate,
+                    Title = $"Flight: {f.AirlineName}",
+                    Details = $"Departure Time: {f.DepartureDate.ToString("HH:mm")}",
+                    Type = "Flight"
+                }));
+        }
+
+        // Add lodgings - add both check-in and check-out dates
+        if (Lodging != null)
+        {
+            foreach (var l in Lodging)
+            {
+                timelineItems.Add(new TimelineItem
+                    {
+                        Date = l.CheckInDate,
+                        Title = $"Check-in: {l.HotelName}",
+                        Details = $"Address: {l.Address}",
+                        Type = "Lodging"
+                    });
+
+                timelineItems.Add(new TimelineItem
+                    {
+                        Date = l.CheckOutDate,
+                        Title = $"Check-out: {l.HotelName}",
+                        Details = $"Address: {l.Address}",
+                        Type = "Lodging"
+                    });
+            }
+        }
+
+        // Add restaurants
+        if (restaurant != null)
+        {
+            timelineItems.AddRange(restaurant.Select(r => new TimelineItem
+                {
+                    Date = r.DateVisited,
+                    Title = $"Restaurant: {r.ResturantName}",
+                    Details = $"Address: {r.Address}",
+                    Type = "Restaurant"
+              }));
+        }
+        // Sort all items by date
+        return timelineItems.OrderBy(x => x.Date).ToList();
     }
 }
