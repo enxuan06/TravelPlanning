@@ -66,6 +66,7 @@ else
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h6 class="mb-2">@flight.DepartureDate.ToString("dddd, MMMM dd, yyyy")</h6>
                                             <a href="/flights/edit/@flight.Id/@flight.TripId" class="btn btn-sm btn-outline-primary">🛫 Edit</a>
+                                            <a href="/flights/delete/@flight.Id/@flight.TripId" class="btn btn-sm btn-outline-primary">🛫 Delete</a>
                                         </div>
                                         <p class="mb-0">
                                             Airline: @flight.AirlineName <br />
@@ -86,6 +87,7 @@ else
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h6 class="mb-2">@lodging.HotelName</h6>
                                             <a href="/lodgings/edit/@lodging.Id/@lodging.TripId" class="btn btn-sm btn-outline-primary">🛏️ Edit</a>
+                                            <a href="/lodgings/delete/@lodging.Id/@lodging.TripId" class="btn btn-sm btn-outline-primary">🛏️ Delete</a>
                                         </div>
                                         <p class="mb-0">
                                             Check-in: @lodging.CheckInDate.ToShortDateString()<br>
@@ -107,6 +109,7 @@ else
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h6 class="mb-2">@restaurant.ResturantName</h6>
                                             <a href="/restaurants/edit/@restaurant.Id/@restaurant.TripId" class="btn btn-sm btn-outline-primary">🍽️ Edit</a>
+                                            <a href="/restaurants/delete/@restaurant.Id/@restaurant.TripId" class="btn btn-sm btn-outline-primary">🍽️ Delete</a>
                                         </div>
                                         <p class="mb-0">
                                             Date: @restaurant.DateVisited.ToShortDateString()<br>
@@ -131,6 +134,8 @@ else
                                               Description: @activity.Description
                                             </p>
                                             <a href="/activities/edit/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Edit</a>
+                                            <a href="/activities/delete/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Edit</a>
+
                                         </div>
                                     </div>
                                 }
