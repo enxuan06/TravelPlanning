@@ -9,16 +9,14 @@
 
 <PageTitle>Flights</PageTitle>
 
-<h1>Flights for Trip @TripId</h1>
-
-<div class="mb-3">
+<div class=" header mb-3">
     <a href="/flights/create/@TripId" class="btn btn-primary">Create New Flight</a>
 </div>
 
 <QuickGrid Class="table" Items="@filteredFlights">
     <PropertyColumn Property="flight => flight.TripId" />
     <PropertyColumn Property="flight => flight.AirlineName" />
-    <PropertyColumn Property="flight => flight.DepartureDate" />
+    <PropertyColumn Property="flight => flight.DepartureDate " />
     <PropertyColumn Property="flight => flight.DateCreated" Format="dd-MM-yyyy" />
     <PropertyColumn Property="flight => flight.DataUpdated" Format="dd-MM-yyyy" />
     <TemplateColumn Context="flight">
@@ -29,6 +27,8 @@
 </QuickGrid>
 <div class="mt-3">
     <a href="/plan/@TripId" class="btn btn-secondary">Back to Plan</a>
+    <br />
+    
 </div>
 
 @code {

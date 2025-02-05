@@ -4,74 +4,98 @@
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Edit</PageTitle>
+<PageTitle>Edit Trip</PageTitle>
 
-<h1>Edit</h1>
-
-<h2>Trip</h2>
-<hr />
-@if (Trip is null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="row">
-        <div class="col-md-4">
-            <EditForm method="post" Model="Trip" OnValidSubmit="UpdateTrip" FormName="edit" Enhance>
-                <DataAnnotationsValidator />
-                <ValidationSummary role="alert"/>
-                <input type="hidden" name="Trip.Id" value="@Trip.Id" />
-                <div class="mb-3">
-                    <label for="tripname" class="form-label">TripName:</label>
-                    <InputText id="tripname" @bind-Value="Trip.TripName" class="form-control" />
-                    <ValidationMessage For="() => Trip.TripName" class="text-danger" />
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="country" class="form-label">Country:</label>
-                    <InputSelect id="country" @bind-Value="Trip.Country" class="form-control">
-                        <option value="">Select a country</option>
-                        @foreach (var country in Countries)
-                        {
-                            <option value="@country">@country</option>
-                        }
-                    </InputSelect>
-                    <ValidationMessage For="() => Trip.Country" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="startdate" class="form-label">StartDate:</label>
-                    <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" />
-                    <ValidationMessage For="() => Trip.StartDate" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="enddate" class="form-label">EndDate:</label>
-                    <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" />
-                    <ValidationMessage For="() => Trip.EndDate" class="text-danger" />
-                </div>
-                <div class="mb-3" hidden>
-                    <label for="userid" class="form-label">UserId:</label>
-                    <InputNumber id="userid" @bind-Value="Trip.UserId" class="form-control" />
-                    <ValidationMessage For="() => Trip.UserId" class="text-danger" />
-                </div>
-                <div class="mb-3" hidden>
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Trip.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => Trip.DateCreated" class="text-danger" />
-                </div>
-                <div class="mb-3" hidden>
-                    <label for="dataupdated" class="form-label">DataUpdated:</label>
-                    <InputDate id="dataupdated" @bind-Value="Trip.DataUpdated" class="form-control" />
-                    <ValidationMessage For="() => Trip.DataUpdated" class="text-danger" />
-                </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </EditForm>
+<div class="container py-4">
+    @if (Trip is null)
+    {
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2"><em>Loading...</em></p>
         </div>
-    </div>
-}
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-header text-black">
+                <h2 class="h4 mb-0">Editing Trip: @Trip.TripName</h2>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <EditForm method="post" Model="Trip" OnValidSubmit="UpdateTrip" FormName="edit" Enhance>
+                            <DataAnnotationsValidator />
+                            <ValidationSummary role="alert" class="alert alert-danger" />
+                            <input type="hidden" name="Trip.Id" value="@Trip.Id" />
 
-<div>
-    <a href="/trips">Back to List</a>
+                            <div class="mb-4">
+                                <label for="tripname" class="form-label fw-bold">Trip Name</label>
+                                <InputText id="tripname" @bind-Value="Trip.TripName" class="form-control form-control-lg" />
+                                <ValidationMessage For="() => Trip.TripName" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="country" class="form-label fw-bold">Country</label>
+                                <InputSelect id="country" @bind-Value="Trip.Country" class="form-control">
+                                    <option value="">Select a country</option>
+                                    @foreach (var country in Countries)
+                                    {
+                                        <option value="@country">@country</option>
+                                    }
+                                </InputSelect>
+                                <ValidationMessage For="() => Trip.Country" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="startdate" class="form-label fw-bold">Start Date</label>
+                                <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" />
+                                <ValidationMessage For="() => Trip.StartDate" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="enddate" class="form-label fw-bold">End Date</label>
+                                <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" />
+                                <ValidationMessage For="() => Trip.EndDate" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3" hidden>
+                                <label for="userid" class="form-label">UserId:</label>
+                                <InputNumber id="userid" @bind-Value="Trip.UserId" class="form-control" />
+                                <ValidationMessage For="() => Trip.UserId" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3" hidden>
+                                <label for="datecreated" class="form-label">DateCreated:</label>
+                                <InputDate id="datecreated" @bind-Value="Trip.DateCreated" class="form-control" />
+                                <ValidationMessage For="() => Trip.DateCreated" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3" hidden>
+                                <label for="dataupdated" class="form-label">DataUpdated:</label>
+                                <InputDate id="dataupdated" @bind-Value="Trip.DataUpdated" class="form-control" />
+                                <ValidationMessage For="() => Trip.DataUpdated" class="text-danger" />
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="bi bi-save"></i> Save Changes
+                                </button>
+                                <a href="/trips" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Back to List
+                                </a>
+                                
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+
+
 
 @code {
     [SupplyParameterFromQuery]

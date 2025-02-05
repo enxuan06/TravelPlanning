@@ -4,62 +4,82 @@
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Edit</PageTitle>
+<PageTitle>Edit Restaurant</PageTitle>
 
-<h1>Edit</h1>
-
-<h2>Restaurant</h2>
-<hr />
-@if (Restaurant is null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="row">
-        <div class="col-md-4">
-            <EditForm method="post" Model="Restaurant" OnValidSubmit="UpdateRestaurant" FormName="edit" Enhance>
-                <DataAnnotationsValidator />
-                <ValidationSummary role="alert"/>
-                <input type="hidden" name="Restaurant.Id" value="@Restaurant.Id" />
-                <div class="mb-3">
-                    <label for="tripid" class="form-label">TripId:</label>
-                    <InputNumber id="tripid" @bind-Value="Restaurant.TripId" class="form-control" />
-                    <ValidationMessage For="() => Restaurant.TripId" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="resturantname" class="form-label">ResturantName:</label>
-                    <InputText id="resturantname" @bind-Value="Restaurant.ResturantName" class="form-control" />
-                    <ValidationMessage For="() => Restaurant.ResturantName" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="address" class="form-label">Address:</label>
-                    <InputText id="address" @bind-Value="Restaurant.Address" class="form-control" />
-                    <ValidationMessage For="() => Restaurant.Address" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="datevisited" class="form-label">DateVisited:</label>
-                    <InputDate id="datevisited" @bind-Value="Restaurant.DateVisited" class="form-control" />
-                    <ValidationMessage For="() => Restaurant.DateVisited" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Restaurant.DateCreated" class="form-control" />
-                    <ValidationMessage For="() => Restaurant.DateCreated" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="dataupdated" class="form-label">DataUpdated:</label>
-                    <InputDate id="dataupdated" @bind-Value="Restaurant.DataUpdated" class="form-control" />
-                    <ValidationMessage For="() => Restaurant.DataUpdated" class="text-danger" />
-                </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </EditForm>
+<div class="container py-4">
+    @if (Restaurant is null)
+    {
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2"><em>Loading...</em></p>
         </div>
-    </div>
-}
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-header  text-black">
+                <h2 class="h4 mb-0">Editing Restaurant: @Restaurant.ResturantName</h2>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <EditForm method="post" Model="Restaurant" OnValidSubmit="UpdateRestaurant" FormName="edit" Enhance>
+                            <DataAnnotationsValidator />
+                            <ValidationSummary role="alert" class="alert alert-danger" />
+                            <input type="hidden" name="Restaurant.Id" value="@Restaurant.Id" />
 
-<div>
-    <a href="/restaurants/@TripId">Back to List</a>
+                            <div class="mb-3" hidden>
+                                <label for="tripid" class="form-label">TripId:</label>
+                                <InputNumber id="tripid" @bind-Value="Restaurant.TripId" class="form-control" />
+                                <ValidationMessage For="() => Restaurant.TripId" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="resturantname" class="form-label fw-bold">Restaurant Name</label>
+                                <InputText id="resturantname" @bind-Value="Restaurant.ResturantName" class="form-control form-control-lg" />
+                                <ValidationMessage For="() => Restaurant.ResturantName" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="address" class="form-label fw-bold">Address</label>
+                                <InputText id="address" @bind-Value="Restaurant.Address" class="form-control" />
+                                <ValidationMessage For="() => Restaurant.Address" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="datevisited" class="form-label fw-bold">Visit Date</label>
+                                <InputDate id="datevisited" @bind-Value="Restaurant.DateVisited" class="form-control" />
+                                <ValidationMessage For="() => Restaurant.DateVisited" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3" hidden>
+                                <label for="datecreated" class="form-label">DateCreated:</label>
+                                <InputDate id="datecreated" @bind-Value="Restaurant.DateCreated" class="form-control" />
+                                <ValidationMessage For="() => Restaurant.DateCreated" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3" hidden>
+                                <label for="dataupdated" class="form-label">DataUpdated:</label>
+                                <InputDate id="dataupdated" @bind-Value="Restaurant.DataUpdated" class="form-control" />
+                                <ValidationMessage For="() => Restaurant.DataUpdated" class="text-danger" />
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-4">                               
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="bi bi-save"></i> Save Changes
+                                </button>
+                                <a href="/restaurants/@TripId" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Back to List
+                                </a>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @code {
@@ -83,8 +103,6 @@ else
         }
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task UpdateRestaurant()
     {
         using var context = DbFactory.CreateDbContext();
