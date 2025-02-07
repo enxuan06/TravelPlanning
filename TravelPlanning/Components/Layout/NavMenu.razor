@@ -20,18 +20,18 @@
                 <li class="nav-item">
                     <NavLink class="nav-link" href="/trips/create">Create Trip</NavLink>
                 </li>
+                <AuthorizeView>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Others
-                    </a>
+                    </a>                   
                     <ul class="dropdown-menu">                        
                         <li><a class="dropdown-item" href="/Account/Manage">Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href=" /trips">History</a></li>
-
-                    </ul>
+                        <li><NavLink class="dropdown-item" href=" /trips">History</NavLink></li>
+                    </ul>                  
                 </li>
-                
+                </AuthorizeView>                
             </ul>
 
             <AuthorizeView>
@@ -53,8 +53,7 @@
                 </div>
                 </Authorized>
             </AuthorizeView>
-        
-
+            
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>

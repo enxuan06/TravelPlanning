@@ -134,20 +134,22 @@ else
                                               Description: @activity.Description
                                             </p>
                                             <a href="/activities/edit/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Edit</a>
-                                            <a href="/activities/delete/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Edit</a>
+                                            <a href="/activities/delete/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Delete</a>
 
                                         </div>
                                     </div>
                                 }
                             }
                          </details>
-
-                         <div class="d-flex gap-2 flex-wrap mt-4">
-                            <a href="/activities/create/@trip.Id" class="btn btn-info custom-btn">🕹️ Add Activity</a>
-                            <a href="/flights/create/@trip.Id" class="btn btn-info custom-btn">✈️ Add Flight</a>
-                            <a href="/lodgings/create/@trip.Id" class="btn btn-info custom-btn">🏨 Add Lodging</a>
-                            <a href="/restaurants/create/@trip.Id" class="btn btn-info custom-btn">🍽️ Add Restaurant</a>
-                         </div>
+                            <div class="d-flex gap-2 flex-wrap mt-4">
+                                <a href="/plan/@trip.Id" class="btn btn-primary custom-btn">Add plan 📝</a>
+                                </div>
+                         @* <div class="d-flex gap-2 flex-wrap mt-4"> *@
+                         @*    <a href="/activities/create/@trip.Id" class="btn btn-info custom-btn">🕹️ Add Activity</a> *@
+                         @*    <a href="/flights/create/@trip.Id" class="btn btn-info custom-btn">✈️ Add Flight</a> *@
+                         @*    <a href="/lodgings/create/@trip.Id" class="btn btn-info custom-btn">🏨 Add Lodging</a> *@
+                         @*    <a href="/restaurants/create/@trip.Id" class="btn btn-info custom-btn">🍽️ Add Restaurant</a> *@
+                         @* </div> *@
                        </div>
                     </div>
                 </div>
@@ -157,8 +159,9 @@ else
                 <div class="card shadow-sm">
                     <div class="card-header bg-secondary text-white">
                         <h3 class="mb-0">Timeline</h3>
+                        
                     </div>
-                    <div class="card-body">
+                    <div class="card-body-timeline">
                         <div class="timeline-container">
                             @foreach (var item in GetSortedTimelineItems())
                             {

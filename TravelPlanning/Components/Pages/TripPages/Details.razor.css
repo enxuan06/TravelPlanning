@@ -1,6 +1,8 @@
 ﻿.timeline-container {
     position: relative;
     padding: 10px 0;
+    height : 50px;
+    
 }
 
 .timeline-item {
@@ -43,11 +45,14 @@
     color: burlywood;
     
 }
-.card-header{
-    background-color:dodgerblue;
+
+
+.card-header {
+    background-color: dodgerblue;
 }
 .card{
     border:none;
+   
 }
 .badge{
     background-color: dimgrey;
