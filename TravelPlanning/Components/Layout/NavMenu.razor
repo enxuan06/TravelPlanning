@@ -20,6 +20,11 @@
                 <li class="nav-item">
                     <NavLink class="nav-link" href="/trips/create">Create Trip</NavLink>
                 </li>
+                <li class="nav-item">
+                    <AuthorizeView Roles="Administrator" Context="innerContext">
+                        <NavLink class="nav-link" href="/users">Manage User</NavLink>
+                    </AuthorizeView>
+                </li>
                 <AuthorizeView>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

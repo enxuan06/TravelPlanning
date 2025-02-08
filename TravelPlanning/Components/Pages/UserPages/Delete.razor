@@ -3,12 +3,14 @@
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Administrator")]
 
 <PageTitle>Delete</PageTitle>
 
 <h1>Delete</h1>
 
-<p>Are you sure you want to delete this?</p>
+<p>Are you sure you want to delete this User?</p>
 <div>
     <h2>User</h2>
     <hr />

@@ -5,14 +5,15 @@
 @using TravelPlanning.Data
 @implements IAsyncDisposable
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Administrator")]
+
 
 <PageTitle>Index</PageTitle>
 
-<h1>Index</h1>
+<h1>User List</h1>
 
-<p>
-    <a href="users/create">Create New</a>
-</p>
+
 
 <QuickGrid Class="table" Items="context.User">
     <PropertyColumn Property="user => user.Id" />
@@ -21,9 +22,11 @@
     <PropertyColumn Property="user => user.DateCreated" />
 
     <TemplateColumn Context="user">
-        <a href="@($"users/edit?id={user.Id}")">Edit</a> |
+        <AuthorizeView Roles="Administrator">
+        <a hidden href="@($"users/edit?id={user.Id}")">Edit</a> |
         <a href="@($"users/details?id={user.Id}")">Details</a> |
         <a href="@($"users/delete?id={user.Id}")">Delete</a>
+        </AuthorizeView>
     </TemplateColumn>
 </QuickGrid>
 

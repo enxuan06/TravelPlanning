@@ -3,6 +3,8 @@
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Administrator")]
 
 <PageTitle>Create</PageTitle>
 
