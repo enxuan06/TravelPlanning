@@ -1,9 +1,14 @@
 ﻿@page "/users/delete"
 @using Microsoft.EntityFrameworkCore
+@using TravelPlanning.Data
 @using TravelPlanning.Domain
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
-@using Microsoft.AspNetCore.Authorization
+@inject UserManager<TravelPlanningUser> UserManager
+
+
 @attribute [Authorize(Roles = "Administrator")]
 
 <PageTitle>Delete</PageTitle>
@@ -18,7 +23,8 @@
     {
         <p><em>Loading...</em></p>
     }
-    else {
+    else
+    {
         <dl class="row">
             <dt class="col-sm-2">IdentityUserId</dt>
             <dd class="col-sm-10">@user.IdentityUserId</dd>
@@ -61,9 +67,20 @@
 
     private async Task DeleteUser()
     {
+        if (user is null) return;
+
         using var context = DbFactory.CreateDbContext();
-        context.User.Remove(user!);
-        await context.SaveChangesAsync();
+
+        // Delete IdentityUser first
+        if (!string.IsNullOrEmpty(user.IdentityUserId))
+        {
+            var identityUser = await UserManager.FindByIdAsync(user.IdentityUserId);
+            if (identityUser != null)
+            {
+                await UserManager.DeleteAsync(identityUser);
+            }
+        }
+
         NavigationManager.NavigateTo("/users");
     }
 }
