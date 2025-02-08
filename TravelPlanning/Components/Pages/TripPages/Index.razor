@@ -8,15 +8,16 @@
 
 <PageTitle>Index</PageTitle>
 <h1></h1>
+
 <p class="action-links">
     <a href="trips/create" class="btn btn-primary">Create New</a>
 </p>
 
-<QuickGrid Class="table table-striped table-bordered" Items="@(context.Trip.Include(t => t.User))">
+<QuickGrid Class="table table-striped table-bordered" Items="@(context.Trip.Include(t => t.User).OrderBy(t => t.StartDate))">
     <PropertyColumn Property="trip => trip.TripName" />
     <PropertyColumn Property="trip => trip.Country" />
-    <PropertyColumn Property="trip => trip.StartDate" />
-    <PropertyColumn Property="trip => trip.EndDate" />
+    <PropertyColumn Property="trip => trip.StartDate" Format="dd/MM/yyyy" />
+    <PropertyColumn Property="trip => trip.EndDate" Format="dd/MM/yyyy" />
     <PropertyColumn Property="trip => trip.User.Id" />
     <PropertyColumn Property="trip => trip.DateCreated" />
     <PropertyColumn Property="trip => trip.DataUpdated" />
@@ -37,6 +38,7 @@
 
     public async ValueTask DisposeAsync() => await context.DisposeAsync();
 }
+
 <style>
     .btn-primary {
         background-color: darkslateblue;

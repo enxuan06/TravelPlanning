@@ -8,13 +8,8 @@
 @inject NavigationManager NavigationManager
 
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Restaurant @TripId</PageTitle>
 
-<h1>Index</h1>
-
-<p>
-    <a href="restaurants/create/@TripId">Create New</a>
-</p>
 
 <QuickGrid Class="table" Items="filteredRestaurants">
     <PropertyColumn Property="restaurant => restaurant.TripId" />
@@ -25,13 +20,13 @@
     <PropertyColumn Property="restaurant => restaurant.DataUpdated" />
 
     <TemplateColumn Context="restaurant">
-        <a href="/restaurants/edit/@restaurant.Id/@TripId">Edit</a> |
-        <a href="/restaurants/details/@restaurant.Id/@TripId">Details</a> |
-        <a href="/restaurants/delete/@restaurant.Id/@TripId">Delete</a>
+        <a href="/restaurants/edit/@restaurant.Id/@TripId" class="btn btn-secondary btn-sm">Edit</a> |
+        <a href="/restaurants/details/@restaurant.Id/@TripId" class="btn btn-info btn-sm">Details</a> |
+        <a href="/restaurants/delete/@restaurant.Id/@TripId" class="btn btn-danger btn-sm">Delete</a>
     </TemplateColumn>
 </QuickGrid>
 <div class="mt-3">
-    <a href="/plan/@TripId" class="btn btn-secondary">Back to Plan</a>
+    <a href="/plan/@TripId" class="btn btn-secondary">Continue planning</a>
 </div>
 
 @code {

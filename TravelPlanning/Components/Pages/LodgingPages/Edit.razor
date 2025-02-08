@@ -1,68 +1,93 @@
-﻿@page "/lodgings/edit"
-@page "/lodgings/edit/{LodgingId:int}/{TripId:int}"
+﻿@page "/lodgings/edit/{LodgingId:int}/{TripId:int}"
 
 @using Microsoft.EntityFrameworkCore
 @using TravelPlanning.Domain
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Edit</PageTitle>
+<PageTitle>Edit Lodging</PageTitle>
 
-<h1>Edit</h1>
-
-<h2>Lodging @TripId</h2>
-<hr />
-@if (Lodging is null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <EditForm method="post" Model="Lodging" OnValidSubmit="UpdateLodging" FormName="edit" Enhance>
-                <DataAnnotationsValidator />
-                <ValidationSummary role="alert" />
-                <input type="hidden" name="Lodging.Id" value="@Lodging.Id" />
-                <input type="hidden" name="Lodging.TripId" value="@TripId" />
-                <div class="mb-3">
-                    <label for="hotelname" class="form-label">HotelName:</label>
-                    <InputText id="hotelname" @bind-Value="Lodging.HotelName" class="form-control" />
-                    <ValidationMessage For="() => Lodging.HotelName" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="address" class="form-label">Address:</label>
-                    <InputText id="address" @bind-Value="Lodging.Address" class="form-control" />
-                    <ValidationMessage For="() => Lodging.Address" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="checkindate" class="form-label">CheckInDate:</label>
-                    <InputDate id="checkindate" @bind-Value="Lodging.CheckInDate" class="form-control" />
-                    <ValidationMessage For="() => Lodging.CheckInDate" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="checkoutdate" class="form-label">CheckOutDate:</label>
-                    <InputDate id="checkoutdate" @bind-Value="Lodging.CheckOutDate" class="form-control" />
-                    <ValidationMessage For="() => Lodging.CheckOutDate" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="datecreated" class="form-label">DateCreated:</label>
-                    <InputDate id="datecreated" @bind-Value="Lodging.DateCreated" class="form-control" Disabled="true" />
-                    <ValidationMessage For="() => Lodging.DateCreated" class="text-danger" />
-                </div>
-                <div class="mb-3">
-                    <label for="dataupdated" class="form-label">DataUpdated:</label>
-                    <InputDate id="dataupdated" @bind-Value="Lodging.DataUpdated" class="form-control" Disabled="true" />
-                    <ValidationMessage For="() => Lodging.DataUpdated" class="text-danger" />
-                </div>
-                <button type="submit" class="btn btn-primary">Save</button>
-            </EditForm>
+<div class="container py-4">
+    @if (Lodging is null)
+    {
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2"><em>Loading...</em></p>
         </div>
-    </div>
-}
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-header text-black">
+                <h2 class="h4 mb-0">Editing Lodging: @Lodging.HotelName</h2>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <EditForm method="post" Model="Lodging" OnValidSubmit="UpdateLodging" FormName="edit" Enhance>
+                            <DataAnnotationsValidator />
+                            <ValidationSummary role="alert" class="alert alert-danger" />
+                            <input type="hidden" name="Lodging.Id" value="@Lodging.Id" />
 
-<div>
-    <a href="/lodgings/@TripId">Back to List</a>
+                            <div class="mb-3" hidden>
+                                <label for="tripid" class="form-label">TripId:</label>
+                                <InputNumber id="tripid" @bind-Value="Lodging.TripId" class="form-control" />
+                                <ValidationMessage For="() => Lodging.TripId" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="hotelname" class="form-label fw-bold">Hotel Name</label>
+                                <InputText id="hotelname" @bind-Value="Lodging.HotelName" class="form-control form-control-lg" />
+                                <ValidationMessage For="() => Lodging.HotelName" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="address" class="form-label fw-bold">Address</label>
+                                <InputText id="address" @bind-Value="Lodging.Address" class="form-control" />
+                                <ValidationMessage For="() => Lodging.Address" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="checkindate" class="form-label fw-bold">Check-In Date</label>
+                                <InputDate id="checkindate" @bind-Value="Lodging.CheckInDate" class="form-control" />
+                                <ValidationMessage For="() => Lodging.CheckInDate" class="text-danger" />
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="checkoutdate" class="form-label fw-bold">Check-Out Date</label>
+                                <InputDate id="checkoutdate" @bind-Value="Lodging.CheckOutDate" class="form-control" />
+                                <ValidationMessage For="() => Lodging.CheckOutDate" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3" hidden>
+                                <label for="datecreated" class="form-label">Date Created:</label>
+                                <InputDate id="datecreated" @bind-Value="Lodging.DateCreated" class="form-control" />
+                                <ValidationMessage For="() => Lodging.DateCreated" class="text-danger" />
+                            </div>
+
+                            <div class="mb-3" hidden>
+                                <label for="dataupdated" class="form-label">Last Updated:</label>
+                                <InputDate id="dataupdated" @bind-Value="Lodging.DataUpdated" class="form-control" />
+                                <ValidationMessage For="() => Lodging.DataUpdated" class="text-danger" />
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="bi bi-save"></i> Save Changes
+                                </button>
+
+                                <a href="/lodgings/@TripId" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Cancel
+                                </a>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @code {

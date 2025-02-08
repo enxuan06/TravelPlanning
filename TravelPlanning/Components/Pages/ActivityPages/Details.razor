@@ -5,16 +5,17 @@
 @inject NavigationManager NavigationManager
 
 <PageTitle>Details</PageTitle>
-<h1>Details</h1>
+
 <div>
-    <h2>Activity</h2>
-    <hr />
+    
     @if (activity is null)
     {
         <p><em>Loading...</em></p>
     }
     else
     {
+        <h2> @activity.ActivityName details</h2>
+        <hr />
         <dl class="row">
             <dt class="col-sm-2">TripId</dt>
             <dd class="col-sm-10">@activity.TripId</dd>
@@ -31,7 +32,7 @@
         </dl>
         <div>
             <a href="/activities/edit/@activity.Id/@TripId" class="btn btn-primary">Edit</a> |
-            <a href="/activities/@TripId" class="btn btn-secondary">Back to List</a>
+            <a href="/activities/@TripId" class="btn btn-secondary">Cancel</a>
         </div>
     }
 </div>

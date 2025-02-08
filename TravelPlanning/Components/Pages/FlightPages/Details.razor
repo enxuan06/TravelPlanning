@@ -6,16 +6,15 @@
 
 <PageTitle>Details</PageTitle>
 
-<h1>Details</h1>
-
 <div>
-    <h2>Flight</h2>
-    <hr />
+    
     @if (flight is null)
     {
         <p><em>Loading...</em></p>
     }
     else {
+        <h2> Flight Details</h2>
+        <hr />
         <dl class="row">
             <dt class="col-sm-2">TripId</dt>
             <dd class="col-sm-10">@flight.TripId</dd>
@@ -30,7 +29,7 @@
         </dl>
         <div>
             <a href="/flights/edit/@flight.Id/@TripId" class="btn btn-primary">Edit</a> |
-            <a href="/flights/@TripId" class="btn btn-secondary">Back to List</a>
+            <a href="/flights/@TripId" class="btn btn-secondary">Cancel</a>
         </div>
     }
 </div>

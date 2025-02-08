@@ -5,12 +5,11 @@
 @inject IDbContextFactory<TravelPlanning.Data.TravelPlanningContext> DbFactory
 @inject NavigationManager NavigationManager
 
-<PageTitle>Delete</PageTitle>
-<h1>Delete @TripId</h1>
-<p>Are you sure you want to delete this?</p>
+<PageTitle>Delete @TripId</PageTitle>
+<h2>Are you sure you want to delete ?</h2>
+<hr />
 <div>
-    <h2>Lodging</h2>
-    <hr />
+    
     @if (lodging is null)
     {
         <p><em>Loading...</em></p>
@@ -47,7 +46,7 @@
         </dl>
         <EditForm method="post" Model="lodging" OnValidSubmit="DeleteLodging" FormName="delete" Enhance>
             <button type="submit" class="btn btn-danger" disabled="@(lodging is null)">Delete</button> |
-            <a href="/lodgings/@TripId">Back to List</a>
+            <a href="/lodgings/@TripId" class="btn btn-secondary">Cancel</a>
         </EditForm>
     }
 </div>
