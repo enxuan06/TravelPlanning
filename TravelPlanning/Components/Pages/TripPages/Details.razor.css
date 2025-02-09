@@ -1,59 +1,68 @@
 ﻿.timeline-container {
     position: relative;
-    padding: 10px 0;
-    height : 50px;
-    
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: 70vh;
 }
 
 .timeline-item {
     display: flex;
     position: relative;
-    align-items: center;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    height: auto;
+    min-height: 80px;
 }
-
-
-.timeline-date {
-    width: 100px;
-    height: 50px;
-    padding: 10px;
-    background-color: lightblue;
-    border-radius: 7px;
-    font-weight: bold;
-}
-
 
 .timeline-content {
     flex-grow: 1;
-    margin-left: 20px;
-    padding: 15px;
+    padding: 0.5rem 1rem;
     background-color: white;
     border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    height: flex;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.timeline-icon {
-    margin-right: 1rem;
-    font-size: 1.5rem;
-    width: 40px;
-    text-align: center;
+.timeline-date {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.5rem;
 }
 
-.timeline-add-plan {
-    text-align: center;
-    margin-top: 20px;
-    color: burlywood;
-    
+.timeline-title {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
 }
 
+.timeline-details {
+    color: #666;
+    font-size: 0.9rem;
+    height: 400px;
+}
+
+.outside-trip-dates {
+    display: inline-block;
+    background-color: #ffd700;
+    color: #000;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-left: 8px;
+}
 
 .card-header {
-    background-color: dodgerblue;
+    background-color: #6c757d;
+    color: white;
+    padding: 1rem;
 }
-.card{
-    border:none;
-   
+
+.card {
+    border: none;
+    height: calc(90vh - 2rem);
 }
-.badge{
-    background-color: dimgrey;
+
+.timeline-warning {
+    border-left: 4px solid #ffd700;
 }

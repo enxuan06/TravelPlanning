@@ -13,11 +13,12 @@
 <QuickGrid Class="table" Items="@filteredActivities">
     <AuthorizeView>
     <PropertyColumn Property="activity => activity.TripId" />
+     <PropertyColumn Property="activity => activity.DateCreated" Format="dd-MM-yyyy" />
+
     </AuthorizeView>
     <PropertyColumn Property="activity => activity.ActivityName" />
     <PropertyColumn Property="activity => activity.Description" />
     <PropertyColumn Property="activity => activity.Address" />
-    <PropertyColumn Property="activity => activity.DateCreated" Format="dd-MM-yyyy" />
     <PropertyColumn Property="activity => activity.DataUpdated" Format="dd-MM-yyyy" />
     <TemplateColumn Context="activity">
         <a href="/activities/edit/@activity.Id/@TripId" class="btn btn-secondary btn-sm">Edit</a> |

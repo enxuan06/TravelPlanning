@@ -10,10 +10,11 @@
 <PageTitle>Flights</PageTitle>
 
 <QuickGrid Class="table" Items="@filteredFlights">
+    <AuthorizeView>
     <PropertyColumn Property="flight => flight.TripId" />
+    </AuthorizeView>
     <PropertyColumn Property="flight => flight.AirlineName" />
     <PropertyColumn Property="flight => flight.DepartureDate " />
-    <PropertyColumn Property="flight => flight.DateCreated" Format="dd-MM-yyyy" />
     <PropertyColumn Property="flight => flight.DataUpdated" Format="dd-MM-yyyy" />
     <TemplateColumn Context="flight">
         <a href="/flights/edit/@flight.Id/@TripId" class="btn btn-secondary btn-sm">Edit</a> |

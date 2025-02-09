@@ -11,12 +11,15 @@
 
 
 <QuickGrid Class="table" Items="@filteredLodgings">
+    <AuthorizeView>
     <PropertyColumn Property="lodging => lodging.TripId" />
+     <PropertyColumn Property="lodging => lodging.DateCreated" Format="dd-MM-yyyy" />
+
+    </AuthorizeView>
     <PropertyColumn Property="lodging => lodging.HotelName" />
     <PropertyColumn Property="lodging => lodging.Address" />
     <PropertyColumn Property="lodging => lodging.CheckInDate" Format="dd-MM-yyyy"/>
     <PropertyColumn Property="lodging => lodging.CheckOutDate" Format="dd-MM-yyyy"/>
-    <PropertyColumn Property="lodging => lodging.DateCreated" Format="dd-MM-yyyy"/>
     <PropertyColumn Property="lodging => lodging.DataUpdated" Format="dd-MM-yyyy"/>
     <TemplateColumn Context="lodging">
         <a href="/lodgings/edit/@lodging.Id/@TripId" class="btn btn-secondary btn-sm">Edit</a> |

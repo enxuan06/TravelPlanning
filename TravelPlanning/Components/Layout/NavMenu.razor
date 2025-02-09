@@ -1,5 +1,8 @@
 ﻿@implements IDisposable
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "User")]
+
 
 <nav class="navbar navbar-expand-sm" style="background-color: #e3f2fd;">
     <div class="container-fluid">
@@ -17,9 +20,11 @@
                 <li class="nav-item">
                     <NavLink class="nav-link" href="/Idea">Travel Idea</NavLink>
                 </li>
+                <AuthorizeView >
                 <li class="nav-item">
                     <NavLink class="nav-link" href="/trips/create">Create Trip</NavLink>
                 </li>
+                </AuthorizeView>
                 <li class="nav-item">
                     <AuthorizeView Roles="Administrator" Context="innerContext">
                         <NavLink class="nav-link" href="/users">Manage User</NavLink>

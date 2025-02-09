@@ -6,7 +6,6 @@
 
 <PageTitle>Details</PageTitle>
 
-
 @if (trip is null)
 {
     <p><em>Loading...</em></p>
@@ -55,101 +54,131 @@ else
                                     <dd class="col-7">@trip.DataUpdated.ToString("dd/MM/yyyy")</dd>
                                 </dl>
                             </div>
-                    
-                <!-- Details Section Below Trip Details -->
-                         <details class="mb-4">
-                            <summary class="h6"> Flight</summary>
-                            @if (flight != null)
-                            {
-                                @foreach (var flight in flight)
-                                {
-                                    <div class="border-bottom py-3">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h6 class="mb-2">@flight.DepartureDate.ToString("dddd,dd MMMM, yyyy")</h6>
-                                            <a href="/flights/edit/@flight.Id/@flight.TripId" class="btn btn-sm btn-outline-primary">🛫 Edit</a>
-                                            <a href="/flights/delete/@flight.Id/@flight.TripId" class="btn btn-sm btn-outline-primary">🛫 Delete</a>
-                                        </div>
-                                        <p class="mb-0">
-                                            Airline: @flight.AirlineName <br />
-                                            Time: @flight.DepartureDate
-                                        </p>
-                                    </div>
-                                }
-                            }
-                        </details>
 
-                        <details class="mb-4">
-                            <summary class="h6"> Lodging</summary>
-                            @if (Lodging != null)
-                            {
-                                @foreach (var lodging in Lodging)
+                            <!-- Details Section Below Trip Details -->
+                            <details class="mb-4">
+                                <summary class="h6">Flight</summary>
+                                @if (flight != null)
                                 {
-                                    <div class="border-bottom py-3">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h6 class="mb-2">@lodging.HotelName</h6>
-                                            <a href="/lodgings/edit/@lodging.Id/@lodging.TripId" class="btn btn-sm btn-outline-primary">🛏️ Edit</a>
-                                            <a href="/lodgings/delete/@lodging.Id/@lodging.TripId" class="btn btn-sm btn-outline-primary">🛏️ Delete</a>
-                                        </div>
-                                        <p class="mb-0">
-                                            Check-in: @lodging.CheckInDate.ToShortDateString()<br>
-                                            Address: @lodging.Address<br>
-                                            Check-out: @lodging.CheckOutDate.ToShortDateString()
-                                        </p>
-                                    </div>
-                                }
-                            }
-                        </details>
-
-                         <details class="mb-4">
-                            <summary class="h6"> Restaurant</summary>
-                            @if (restaurant != null)
-                            {
-                                @foreach (var restaurant in restaurant)
-                                {
-                                    <div class="border-bottom py-3">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h6 class="mb-2">@restaurant.ResturantName</h6>
-                                            <a href="/restaurants/edit/@restaurant.Id/@restaurant.TripId" class="btn btn-sm btn-outline-primary">🍽️ Edit</a>
-                                            <a href="/restaurants/delete/@restaurant.Id/@restaurant.TripId" class="btn btn-sm btn-outline-primary">🍽️ Delete</a>
-                                        </div>
-                                        <p class="mb-0">
-                                            Date: @restaurant.DateVisited.ToShortDateString()<br>
-                                            Address: @restaurant.Address
-                                        </p>
-                                    </div>
-                                }
-                            }
-                        </details>
-
-                         <details class="mb-4">
-                            <summary class="h6"> Activity</summary>
-                            @if (activity != null)
-                            {
-                                @foreach (var activity in activity)
-                                {
-                                    <div class="border-bottom py-3">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h6 class="mb-2">@activity.ActivityName</h6>
+                                    @foreach (var flight in flight)
+                                    {
+                                        bool isOutOfRange = IsDateOutOfRange(flight.DepartureDate.Date.AddDays(+1)) || IsDateOutOfRange(flight.DepartureDate.Date.AddDays(-1));
+                                           <div class="border-bottom py-3 @(isOutOfRange ? "bg-warning bg-opacity-10" : "")">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="mb-2">
+                                                    @flight.DepartureDate.ToString("dddd,dd MMMM, yyyy")
+                                                    @if (isOutOfRange)
+                                                    {
+                                                        <span class="badge bg-warning text-dark ms-2">Outside Trip Dates</span>
+                                                    }
+                                                </h6>
+                                                <div>
+                                                    <a href="/flights/edit/@flight.Id/@flight.TripId" class="btn btn-sm btn-outline-primary">🛫 Edit</a>
+                                                    <a href="/flights/delete/@flight.Id/@flight.TripId" class="btn btn-sm btn-outline-primary">🛫 Delete</a>
+                                                </div>
+                                            </div>
                                             <p class="mb-0">
-                                              Address: @activity.Address<br />
-                                              Description: @activity.Description
+                                                Airline: @flight.AirlineName <br />
+                                                Time: @flight.DepartureDate
                                             </p>
-                                            <a href="/activities/edit/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Edit</a>
-                                            <a href="/activities/delete/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Delete</a>
-
                                         </div>
-                                    </div>
+                                    }
                                 }
-                            }
-                         </details>
+                            </details>
+
+                            <details class="mb-4">
+                                <summary class="h6">Lodging</summary>
+                                @if (Lodging != null)
+                                {
+                                    @foreach (var lodging in Lodging)
+                                    {
+                                        bool checkInOutOfRange = IsDateOutOfRange(lodging.CheckInDate);
+                                        bool checkOutOutOfRange = IsDateOutOfRange(lodging.CheckOutDate);
+                                        <div class="border-bottom py-3 @(checkInOutOfRange || checkOutOutOfRange ? "bg-warning bg-opacity-10" : "")">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="mb-2">
+                                                    @lodging.HotelName
+                                                    @if (checkInOutOfRange || checkOutOutOfRange)
+                                                    {
+                                                        <span class="badge bg-warning text-dark ms-2">Outside Trip Dates</span>
+                                                    }
+                                                </h6>
+                                                <div>
+                                                    <a href="/lodgings/edit/@lodging.Id/@lodging.TripId" class="btn btn-sm btn-outline-primary">🛏️ Edit</a>
+                                                    <a href="/lodgings/delete/@lodging.Id/@lodging.TripId" class="btn btn-sm btn-outline-primary">🛏️ Delete</a>
+                                                </div>
+                                            </div>
+                                            <p class="mb-0">
+                                                Check-in: @lodging.CheckInDate.ToShortDateString()<br>
+                                                Address: @lodging.Address<br>
+                                                Check-out: @lodging.CheckOutDate.ToShortDateString()
+                                            </p>
+                                        </div>
+                                    }
+                                }
+                            </details>
+
+                            <details class="mb-4">
+                                <summary class="h6">Restaurant</summary>
+                                @if (restaurant != null)
+                                {
+                                    @foreach (var restaurant in restaurant)
+                                    {
+                                        bool isOutOfRange = IsDateOutOfRange(restaurant.DateVisited);
+                                        <div class="border-bottom py-3 @(isOutOfRange ? "bg-warning bg-opacity-10" : "")">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="mb-2">
+                                                    @restaurant.ResturantName
+                                                    @if (isOutOfRange)
+                                                    {
+                                                        <span class="badge bg-warning text-dark ms-2">Outside Trip Dates</span>
+                                                    }
+                                                </h6>
+                                                <div>
+                                                    <a href="/restaurants/edit/@restaurant.Id/@restaurant.TripId" class="btn btn-sm btn-outline-primary">🍽️ Edit</a>
+                                                    <a href="/restaurants/delete/@restaurant.Id/@restaurant.TripId" class="btn btn-sm btn-outline-primary">🍽️ Delete</a>
+                                                </div>
+                                            </div>
+                                            <p class="mb-0">
+                                                Date: @restaurant.DateVisited.ToShortDateString()<br>
+                                                Address: @restaurant.Address
+                                            </p>
+                                        </div>
+                                    }
+                                }
+                            </details>
+
+                            <details class="mb-4">
+                                <summary class="h6">Activity</summary>
+                                @if (activity != null)
+                                {
+                                    @foreach (var activity in activity)
+                                    {
+                                        <div class="border-bottom py-3">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="mb-2">@activity.ActivityName</h6>
+                                                <div>
+                                                    <a href="/activities/edit/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Edit</a>
+                                                    <a href="/activities/delete/@activity.Id/@activity.TripId" class="btn btn-sm btn-outline-primary">🎮 Delete</a>
+                                                </div>
+                                            </div>
+                                            <p class="mb-0">
+                                                Address: @activity.Address<br />
+                                                Description: @activity.Description
+                                            </p>
+                                        </div>
+                                    }
+                                }
+                            </details>
+
                             <div class="d-flex gap-2 flex-wrap mt-4">
                                 <a href="/plan/@trip.Id" class="btn btn-primary custom-btn">Add plan 📝</a>
-                                </div>
-                        
-                       </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <!-- Timeline - Right Side -->
             <div class="col-md-5">
                 <div class="card shadow-sm h-60">
@@ -157,12 +186,19 @@ else
                         <h3 class="mb-0">Timeline</h3>
                     </div>
                     <div class="card-body p-0">
-                        <div class="timeline-container" style="height: 600px; overflow-y: auto; padding: 1rem;">
+                        <div class="timeline-container" >
                             @foreach (var item in GetSortedTimelineItems())
                             {
-                                <div class="timeline-item border-bottom py-2">
+                                bool isOutOfRange = IsDateOutOfRange(item.Date);
+                                <div class="timeline-item border-bottom py- @(isOutOfRange ? "bg-warning bg-opacity-10" : "")">
                                     <div class="timeline-content">
-                                        <h6 class="mb-1">@item.Date.ToString("dddd,dd MMMM , yyyy")</h6>
+                                        <h6 class="mb-1">
+                                            @item.Date.ToString("dddd,dd MMMM , yyyy")
+                                            @if (isOutOfRange)
+                                            {
+                                                <span class="badge bg-warning text-dark ms-2">Outside Trip Dates</span>
+                                            }
+                                        </h6>
                                         <p class="mb-2">@item.Title</p>
                                         <small class="text-muted">@item.Details</small>
                                     </div>
@@ -191,6 +227,19 @@ else
         public string Title { get; set; } = "";
         public string Details { get; set; } = "";
         public string Type { get; set; } = "";
+    }
+
+    private bool IsDateOutOfRange(DateTime date)
+    {
+        if (trip == null) return false;
+        return date.Date < trip.StartDate.Date || date.Date > trip.EndDate.Date;
+
+    }
+    private bool IsFlightDateOutOfRange(DateTime date)
+    {
+        if (trip == null) return false;
+        // Allow one day before and after the trip dates
+        return date.Date < trip.StartDate.Date.AddDays(-1) || date.Date > trip.EndDate.Date.AddDays(1);
     }
 
     protected override async Task OnInitializedAsync()
@@ -227,6 +276,7 @@ else
             NavigationManager.NavigateTo("notfound");
         }
     }
+
     private List<TimelineItem> GetSortedTimelineItems()
     {
         var timelineItems = new List<TimelineItem>();
@@ -275,8 +325,9 @@ else
                     Title = $"Restaurant: {r.ResturantName}",
                     Details = $"Address: {r.Address}",
                     Type = "Restaurant"
-              }));
+                }));
         }
+
         // Sort all items by date
         return timelineItems.OrderBy(x => x.Date).ToList();
     }

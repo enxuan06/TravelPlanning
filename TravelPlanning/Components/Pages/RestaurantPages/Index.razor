@@ -12,12 +12,14 @@
 
 
 <QuickGrid Class="table" Items="filteredRestaurants">
+    <AuthorizeView>
     <PropertyColumn Property="restaurant => restaurant.TripId" />
+     <PropertyColumn Property="restaurant => restaurant.DataUpdated" />
+    </AuthorizeView>
     <PropertyColumn Property="restaurant => restaurant.ResturantName" />
     <PropertyColumn Property="restaurant => restaurant.Address" />
     <PropertyColumn Property="restaurant => restaurant.DateVisited" />
-    <PropertyColumn Property="restaurant => restaurant.DateCreated" />
-    <PropertyColumn Property="restaurant => restaurant.DataUpdated" />
+   
 
     <TemplateColumn Context="restaurant">
         <a href="/restaurants/edit/@restaurant.Id/@TripId" class="btn btn-secondary btn-sm">Edit</a> |

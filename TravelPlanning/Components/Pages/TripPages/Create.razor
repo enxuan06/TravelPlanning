@@ -26,7 +26,7 @@
 
                    <div class="row"> 
                         <div class="col-md-6 mb-3">
-                        <label for="tripname" class="form-label">TripName:</label>
+                        <label for="tripname" class="form-label">Trip Name:</label>
                         <InputText id="tripname" @bind-Value="Trip.TripName" class="form-control" />
                         <ValidationMessage For="() => Trip.TripName" class="text-danger" />
                     </div>
@@ -46,12 +46,12 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                        <label for="startdate" class="form-label">StartDate:</label>
+                        <label for="startdate" class="form-label">Start Date:</label>
                         <InputDate id="startdate" @bind-Value="Trip.StartDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                         <ValidationMessage For="() => Trip.StartDate" class="text-danger" />
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="enddate" class="form-label">EndDate:</label>
+                        <label for="enddate" class="form-label">End Date:</label>
                         <InputDate id="enddate" @bind-Value="Trip.EndDate" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                         <ValidationMessage For="() => Trip.EndDate" class="text-danger" />
                     </div>
