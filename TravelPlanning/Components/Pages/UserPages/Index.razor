@@ -8,27 +8,32 @@
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize(Roles = "Administrator")]
 
-
-<PageTitle>Index</PageTitle>
-
-<h1>User List</h1>
+<PageTitle>User List</PageTitle>
 
 
 
-<QuickGrid Class="table" Items="context.User">
-    <PropertyColumn Property="user => user.Id" />
-    <PropertyColumn Property="user => user.UserName" />
-    <PropertyColumn Property="user => user.DomainUsername" />
-    <PropertyColumn Property="user => user.DateCreated" />
 
-    <TemplateColumn Context="user">
-        <AuthorizeView Roles="Administrator">
-        <a hidden href="@($"users/edit?id={user.Id}")">Edit</a> |
-        <a href="@($"users/details?id={user.Id}")">Details</a> |
-        <a href="@($"users/delete?id={user.Id}")">Delete</a>
-        </AuthorizeView>
-    </TemplateColumn>
-</QuickGrid>
+    
+        
+            <h1 class="mb-4 text-center">User List</h1>
+
+            
+                <QuickGrid Class="table table-striped table-bordered" Items="context.User">
+                    <PropertyColumn Property="user => user.Id" Title="ID" />
+                    <PropertyColumn Property="user => user.UserName" Title="User Name" />
+                    <PropertyColumn Property="user => user.DomainUsername" Title="Domain Username" />
+                    <PropertyColumn Property="user => user.DateCreated" Title="Date Created" />
+
+                    <TemplateColumn Context="user" Title="Actions">
+                        <AuthorizeView Roles="Administrator">
+                            <div class="d-flex gap-2">
+                                <a class="btn btn-sm btn-primary" href="@($"users/details?id={user.Id}")">Details</a>
+                                <a class="btn btn-sm btn-danger" href="@($"users/delete?id={user.Id}")">Delete</a>
+                            </div>
+                        </AuthorizeView>
+                    </TemplateColumn>
+                </QuickGrid>
+            
 
 @code {
     private TravelPlanningContext context = default!;
